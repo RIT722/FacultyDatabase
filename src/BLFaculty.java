@@ -1,7 +1,8 @@
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.*;
 
 
 
@@ -31,4 +32,19 @@ public class BLFaculty extends DLFaculty {
 		return hashedPw.equals(storedPw);
 	}
  */
+   
+   public static ArrayList<ArrayList<String>> profList() throws DLException{
+	   ArrayList<ArrayList<String>> returnList = getAllProfs();
+	   ArrayList<ArrayList<String>> outputList = new ArrayList();
+	   for(int i = 0; i < returnList.size(); i++)
+	   {
+			   String name = returnList.get(i).get(1) + " " + returnList.get(i).get(2);
+			   String profID = returnList.get(i).get(0);
+			   ArrayList<String> temp = new ArrayList();
+			   temp.add(profID);
+			   temp.add(name);
+			   outputList.add(temp);
+	   }
+	   return outputList;
+   }
 }

@@ -201,6 +201,21 @@ public class DLFaculty {
 
       
       
- }
+		}
+	
+	public static ArrayList<ArrayList<String>> getAllProfs() throws DLException{
+		ArrayList<ArrayList<String>> profList;
+
+        try{
+            MySQLDatabase msd = MySQLDatabase.getInstance();  
+            profList = msd.getData("SELECT Id, fname, lname  FROM faculty");
+			
+            
+        }
+        catch(RuntimeException e){
+            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in searchByKeywords() of Faculty");
+        }
+        return profList;
+	}
 
 }

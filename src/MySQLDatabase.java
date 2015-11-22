@@ -18,13 +18,16 @@ public class MySQLDatabase { //Database connector class
 
  
     private MySQLDatabase(){ 
-             
-        }
+	}
     
     public static MySQLDatabase getInstance(){
         return INSTANCE;
         }
     
+	public void setPassword(String pw) {
+		password = pw;
+	}
+	
     public boolean connect() throws DLException{ //makes connection to database
         
         try{
