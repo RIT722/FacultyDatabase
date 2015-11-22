@@ -10,10 +10,16 @@ public class DLFaculty {
     boolean askHelp;
     int ID;
     
+    public DLFaculty(){
+        
+    }
+    
     //Faculty constructor
     public DLFaculty(int ID){
         this.ID = ID;
     }
+    
+
     
     //Accessor methods
     public String getFN(){
@@ -112,10 +118,10 @@ public class DLFaculty {
     
     //faculty login
     //Consider adding unique username to password
-   public static boolean facultyLogin(String email, String password) throws DLException{
+ /*  public static boolean facultyLogin(String email, String password) throws DLException{
         // Nazar 
        
-    }
+    }*/
     
     
         
@@ -161,15 +167,40 @@ public class DLFaculty {
     }
     
     // Will return the faculty name, email, and list of papers
-    public void getAllProfessorInfo(String ProfName) throws SQLException {
+/*    public void getAllProfessorInfo(String ProfName) throws SQLException {
     
     // 
-    }
+    }*/
     
-    public void getAllStudentNames(String ProfName) throws SQLException{
-    
-    
-    // Nazar
-    }
+    public void getAllStudentNames() throws DLException {
+	   
+	   String query = "select student.name from student"+
+			 " join faculty on ((faculty.id = student.facultyID) AND faculty.id = '"+ ID +"')"+""
+			 		+ "group by student.name;";
+               
+      MySQLDatabase myDB = MySQLDatabase.getInstance();
+
+      try {
+      ArrayList<ArrayList<String>> results = myDB.getData(query);
+
+	   if(results.isEmpty()){
+		System.out.println("We didn't fetch data from the database, try again");
+							
+	   }
+	   else{ 
+		   System.out.println("Student id who work with this profesor are: \n");
+		   for(int i =0 ; i< results.size(); i++)
+		      {
+			      String studentId = (results.get(i).toString());
+			      System.out.println(studentId);	
+		      }
+	      }			
+      }catch(RuntimeException e){
+            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "SQL string = " + query, "Error in fetch() of Faculty");
+        }
+
+      
+      
+ }
 
 }
