@@ -3,10 +3,9 @@
 public class BLFaculty extends DLFaculty {
 
    
-  
-   
-   public BLFaculty(){}
-   
+   public BLFaculty(int ID){
+        super(ID);
+    }
    
    
    public Login(String emai, String pwd) {
@@ -19,18 +18,7 @@ public class BLFaculty extends DLFaculty {
    
    
    }
-   
-   
-   public 
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
 
 
 }
