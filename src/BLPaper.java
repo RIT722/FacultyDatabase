@@ -1,5 +1,9 @@
 public class BLPaper extends DLPaper {
 
+    public BLPaper(){
+        
+    }
+    
     public BLPaper(int ID){
         super(ID);
     }

@@ -1,0 +1,137 @@
+Sun Nov 22 14:49:45 EST 2015 java.lang.NullPointerException 
+Unix time: 1448221785
+Error in getData() of MySQLDatabase
+SQL = select student.name from student join faculty on ((faculty.id = student.facultyID) AND faculty.id = '1')group by student.name;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.getData(MySQLDatabase.java:61)
+	at DLFaculty.getAllStudentNames(DLFaculty.java:184)
+	at MainTest.main(MainTest.java:14)
+
+Sun Nov 22 14:53:28 EST 2015 java.lang.NullPointerException 
+Unix time: 1448222008
+Error in getData() of MySQLDatabase
+SQL = select student.name from student join faculty on ((faculty.id = student.facultyID) WHERE faculty.id = '1')group by student.name;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.getData(MySQLDatabase.java:61)
+	at DLFaculty.getAllStudentNames(DLFaculty.java:184)
+	at MainTest.main(MainTest.java:14)
+
+Sun Nov 22 14:55:26 EST 2015 java.lang.NullPointerException 
+Unix time: 1448222126
+Error in getData() of MySQLDatabase
+SQL = select student.name from student join faculty on faculty.id = student.facultyID WHERE faculty.id = '1')group by student.name;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.getData(MySQLDatabase.java:61)
+	at DLFaculty.getAllStudentNames(DLFaculty.java:184)
+	at MainTest.main(MainTest.java:14)
+
+Sun Nov 22 15:00:22 EST 2015 java.lang.ClassNotFoundException: com.mysql.jdbc.Driver 
+Unix time: 1448222422
+Driver error in connect()
+Stack Trace: java.lang.ClassNotFoundException: com.mysql.jdbc.Driver
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:372)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:361)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:360)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:260)
+	at MySQLDatabase.connect(MySQLDatabase.java:31)
+	at MainTest.main(MainTest.java:16)
+
+Sun Nov 22 15:00:22 EST 2015 java.lang.NullPointerException 
+Unix time: 1448222422
+Error in getData() of MySQLDatabase
+SQL = select student.name from student join faculty on faculty.id = student.facultyID WHERE faculty.id = '1')group by student.name;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.getData(MySQLDatabase.java:61)
+	at DLFaculty.getAllStudentNames(DLFaculty.java:184)
+	at MainTest.main(MainTest.java:27)
+
+Sun Nov 22 15:01:42 EST 2015 java.lang.ClassNotFoundException: com.mysql.jdbc.Driver 
+Unix time: 1448222502
+Driver error in connect()
+Stack Trace: java.lang.ClassNotFoundException: com.mysql.jdbc.Driver
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:372)
+	at java.net.URLClassLoader$1.run(URLClassLoader.java:361)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:360)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:260)
+	at MySQLDatabase.connect(MySQLDatabase.java:31)
+	at MainTest.main(MainTest.java:16)
+
+Sun Nov 22 15:03:56 EST 2015 com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')group by student.name' at line 1 
+Unix time: 1448222636
+Error in getData() of MySQLDatabase
+SQL = select student.name from student join faculty on faculty.id = student.facultyID WHERE faculty.id = '1')group by student.name;
+Stack Trace: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')group by student.name' at line 1
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:408)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:400)
+	at com.mysql.jdbc.Util.getInstance(Util.java:383)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:980)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3847)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3783)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2447)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2594)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2541)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2499)
+	at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1432)
+	at MySQLDatabase.getData(MySQLDatabase.java:62)
+	at DLFaculty.getAllStudentNames(DLFaculty.java:184)
+	at MainTest.main(MainTest.java:27)
+
+Sun Nov 22 15:04:42 EST 2015 com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')group by student.name' at line 1 
+Unix time: 1448222682
+Error in getData() of MySQLDatabase
+SQL = select student.name from student join faculty on faculty.id = student.facultyID WHERE faculty.id = '1')group by student.name;
+Stack Trace: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')group by student.name' at line 1
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:408)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:400)
+	at com.mysql.jdbc.Util.getInstance(Util.java:383)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:980)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3847)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3783)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2447)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2594)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2541)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2499)
+	at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1432)
+	at MySQLDatabase.getData(MySQLDatabase.java:62)
+	at DLFaculty.getAllStudentNames(DLFaculty.java:184)
+	at MainTest.main(MainTest.java:27)
+
+Sun Nov 22 15:05:25 EST 2015 com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1group by student.name' at line 1 
+Unix time: 1448222725
+Error in getData() of MySQLDatabase
+SQL = select student.name from student join faculty on faculty.id = student.facultyID WHERE faculty.id = '1group by student.name;
+Stack Trace: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1group by student.name' at line 1
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:408)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:400)
+	at com.mysql.jdbc.Util.getInstance(Util.java:383)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:980)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3847)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3783)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2447)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2594)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2541)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2499)
+	at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1432)
+	at MySQLDatabase.getData(MySQLDatabase.java:62)
+	at DLFaculty.getAllStudentNames(DLFaculty.java:184)
+	at MainTest.main(MainTest.java:27)
+

@@ -8,6 +8,10 @@ public class DLPaper {
     String pAbstract;
     String citation;
     
+    public DLPaper(){
+        
+    }
+    
     public DLPaper(int ID){
         this.ID = ID;
     }
@@ -23,7 +27,9 @@ public class DLPaper {
         return title;
     }
     
-    
+    public void SetPaperId(int _ID) {
+          ID = _ID;
+    }
     
     
     //Gets values from papers table and loads them into the database
@@ -183,5 +189,33 @@ public class DLPaper {
         }
         return keyword;
     }
+     
+     public void SearchByTitle(String _title) throws DLException {
+   
+            String title = _title; 
+            String[] arr = title.split(" ");    
+            int size =  arr.length;
+      // System.out.println(size);
+            for (int i=0;i<size;i++){
+       //System.out.println(arr[i]);
+       
+            String query = "select papers.title from papers where title like '%"+arr[i]+"%' order by id;";
+            try{ 
+            MySQLDatabase myDB = MySQLDatabase.getInstance();
+            myDB.connect();
 
+            ArrayList<ArrayList<String>> result = myDB.getData(query);
+  // results.add(result);
+            for (int j=0; j < result.size();j++) {
+            System.out.println(result.get(j));
+                  }
+
+               }
+               catch(RuntimeException e){
+                   throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "SQL string = " + query, "Error in fetch() of Faculty");
+        }
+        }
+
+        }  
+     
 }

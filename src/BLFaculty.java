@@ -11,7 +11,7 @@ public class BLFaculty extends DLFaculty {
    public BLFaculty(int ID){
         super(ID);
     }
-   
+   /*
    public boolean login(String email, String pw) {
 		MessageDigest md;
 		byte[] hashedBytes = new byte[0];
@@ -30,5 +30,5 @@ public class BLFaculty extends DLFaculty {
 		String storedPw = DLFaculty.login(email);
 		return hashedPw.equals(storedPw);
 	}
- 
+ */
 }
