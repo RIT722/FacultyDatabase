@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.sql.*;
 
 public class DLPaper {
     int ID;
@@ -43,28 +44,29 @@ public class DLPaper {
         }
     }
     
-    //Loads details of radio-button-selected paper into the user interface to allow editing
-    //Used also in search by faculty to display paper details
+
        
-       
-    //Modify to include commit/rollback confirm delete
+    //Modify to include commit/rollback confirm delete: not done, unnecessary
+    //Pop-up confirmation will occur before any SQL happens
     //Deletes a radio-button-selected paper from the papers table
-    //Make sure cascading delete works, otherwise put all deletes in transaction
+    
     public void deletePaper() throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{   
             ArrayList values = new ArrayList();
             values.add(ID);
-            msd.setData("DELETE FROM authorship WHERE id = ?;", values);
+            msd.startTrans();
+            msd.setData("DELETE FROM authorship WHERE paperId = ?;", values);
             msd.setData("DELETE FROM paper_keywords WHERE id = ?;", values);
             msd.setData("DELETE FROM papers WHERE id = ?;", values);
+            msd.endTrans();
         }
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in deletePaper() of Papers");
         }
     }
     
-    //Modify to include commit/rollback would you like to save changes?
+    //Modify to include commit/rollback would you like to save changes? - unnecessary
     //Updates the papers table to reflect updated details for a paper. Updates keywords in paper_keywords
     public void save(String title, String pAbstract, String citation, String keywords, int facID) throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
@@ -162,33 +164,24 @@ public class DLPaper {
         return paperList;
     }
     
-    
-   
-    // By Katei separate Keywords
-     public ArrayList<String> getPaperByID() throws DLException {
-        ArrayList<ArrayList<String>> paper;
-        ArrayList<String> returnArray = new ArrayList();
+    // Updated to be only get keywords, other part is done in fetch
+     public String getPaperKeywords() throws DLException {
+        String keyword = ""; 
         try{
             MySQLDatabase msd = MySQLDatabase.getInstance();  
             ArrayList values = new ArrayList();
             values.add(ID);
-            paper = msd.getData("SELECT title, abstract, citation FROM papers WHERE id = ?", values);
             ArrayList<ArrayList<String>> keywords = msd.getData("SELECT keyword FROM paper_keywords WHERE id = ?", values);
-            for(int i = 0; i < paper.get(0).size(); i++)
-                returnArray.add(paper.get(0).get(i));
             
-            String keyword = "";
             for(int i = 0; i < keywords.size(); i++)
                 for(int j = 0; j < keywords.get(0).size(); j++)
                     keyword = keyword + keywords.get(i).get(j) + ",";
-            returnArray.add(keyword);
             
         }
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in editPaper() of Faculty");
         }
-        return returnArray;
+        return keyword;
     }
-
 
 }

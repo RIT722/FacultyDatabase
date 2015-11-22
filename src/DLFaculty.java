@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.sql.*;
 
 public class DLFaculty {
     String firstName;
@@ -113,6 +114,7 @@ public class DLFaculty {
     //Consider adding unique username to password
    public static boolean facultyLogin(String email, String password) throws DLException{
         // Nazar 
+       
     }
     
     
@@ -134,9 +136,11 @@ public class DLFaculty {
     
     //Updates the needHelp boolean in the faculty table
     //Change to use text box and return string value
-    public void needHelp(boolean help) throws DLException{
+    public void needHelp(String help) throws DLException{
          MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{
+            if(help.equals(""))
+                help = null;
             ArrayList values = new ArrayList();
             values.add(help);
             values.add(ID);
