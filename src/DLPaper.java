@@ -145,13 +145,6 @@ public class DLPaper {
     
     // Nazar
     }
-
-
-   public void searchByKeyWords(String key) throws SQLException {
-   
-   
-   // Nazar
-   }
    
     public static ArrayList<ArrayList<String>> searchByKeywords(String keyword) throws DLException{
 
@@ -190,8 +183,7 @@ public class DLPaper {
         return keyword;
     }
      
-     public void SearchByTitle(String _title) throws DLException {
-   
+     public static void searchByTitle(String _title) throws DLException {
             String title = _title; 
             String[] arr = title.split(" ");    
             int size =  arr.length;
@@ -202,7 +194,7 @@ public class DLPaper {
             String query = "select papers.title from papers where title like '%"+arr[i]+"%' order by id;";
             try{ 
             MySQLDatabase myDB = MySQLDatabase.getInstance();
-            myDB.connect();
+
 
             ArrayList<ArrayList<String>> result = myDB.getData(query);
   // results.add(result);
@@ -215,7 +207,6 @@ public class DLPaper {
                    throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "SQL string = " + query, "Error in fetch() of Faculty");
         }
         }
-
         }  
      
 }

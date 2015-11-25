@@ -10,7 +10,7 @@ public class MySQLDatabase { //Database connector class
             
     static Connection conn = null; //Connection object
     private String userName = "root";
-    private String password = "student";
+    private String password;
     private String url = "jdbc:mysql://127.0.0.1/722Project";
     public boolean connection = false;
     public boolean closeVar = false;

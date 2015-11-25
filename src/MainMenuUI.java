@@ -1,5 +1,6 @@
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import javax.swing.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,13 +16,33 @@ import java.util.ArrayList;
 public class MainMenuUI extends javax.swing.JFrame {
 
 	private ArrayList<ArrayList<String>> profs;
-	private static MySQLDatabase MySQLDB;
-	
+	private MySQLDatabase MySQLDB;
 	
 	/**
 	 * Creates new form FacultyDatabaseUI
 	 */
-	public MainMenuUI() {
+	public MainMenuUI() {		
+		//ADAPTED FROM: http://stackoverflow.com/a/8881235
+		JPanel panel = new JPanel();
+		JLabel label = new JLabel("Enter database password:");
+		JPasswordField pass = new JPasswordField(16);
+		panel.add(label);
+		panel.add(pass);
+		String[] options = new String[]{"OK", "Cancel"};
+		int option = JOptionPane.showOptionDialog(null, panel, "Enter Password",
+								 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+								 null, options, pass);
+		//pass.requestFocusInWindow();
+		if (option == 0) // pressing OK button
+		{
+			String pw = new String(pass.getPassword());
+			this.connectToDatabase(pw);
+		}
+		else { //Cancel
+			System.exit(0);
+			System.out.println("UH NEVER MIND");
+		}
+		
 		initComponents();
 	}
 
@@ -34,18 +55,13 @@ public class MainMenuUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        mainMenuLabel = new javax.swing.JLabel();
+        searchByButtonGroup = new javax.swing.ButtonGroup();
+        mainMenuPanel = new javax.swing.JPanel();
         userNameField = new javax.swing.JTextField();
         userNameLabel = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
         passwordLabel = new javax.swing.JLabel();
         loginButton = new javax.swing.JButton();
-        titleRadioButton = new javax.swing.JRadioButton();
-        facultyNameRadioButton = new javax.swing.JRadioButton();
-        keywordRadioButton = new javax.swing.JRadioButton();
-        searchByLabel = new javax.swing.JLabel();
         facultyMembersLabel = new javax.swing.JLabel();
         titleField = new javax.swing.JTextField();
         keywordField = new javax.swing.JTextField();
@@ -55,19 +71,26 @@ public class MainMenuUI extends javax.swing.JFrame {
         catch(DLException e){
             //blah
         }
-        String[] profNames = new String[this.profs.size()];
-        for (int i=0;i<profNames.length;i++) {
-            profNames[i] = this.profs.get(i).get(1);
+        String[] profNames = new String[this.profs.size()+1];
+        profNames[0] = "";  //should be a blank option first
+        for (int i=1;i<profNames.length;i++) {
+            profNames[i] = this.profs.get(i-1).get(1);
         }
         facultyNameComboBox = new javax.swing.JComboBox(profNames);
         titleLabel = new javax.swing.JLabel();
         facultyNameLabel = new javax.swing.JLabel();
         keywordLabel = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
+        searchByPanel = new javax.swing.JPanel();
+        titleRadioButton = new javax.swing.JRadioButton();
+        searchByLabel = new javax.swing.JLabel();
+        facultyNameRadioButton = new javax.swing.JRadioButton();
+        keywordRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Faculty Database");
 
-        mainMenuLabel.setText("Main Menu");
+        mainMenuPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Main Menu"));
 
         userNameLabel.setText("User Name");
 
@@ -86,49 +109,26 @@ public class MainMenuUI extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(titleRadioButton);
-        titleRadioButton.setText("Title");
-        titleRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleRadioButtonActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(facultyNameRadioButton);
-        facultyNameRadioButton.setText("Faculty Name");
-        facultyNameRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facultyNameRadioButtonActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(keywordRadioButton);
-        keywordRadioButton.setText("Keyword");
-        keywordRadioButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                keywordRadioButtonActionPerformed(evt);
-            }
-        });
-
-        searchByLabel.setText("Search By");
-
         facultyMembersLabel.setText("Faculty Members");
 
-        titleField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                titleFieldActionPerformed(evt);
+        titleField.setEnabled(false);
+        titleField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                titleFieldPropertyChange(evt);
             }
         });
 
-        keywordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                keywordFieldActionPerformed(evt);
+        keywordField.setEnabled(false);
+        keywordField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                keywordFieldPropertyChange(evt);
             }
         });
 
-        facultyNameComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                facultyNameComboBoxActionPerformed(evt);
+        facultyNameComboBox.setEnabled(false);
+        facultyNameComboBox.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                facultyNameComboBoxPropertyChange(evt);
             }
         });
 
@@ -139,97 +139,138 @@ public class MainMenuUI extends javax.swing.JFrame {
         keywordLabel.setText("Keyword");
 
         searchButton.setText("Search");
+        searchButton.setEnabled(false);
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userNameLabel)
-                            .addComponent(passwordLabel))
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loginButton)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                .addComponent(userNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(mainMenuLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(facultyMembersLabel)
-                        .addContainerGap())))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(67, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        searchByPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        searchByButtonGroup.add(titleRadioButton);
+        titleRadioButton.setText("Title");
+        titleRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                titleRadioButtonActionPerformed(evt);
+            }
+        });
+
+        searchByLabel.setText("Search By");
+
+        searchByButtonGroup.add(facultyNameRadioButton);
+        facultyNameRadioButton.setText("Faculty Name");
+        facultyNameRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facultyNameRadioButtonActionPerformed(evt);
+            }
+        });
+
+        searchByButtonGroup.add(keywordRadioButton);
+        keywordRadioButton.setText("Keyword");
+        keywordRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                keywordRadioButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout searchByPanelLayout = new javax.swing.GroupLayout(searchByPanel);
+        searchByPanel.setLayout(searchByPanelLayout);
+        searchByPanelLayout.setHorizontalGroup(
+            searchByPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchByPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(searchByPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(searchByLabel)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(searchByPanelLayout.createSequentialGroup()
                         .addComponent(titleRadioButton)
                         .addGap(18, 18, 18)
                         .addComponent(facultyNameRadioButton)
                         .addGap(18, 18, 18)
                         .addComponent(keywordRadioButton)))
-                .addContainerGap(247, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap())
+        );
+        searchByPanelLayout.setVerticalGroup(
+            searchByPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchByPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchByLabel)
+                .addGap(26, 26, 26)
+                .addGroup(searchByPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titleRadioButton)
+                    .addComponent(facultyNameRadioButton)
+                    .addComponent(keywordRadioButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout mainMenuPanelLayout = new javax.swing.GroupLayout(mainMenuPanel);
+        mainMenuPanel.setLayout(mainMenuPanelLayout);
+        mainMenuPanelLayout.setHorizontalGroup(
+            mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainMenuPanelLayout.createSequentialGroup()
+                .addContainerGap(410, Short.MAX_VALUE)
+                .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMenuPanelLayout.createSequentialGroup()
+                        .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userNameLabel)
+                            .addComponent(passwordLabel))
+                        .addGap(15, 15, 15)
+                        .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loginButton)
+                            .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                .addComponent(userNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMenuPanelLayout.createSequentialGroup()
+                        .addComponent(facultyMembersLabel)
+                        .addContainerGap())))
+            .addGroup(mainMenuPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(searchByPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMenuPanelLayout.createSequentialGroup()
+                .addGap(0, 232, Short.MAX_VALUE)
+                .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(searchButton)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainMenuPanelLayout.createSequentialGroup()
+                        .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titleLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(facultyNameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(keywordLabel, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(titleField)
                             .addComponent(keywordField)
                             .addComponent(facultyNameComboBox, 0, 177, Short.MAX_VALUE))))
                 .addGap(45, 45, 45))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        mainMenuPanelLayout.setVerticalGroup(
+            mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainMenuPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mainMenuLabel)
-                    .addComponent(facultyMembersLabel))
+                .addComponent(facultyMembersLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userNameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(loginButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                .addComponent(searchByLabel)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(titleRadioButton)
-                    .addComponent(facultyNameRadioButton)
-                    .addComponent(keywordRadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(searchByPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(titleField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(titleLabel))
                 .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(facultyNameComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(facultyNameLabel))
                 .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mainMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(keywordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(keywordLabel))
                 .addGap(20, 20, 20)
@@ -243,51 +284,124 @@ public class MainMenuUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainMenuPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        mainMenuPanel.getAccessibleContext().setAccessibleName("Main Menu");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        if (this.titleField.isEnabled() && !this.titleField.getText().isEmpty()){
+			System.out.println("DIAGNOSTIC: TITLE SEARCH");
+			/*
+			try {
+				BLPaper.searchByTitle(this.titleField.getName());
+			}
+			catch(DLException e) {
+				JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+			}*/
+			//open search results window
+		}
+		else if (this.facultyNameComboBox.isEnabled() && this.facultyNameComboBox.getSelectedIndex() > 0) {
+			System.out.println("DIAGNOSTIC: FACULTY NAME SEARCH");
+			/*
+			try {
+				//searchByFacultyName()
+			}
+			catch(DLException e) {
+				JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+			}*/
+		}
+		else if (this.keywordField.isEnabled() && !this.keywordField.getText().isEmpty()) {
+			System.out.println("DIAGNOSTIC: KEYWORD SEARCH");
+			/*ArrayList<ArrayList<String>> results = null;
+			try {
+				results = BLPaper.searchByKeywords(this.keywordField.getText());
+			}
+			catch(DLException e) {
+				JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+			}*/
+			//open search results window
+		}
+		else {
+			this.searchButton.setEnabled(false); //if none of the above is true this button should not be enabled to begin with!
+		}
+    }//GEN-LAST:event_searchButtonActionPerformed
+
+    private void keywordRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordRadioButtonActionPerformed
+		if (this.facultyNameComboBox.isEnabled()){
+			this.facultyNameComboBox.setEnabled(false);
+		}
+		if (this.titleField.isEnabled()){
+			this.titleField.setEnabled(false);
+		}
+		this.keywordField.setEnabled(true);
+    }//GEN-LAST:event_keywordRadioButtonActionPerformed
+
+    private void facultyNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyNameRadioButtonActionPerformed
+		if (this.titleField.isEnabled()){
+			this.titleField.setEnabled(false);
+		}
+		if (this.keywordField.isEnabled()){
+			this.keywordField.setEnabled(false);
+		}
+		this.facultyNameComboBox.setEnabled(true);
+    }//GEN-LAST:event_facultyNameRadioButtonActionPerformed
+
+    private void titleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleRadioButtonActionPerformed
+		if (this.facultyNameComboBox.isEnabled()){
+			this.facultyNameComboBox.setEnabled(false);
+		}
+		if (this.keywordField.isEnabled()){
+			this.keywordField.setEnabled(false);
+		}
+		this.titleField.setEnabled(true);
+    }//GEN-LAST:event_titleRadioButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void titleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleRadioButtonActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_titleRadioButtonActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void facultyNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyNameRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_facultyNameRadioButtonActionPerformed
+    private void titleFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_titleFieldPropertyChange
+        Object source = evt.getSource();
+		if (!((JTextField)source).getText().isEmpty()) {
+			System.out.println("SEARCH TITLE ENTERED");
+			this.searchButton.setEnabled(true);
+		}
+		else {
+			this.searchButton.setEnabled(false);
+		}
+    }//GEN-LAST:event_titleFieldPropertyChange
 
-    private void keywordRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordRadioButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_keywordRadioButtonActionPerformed
+    private void facultyNameComboBoxPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_facultyNameComboBoxPropertyChange
+		Object source = evt.getSource();
+		if (((JComboBox)source).getSelectedIndex() > 0) {
+			this.searchButton.setEnabled(true);
+		}
+		else {
+			this.searchButton.setEnabled(false);
+		}
+    }//GEN-LAST:event_facultyNameComboBoxPropertyChange
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    private void titleFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_titleFieldActionPerformed
-
-    private void facultyNameComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyNameComboBoxActionPerformed
-        
-    }//GEN-LAST:event_facultyNameComboBoxActionPerformed
-
-    private void keywordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_keywordFieldActionPerformed
+    private void keywordFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_keywordFieldPropertyChange
+        Object source = evt.getSource();
+		if (!((JTextField)source).getText().isEmpty()) {
+			this.searchButton.setEnabled(true);
+		}
+		else {
+			this.searchButton.setEnabled(false);
+		}
+    }//GEN-LAST:event_keywordFieldPropertyChange
 
 	/**
 	 * @param args the command line arguments
@@ -318,40 +432,42 @@ public class MainMenuUI extends javax.swing.JFrame {
         //</editor-fold>
 
 		/* Create and display the form */
-		MySQLDB = MySQLDatabase.getInstance();
-		String pw = args[0];
-		try{
-			MySQLDB.setPassword(pw);
-			MySQLDB.connect();
-		} //attempt connection to database
-		catch(DLException DLE){
-			System.out.println("Error: cannot complete operation");
-		}
-		System.out.println("connection successful"); //Will print if connection is successful
-		
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new MainMenuUI().setVisible(true);
 			}
 		});
 	}
+	
+	private void connectToDatabase(String pw) {
+		MySQLDB = MySQLDatabase.getInstance();
+		try{
+			MySQLDB.setPassword(pw);
+			MySQLDB.connect();
+		} //attempt connection to database
+		catch(DLException e){
+			JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+			System.exit(1);
+		}
+		System.out.println("connection successful"); //Will print if connection is successful
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel facultyMembersLabel;
     private javax.swing.JComboBox facultyNameComboBox;
     private javax.swing.JLabel facultyNameLabel;
     private javax.swing.JRadioButton facultyNameRadioButton;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField keywordField;
     private javax.swing.JLabel keywordLabel;
     private javax.swing.JRadioButton keywordRadioButton;
     private javax.swing.JButton loginButton;
-    private javax.swing.JLabel mainMenuLabel;
+    private javax.swing.JPanel mainMenuPanel;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton searchButton;
+    private javax.swing.ButtonGroup searchByButtonGroup;
     private javax.swing.JLabel searchByLabel;
+    private javax.swing.JPanel searchByPanel;
     private javax.swing.JTextField titleField;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JRadioButton titleRadioButton;
