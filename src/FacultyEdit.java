@@ -51,7 +51,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         needStudentTextBox = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         facultyEditPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Edit Faculty Information"));
         facultyEditPanel.setPreferredSize(new java.awt.Dimension(612, 489));
@@ -193,7 +193,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1))
                             .addComponent(facultyPapersList, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(facultyEditPanelLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -255,7 +255,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                     .addGroup(facultyEditPanelLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(returnToSearchButton)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

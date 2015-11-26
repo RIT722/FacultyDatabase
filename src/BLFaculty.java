@@ -12,8 +12,7 @@ public class BLFaculty extends DLFaculty {
    public BLFaculty(int ID){
         super(ID);
     }
-   /*
-   public boolean login(String email, String pw) {
+   public static boolean login(String email, String pw) throws DLException {
 		MessageDigest md;
 		byte[] hashedBytes = new byte[0];
 		try {
@@ -28,10 +27,8 @@ public class BLFaculty extends DLFaculty {
 			sb.append(String.format("%02X", b));
 		}
 		String hashedPw = sb.toString();
-		String storedPw = DLFaculty.login(email);
-		return hashedPw.equals(storedPw);
+		return DLFaculty.facultyLogin(email,hashedPw);
 	}
- */
    
    public static ArrayList<ArrayList<String>> profList() throws DLException{
 	   ArrayList<ArrayList<String>> returnList = getAllProfs();

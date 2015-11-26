@@ -118,10 +118,10 @@ public class DLFaculty {
     
     //faculty login
     //Consider adding unique username to password
- /*  public static boolean facultyLogin(String email, String password) throws DLException{
+   public static boolean facultyLogin(String email, String password) throws DLException{
         // Nazar 
-       
-    }*/
+       return true;
+    }
     
     
         

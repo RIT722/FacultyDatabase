@@ -1,6 +1,11 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -94,12 +99,6 @@ public class MainMenuUI extends javax.swing.JFrame {
 
         userNameLabel.setText("User Name");
 
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
-
         passwordLabel.setText("Password");
 
         loginButton.setText("Login");
@@ -112,23 +111,35 @@ public class MainMenuUI extends javax.swing.JFrame {
         facultyMembersLabel.setText("Faculty Members");
 
         titleField.setEnabled(false);
-        titleField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                titleFieldPropertyChange(evt);
+        titleField.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                titleFieldDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                titleFieldDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                titleFieldDocumentUpdated(evt);
             }
         });
 
         keywordField.setEnabled(false);
-        keywordField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                keywordFieldPropertyChange(evt);
+        keywordField.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                keywordFieldDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                keywordFieldDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                keywordFieldDocumentUpdated(evt);
             }
         });
 
         facultyNameComboBox.setEnabled(false);
-        facultyNameComboBox.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                facultyNameComboBoxPropertyChange(evt);
+        facultyNameComboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                facultyNameComboBoxSelected(evt);
             }
         });
 
@@ -342,6 +353,9 @@ public class MainMenuUI extends javax.swing.JFrame {
 			this.titleField.setEnabled(false);
 		}
 		this.keywordField.setEnabled(true);
+		if (this.keywordField.getDocument().getLength() == 0 && this.searchButton.isEnabled()) {
+			this.searchButton.setEnabled(false);
+		}
     }//GEN-LAST:event_keywordRadioButtonActionPerformed
 
     private void facultyNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyNameRadioButtonActionPerformed
@@ -352,6 +366,9 @@ public class MainMenuUI extends javax.swing.JFrame {
 			this.keywordField.setEnabled(false);
 		}
 		this.facultyNameComboBox.setEnabled(true);
+		if (this.facultyNameComboBox.getSelectedIndex() == 0 && this.searchButton.isEnabled()) {
+			this.searchButton.setEnabled(false);
+		}
     }//GEN-LAST:event_facultyNameRadioButtonActionPerformed
 
     private void titleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleRadioButtonActionPerformed
@@ -362,47 +379,54 @@ public class MainMenuUI extends javax.swing.JFrame {
 			this.keywordField.setEnabled(false);
 		}
 		this.titleField.setEnabled(true);
+		if (this.titleField.getDocument().getLength() == 0 && this.searchButton.isEnabled()) {
+			this.searchButton.setEnabled(false);
+		}
     }//GEN-LAST:event_titleRadioButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
+        String username = this.userNameField.getText();
+		String password = this.passwordField.getPassword().toString();
+		if (username.length() > 0 && password.length() > 0) {
+			//if (BLFaculty.login(username,password)) { //TRY-CATCH THIS
+				FacultyEdit.main(null);
+			//}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Please enter username and password.");
+		}
     }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
-    private void titleFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_titleFieldPropertyChange
-        Object source = evt.getSource();
-		if (!((JTextField)source).getText().isEmpty()) {
-			System.out.println("SEARCH TITLE ENTERED");
+	private void titleFieldDocumentUpdated(DocumentEvent evt) {
+		Document titleFieldDocument = (Document)evt.getDocument();
+		if (titleFieldDocument.getLength() > 0) {
 			this.searchButton.setEnabled(true);
 		}
 		else {
 			this.searchButton.setEnabled(false);
 		}
-    }//GEN-LAST:event_titleFieldPropertyChange
-
-    private void facultyNameComboBoxPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_facultyNameComboBoxPropertyChange
-		Object source = evt.getSource();
-		if (((JComboBox)source).getSelectedIndex() > 0) {
+	}
+	
+	private void facultyNameComboBoxSelected(ActionEvent evt) {
+		JComboBox cb = (JComboBox)evt.getSource();
+		if (cb.getSelectedIndex() > 0) {
 			this.searchButton.setEnabled(true);
 		}
 		else {
 			this.searchButton.setEnabled(false);
 		}
-    }//GEN-LAST:event_facultyNameComboBoxPropertyChange
-
-    private void keywordFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_keywordFieldPropertyChange
-        Object source = evt.getSource();
-		if (!((JTextField)source).getText().isEmpty()) {
+	}
+	
+	private void keywordFieldDocumentUpdated(DocumentEvent evt) {
+		Document keywordFieldDocument = (Document)evt.getDocument();
+		if (keywordFieldDocument.getLength() > 0) {
 			this.searchButton.setEnabled(true);
 		}
 		else {
 			this.searchButton.setEnabled(false);
 		}
-    }//GEN-LAST:event_keywordFieldPropertyChange
-
+	}
+	
 	/**
 	 * @param args the command line arguments
 	 */

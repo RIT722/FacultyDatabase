@@ -154,9 +154,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="passwordField">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordFieldActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="passwordLabel">
           <Properties>
@@ -181,30 +178,21 @@
         </Component>
         <Component class="javax.swing.JTextField" name="titleField">
           <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false" postCode="titleField.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        titleFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        titleFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        titleFieldDocumentUpdated(evt);&#xa;    }&#xa;});"/>
           </Properties>
-          <Events>
-            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="titleFieldPropertyChange"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="keywordField">
           <Properties>
-            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false" postCode="keywordField.getDocument().addDocumentListener(new DocumentListener() {&#xa;&#x9;public void insertUpdate(DocumentEvent evt) {&#xa;        keywordFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        keywordFieldDocumentUpdated(evt);&#xa;    }&#xa;&#x9;public void changedUpdate(DocumentEvent evt) {&#xa;&#x9;&#x9;keywordFieldDocumentUpdated(evt);&#xa;&#x9;}&#xa;});"/>
           </Properties>
-          <Events>
-            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="keywordFieldPropertyChange"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="facultyNameComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false" postCode="facultyNameComboBox.addActionListener(new ActionListener() {&#xa;    public void actionPerformed(ActionEvent evt) {&#xa;&#x9;facultyNameComboBoxSelected(evt);&#xa;    }&#xa;});"/>
           </Properties>
-          <Events>
-            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="facultyNameComboBoxPropertyChange"/>
-          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox(profNames)"/>
             <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {&#xa;    this.profs = BLFaculty.profList();&#xa;}&#xa;catch(DLException e){&#xa;    //blah&#xa;}&#xa;String[] profNames = new String[this.profs.size()+1];&#xa;profNames[0] = &quot;&quot;;  //should be a blank option first&#xa;for (int i=1;i&lt;profNames.length;i++) {&#xa;    profNames[i] = this.profs.get(i-1).get(1);&#xa;}"/>
