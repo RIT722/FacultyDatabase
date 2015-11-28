@@ -8,14 +8,30 @@
  *
  * @author katie
  */
+import java.util.*;
 public class FacultyEdit extends javax.swing.JFrame {
 
     /**
      * Creates new form FacultyEdit
      */
-    public FacultyEdit() {
+    String facultyName;
+    BLFaculty faculty;
+    String studentName;
+    String helpText;
+    
+    public FacultyEdit(int facultyID) {
+        faculty = new BLFaculty(facultyID);
+        try{
+            faculty.fetch();
+        }
+        catch(DLException e){
+            
+        }
+        facultyName = faculty.getFN() + " " + faculty.getLN();
         initComponents();
+        
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,37 +44,51 @@ public class FacultyEdit extends javax.swing.JFrame {
 
         facultyEditPanel = new javax.swing.JPanel();
         profNameLabel = new javax.swing.JLabel();
-        facultyPapersList = new javax.swing.JComboBox();
+        ArrayList<ArrayList<String>> papers = new ArrayList();
+        try {
+            papers = faculty.getPapersByFacultyID();
+        }
+        catch(DLException e){
+            //blah
+        }
+        String[] paperList = new String[papers.size()+2];
+        paperList[0] = "";  //should be a blank option first
+        paperList[1] = "Add New Paper"; //Add option for new paper to combo box list
+        for(int i = 0; i < papers.size(); i++)
+        {
+            paperList[i+2] = (papers.get(i).get(1)).substring(0, 20) + "...";
+        }
+        facultyPapersList = new javax.swing.JComboBox(paperList);
         paperInfoPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         abstractLabel = new javax.swing.JLabel();
         citationLabel = new javax.swing.JLabel();
         keywordLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        keywordInstructions = new javax.swing.JLabel();
         titleTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         abstractTextArea = new javax.swing.JTextArea();
         citationTextField = new javax.swing.JTextField();
         keywordsTextField = new javax.swing.JTextField();
         editButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        deletePaperButton = new javax.swing.JButton();
         addNewPaperButton = new javax.swing.JButton();
         saveChangesButton = new javax.swing.JButton();
         returnToSearchButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        studentNameTextBox = new javax.swing.JTextField();
+        addStudentButton = new javax.swing.JButton();
+        studentNameTextBox = new javax.swing.JTextField(20);
         needStudentLabel = new javax.swing.JLabel();
         needStudentTextBox = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         facultyEditPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Edit Faculty Information"));
         facultyEditPanel.setPreferredSize(new java.awt.Dimension(612, 489));
 
-        profNameLabel.setText("Professor Name");
+        profNameLabel.setText(facultyName);
 
-        facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList));
         facultyPapersList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 facultyPapersListActionPerformed(evt);
@@ -75,7 +105,7 @@ public class FacultyEdit extends javax.swing.JFrame {
 
         keywordLabel.setText("Keywords");
 
-        jLabel1.setText("(Separate with commas)");
+        keywordInstructions.setText("(Separate with commas)");
 
         titleTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +137,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
                     .addGroup(paperInfoPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(keywordInstructions)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(paperInfoPanelLayout.createSequentialGroup()
                         .addComponent(keywordLabel)
@@ -135,16 +165,16 @@ public class FacultyEdit extends javax.swing.JFrame {
                     .addComponent(keywordLabel)
                     .addComponent(keywordsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(keywordInstructions)
                 .addGap(24, 24, 24))
         );
 
         editButton.setText("Edit Paper");
 
-        jButton1.setText("Delete Paper");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        deletePaperButton.setText("Delete Paper");
+        deletePaperButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                deletePaperButtonActionPerformed(evt);
             }
         });
 
@@ -164,7 +194,12 @@ public class FacultyEdit extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Add Student");
+        addStudentButton.setText("Add Student");
+        addStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStudentButtonActionPerformed(evt);
+            }
+        });
 
         studentNameTextBox.setText("<student name>");
         studentNameTextBox.addActionListener(new java.awt.event.ActionListener() {
@@ -176,8 +211,18 @@ public class FacultyEdit extends javax.swing.JFrame {
         needStudentLabel.setText("Student Researcher Text");
 
         needStudentTextBox.setText("Looking for a student experienced in Java and C#");
+        needStudentTextBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                needStudentTextBoxActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Update");
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout facultyEditPanelLayout = new javax.swing.GroupLayout(facultyEditPanel);
         facultyEditPanel.setLayout(facultyEditPanelLayout);
@@ -191,22 +236,20 @@ public class FacultyEdit extends javax.swing.JFrame {
                             .addGroup(facultyEditPanelLayout.createSequentialGroup()
                                 .addComponent(editButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
+                                .addComponent(deletePaperButton))
                             .addComponent(facultyPapersList, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(facultyEditPanelLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
                                 .addComponent(needStudentLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3))
-                            .addComponent(needStudentTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, facultyEditPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(studentNameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
+                                .addComponent(updateButton))
+                            .addComponent(needStudentTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(facultyEditPanelLayout.createSequentialGroup()
+                                .addComponent(studentNameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(addStudentButton))))
                     .addGroup(facultyEditPanelLayout.createSequentialGroup()
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(paperInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,32 +273,28 @@ public class FacultyEdit extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(editButton)
-                            .addComponent(jButton1)))
+                            .addComponent(deletePaperButton)))
                     .addGroup(facultyEditPanelLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(19, 19, 19)
                         .addComponent(profNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(studentNameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(studentNameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addStudentButton))
                         .addGap(18, 18, 18)
                         .addComponent(needStudentTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(needStudentLabel)
-                            .addComponent(jButton3))))
+                            .addComponent(updateButton))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paperInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(facultyEditPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(addNewPaperButton)
-                            .addComponent(saveChangesButton)))
-                    .addGroup(facultyEditPanelLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(returnToSearchButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addNewPaperButton)
+                    .addComponent(saveChangesButton)
+                    .addComponent(returnToSearchButton))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,9 +319,9 @@ public class FacultyEdit extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_facultyPapersListActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void deletePaperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePaperButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_deletePaperButtonActionPerformed
 
     private void titleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleTextFieldActionPerformed
         // TODO add your handling code here:
@@ -297,8 +336,32 @@ public class FacultyEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_returnToSearchButtonActionPerformed
 
     private void studentNameTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentNameTextBoxActionPerformed
-        // TODO add your handling code here:
+        //get value of text box
+        studentName = studentNameTextBox.getText();
+
     }//GEN-LAST:event_studentNameTextBoxActionPerformed
+
+    private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
+        try{
+            faculty.addStudent(studentName);
+        }
+        catch(DLException e){
+            //
+        }
+    }//GEN-LAST:event_addStudentButtonActionPerformed
+
+    private void needStudentTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_needStudentTextBoxActionPerformed
+        helpText = needStudentTextBox.getText();
+    }//GEN-LAST:event_needStudentTextBoxActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        try{
+            faculty.needHelp(helpText);
+        }
+        catch(DLException e){
+            //
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,7 +393,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FacultyEdit().setVisible(true);
+                new FacultyEdit(1).setVisible(true);
             }
         });
     }
@@ -339,16 +402,15 @@ public class FacultyEdit extends javax.swing.JFrame {
     private javax.swing.JLabel abstractLabel;
     private javax.swing.JTextArea abstractTextArea;
     private javax.swing.JButton addNewPaperButton;
+    private javax.swing.JButton addStudentButton;
     private javax.swing.JLabel citationLabel;
     private javax.swing.JTextField citationTextField;
+    private javax.swing.JButton deletePaperButton;
     private javax.swing.JButton editButton;
     private javax.swing.JPanel facultyEditPanel;
     private javax.swing.JComboBox facultyPapersList;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel keywordInstructions;
     private javax.swing.JLabel keywordLabel;
     private javax.swing.JTextField keywordsTextField;
     private javax.swing.JLabel needStudentLabel;
@@ -360,5 +422,6 @@ public class FacultyEdit extends javax.swing.JFrame {
     private javax.swing.JTextField studentNameTextBox;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JTextField titleTextField;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }
