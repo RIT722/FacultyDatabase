@@ -46,6 +46,9 @@
           </Border>
         </Property>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Main Menu"/>
+      </AccessibilityProperties>
 
       <Layout>
         <DimensionLayout dim="0">
