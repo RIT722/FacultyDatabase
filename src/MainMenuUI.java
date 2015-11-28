@@ -309,8 +309,7 @@ public class MainMenuUI extends javax.swing.JFrame {
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         if (this.titleField.isEnabled() && !this.titleField.getText().isEmpty()){
 			System.out.println("DIAGNOSTIC: TITLE SEARCH");
-			/*
-			try {
+			/* FAHAD DID THIS, HAS NOT PUSHED YET
 				BLPaper.searchByTitle(this.titleField.getName());
 			}
 			catch(DLException e) {
@@ -320,7 +319,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
 		else if (this.facultyNameComboBox.isEnabled() && this.facultyNameComboBox.getSelectedIndex() > 0) {
 			System.out.println("DIAGNOSTIC: FACULTY NAME SEARCH");
-			/*
+			/* NEED TO CALL NAZAR'S WINDOW
 			try {
 				//searchByFacultyName()
 			}
@@ -330,7 +329,8 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
 		else if (this.keywordField.isEnabled() && !this.keywordField.getText().isEmpty()) {
 			System.out.println("DIAGNOSTIC: KEYWORD SEARCH");
-			/*ArrayList<ArrayList<String>> results = null;
+			/* FAHAD DID THIS, HAS NOT PUSHED YET
+			ArrayList<ArrayList<String>> results = null;
 			try {
 				results = BLPaper.searchByKeywords(this.keywordField.getText());
 			}

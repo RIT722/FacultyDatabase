@@ -478,20 +478,14 @@ public class FacultyEdit extends javax.swing.JFrame {
 		catch (BadLocationException e) {}
 	}
 	
-		private void studentNameTextBoxDocumentUpdated(DocumentEvent evt) {
-			Document studentNameTextBoxDocument = (Document)evt.getDocument();
-			if (studentNameTextBoxDocument.getLength() > 0) {
-				this.addStudentButton.setEnabled(true);
-			}
-			else {
-				this.addStudentButton.setEnabled(false);
-			}
-			int studentNameLength = studentNameTextBoxDocument.getLength();
-			try {
-				studentName = studentNameTextBoxDocument.getText(0, studentNameLength);
-			}
-			catch (BadLocationException e) {}
+	private void needStudentTextBoxDocumentUpdated(DocumentEvent evt) {
+		Document needStudentTextBoxDocument = (Document)evt.getDocument();
+		int needStudentLength = needStudentTextBoxDocument.getLength();
+		try {
+			studentName = needStudentTextBoxDocument.getText(0, needStudentLength);
 		}
+		catch (BadLocationException e) {}
+	}
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel abstractLabel;
