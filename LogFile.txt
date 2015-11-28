@@ -1,0 +1,62 @@
+Sat Nov 28 11:55:34 EST 2015 java.lang.NullPointerException 
+Unix time: 1448729734
+Error in getData() of MySQLDatabase
+SQL = SELECT * FROM Faculty WHERE ID = ?;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.prepare(MySQLDatabase.java:172)
+	at MySQLDatabase.getData(MySQLDatabase.java:116)
+	at DLFaculty.fetch(DLFaculty.java:51)
+	at facultyInforUI.<init>(facultyInforUI.java:30)
+	at facultyInforUI$1.run(facultyInforUI.java:322)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:756)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:726)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+Sat Nov 28 11:55:34 EST 2015 java.lang.NullPointerException 
+Unix time: 1448729734
+Error in getData() of MySQLDatabase
+SQL = SELECT * FROM Faculty WHERE ID = ?;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.prepare(MySQLDatabase.java:172)
+	at MySQLDatabase.getData(MySQLDatabase.java:116)
+	at DLFaculty.fetch(DLFaculty.java:51)
+	at facultyInforUI.initComponents(facultyInforUI.java:54)
+	at facultyInforUI.<init>(facultyInforUI.java:34)
+	at facultyInforUI$1.run(facultyInforUI.java:322)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:756)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:726)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+Sat Nov 28 12:11:24 EST 2015 java.lang.IndexOutOfBoundsException: Index: 0, Size: 0 
+Unix time: 1448730684
+SQL string = SELECT * FROM papers WHERE ID = ?;
+Error in fetch() of Faculty
+Stack Trace: java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:653)
+	at java.util.ArrayList.get(ArrayList.java:429)
+	at DLPaper.fetch(DLPaper.java:43)
+	at MainTest.initCom(MainTest.java:88)
+	at MainTest.main(MainTest.java:107)
+
