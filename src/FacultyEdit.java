@@ -9,6 +9,9 @@
  * @author katie
  */
 import java.util.*;
+import javax.swing.JOptionPane;
+import javax.swing.event.*;
+import javax.swing.text.*;
 public class FacultyEdit extends javax.swing.JFrame {
 
     /**
@@ -246,6 +249,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         });
 
         addStudentButton.setText("Add Student");
+        addStudentButton.setEnabled(false);
         addStudentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addStudentButtonActionPerformed(evt);
@@ -253,9 +257,21 @@ public class FacultyEdit extends javax.swing.JFrame {
         });
 
         studentNameTextBox.setText("<student name>");
-        studentNameTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                studentNameTextBoxActionPerformed(evt);
+        studentNameTextBox.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                studentNameTextBoxDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                studentNameTextBoxDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                studentNameTextBoxDocumentUpdated(evt);
+            }
+        });
+        studentNameTextBox.setRequestFocusEnabled(false);
+        studentNameTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                studentNameTextBoxFocusGained(evt);
             }
         });
 
@@ -263,9 +279,15 @@ public class FacultyEdit extends javax.swing.JFrame {
 
         needStudentTextBox.setText("Looking for a student experienced in Java and C#");
         needStudentTextBox.setCaretPosition(0);
-        needStudentTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                needStudentTextBoxActionPerformed(evt);
+        needStudentTextBox.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                needStudentTextBoxDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                needStudentTextBoxDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                needStudentTextBoxDocumentUpdated(evt);
             }
         });
 
@@ -292,7 +314,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                                 .addComponent(deletePaperButton))
                             .addComponent(profNameLabel)
                             .addComponent(facultyPapersList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(facultyEditPanelLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -333,18 +355,17 @@ public class FacultyEdit extends javax.swing.JFrame {
                             .addComponent(addStudentButton))
                         .addGap(18, 18, 18)
                         .addComponent(needStudentTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(needStudentLabel)
                             .addComponent(updateButton))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paperInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addNewPaperButton)
                     .addComponent(saveChangesButton)
                     .addComponent(returnToSearchButton))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -408,24 +429,16 @@ public class FacultyEdit extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_returnToSearchButtonActionPerformed
 
-    private void studentNameTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentNameTextBoxActionPerformed
-        //get value of text box
-        studentName = studentNameTextBox.getText();
-
-    }//GEN-LAST:event_studentNameTextBoxActionPerformed
-
     private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
         try{
             faculty.addStudent(studentName);
         }
         catch(DLException e){
-            //
+            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
         }
+		JOptionPane.showMessageDialog(null, "Student added.");
+		studentNameTextBox.setText("");
     }//GEN-LAST:event_addStudentButtonActionPerformed
-
-    private void needStudentTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_needStudentTextBoxActionPerformed
-        helpText = needStudentTextBox.getText();
-    }//GEN-LAST:event_needStudentTextBoxActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         try{
@@ -443,41 +456,43 @@ public class FacultyEdit extends javax.swing.JFrame {
         keywordsTextField.setEditable(true);
     }//GEN-LAST:event_editButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FacultyEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FacultyEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FacultyEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FacultyEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void studentNameTextBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studentNameTextBoxFocusGained
+        javax.swing.JTextField tf = (javax.swing.JTextField)evt.getSource();
+		if (tf.getText().equals("<student name>")) {
+			studentNameTextBox.setText("");
+		}
+    }//GEN-LAST:event_studentNameTextBoxFocusGained
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FacultyEdit(1).setVisible(true);
-            }
-        });
-    }
-
+	private void studentNameTextBoxDocumentUpdated(DocumentEvent evt) {
+		Document studentNameTextBoxDocument = (Document)evt.getDocument();
+		if (studentNameTextBoxDocument.getLength() > 0) {
+			this.addStudentButton.setEnabled(true);
+		}
+		else {
+			this.addStudentButton.setEnabled(false);
+		}
+		int studentNameLength = studentNameTextBoxDocument.getLength();
+		try {
+			studentName = studentNameTextBoxDocument.getText(0, studentNameLength);
+		}
+		catch (BadLocationException e) {}
+	}
+	
+		private void studentNameTextBoxDocumentUpdated(DocumentEvent evt) {
+			Document studentNameTextBoxDocument = (Document)evt.getDocument();
+			if (studentNameTextBoxDocument.getLength() > 0) {
+				this.addStudentButton.setEnabled(true);
+			}
+			else {
+				this.addStudentButton.setEnabled(false);
+			}
+			int studentNameLength = studentNameTextBoxDocument.getLength();
+			try {
+				studentName = studentNameTextBoxDocument.getText(0, studentNameLength);
+			}
+			catch (BadLocationException e) {}
+		}
+	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel abstractLabel;
     private javax.swing.JTextArea abstractTextArea;

@@ -389,8 +389,9 @@ public class MainMenuUI extends javax.swing.JFrame {
 		String password = this.passwordField.getPassword().toString();
 		if (username.length() > 0 && password.length() > 0) {
 			//if (BLFaculty.login(username,password)) { //TRY-CATCH THIS
-				FacultyEdit.main(null);
+				//FacultyEdit.main(null); //instantiate, pass faculty_id
 			//}
+			new FacultyEdit(1).setVisible(true);
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Please enter username and password.");
