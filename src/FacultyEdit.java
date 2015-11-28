@@ -277,7 +277,6 @@ public class FacultyEdit extends javax.swing.JFrame {
 
         needStudentLabel.setText("Student Researcher Text");
 
-        needStudentTextBox.setText("Looking for a student experienced in Java and C#");
         needStudentTextBox.setCaretPosition(0);
         needStudentTextBox.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent evt) {
@@ -478,20 +477,14 @@ public class FacultyEdit extends javax.swing.JFrame {
 		catch (BadLocationException e) {}
 	}
 	
-		private void studentNameTextBoxDocumentUpdated(DocumentEvent evt) {
-			Document studentNameTextBoxDocument = (Document)evt.getDocument();
-			if (studentNameTextBoxDocument.getLength() > 0) {
-				this.addStudentButton.setEnabled(true);
-			}
-			else {
-				this.addStudentButton.setEnabled(false);
-			}
-			int studentNameLength = studentNameTextBoxDocument.getLength();
-			try {
-				studentName = studentNameTextBoxDocument.getText(0, studentNameLength);
-			}
-			catch (BadLocationException e) {}
+	private void needStudentTextBoxDocumentUpdated(DocumentEvent evt) {
+		Document needStudentTextBoxDocument = (Document)evt.getDocument();
+		int needHelpLength = needStudentTextBoxDocument.getLength();
+		try {
+			helpText = needStudentTextBoxDocument.getText(0, needHelpLength);
 		}
+		catch (BadLocationException e) {}
+	}
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel abstractLabel;

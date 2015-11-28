@@ -421,9 +421,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="needStudentTextBox">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Looking for a student experienced in Java and C#"/>
-          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="needStudentTextBox.setCaretPosition(0);&#xa;needStudentTextBox.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        needStudentTextBoxDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        needStudentTextBoxDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        needStudentTextBoxDocumentUpdated(evt);&#xa;    }&#xa;});"/>
           </AuxValues>
