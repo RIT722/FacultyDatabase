@@ -438,10 +438,13 @@ public class FacultyEdit extends javax.swing.JFrame {
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         try{
             faculty.needHelp(helpText);
+            
         }
         catch(DLException e){
-            //
+            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
         }
+        JOptionPane.showMessageDialog(null, "Help Statement Changed");
+
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
@@ -470,7 +473,7 @@ public class FacultyEdit extends javax.swing.JFrame {
 		Document needStudentTextBoxDocument = (Document)evt.getDocument();
 		int needStudentLength = needStudentTextBoxDocument.getLength();
 		try {
-			studentName = needStudentTextBoxDocument.getText(0, needStudentLength);
+			helpText = needStudentTextBoxDocument.getText(0, needStudentLength);
 		}
 		catch (BadLocationException e) {}
 	}
