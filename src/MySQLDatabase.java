@@ -37,7 +37,7 @@ public class MySQLDatabase { //Database connector class
         }
         
         try{
-            conn = DriverManager.getConnection(url, userName, "root12345");
+            conn = DriverManager.getConnection(url, userName, password);
             connection = true;
         }
         catch(SQLException e){
