@@ -1,9 +1,8 @@
 
 
-import java.io.IOException;
+import java.lang.*;
 import java.sql.*;
 import java.util.*;
-import java.lang.*;
 
 public class MySQLDatabase { //Database connector class
     private static final MySQLDatabase INSTANCE = new MySQLDatabase();
@@ -38,7 +37,7 @@ public class MySQLDatabase { //Database connector class
         }
         
         try{
-            conn = DriverManager.getConnection(url, userName, password);
+            conn = DriverManager.getConnection(url, userName, "root12345");
             connection = true;
         }
         catch(SQLException e){

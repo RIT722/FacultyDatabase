@@ -27,14 +27,6 @@ public class DLPaper {
         return title;
     }
     
-    public String getAbstract(){
-        return pAbstract;
-    }
-    
-    public String getCitation(){
-        return citation;
-    }
-    
     public void SetPaperId(int _ID) {
           ID = _ID;
     }
