@@ -172,6 +172,23 @@ public class DLFaculty {
     // 
     }*/
     
+    //temporary placeholder method
+    public ArrayList<ArrayList<String>> getPapersByFacultyID() throws DLException{
+        ArrayList<ArrayList<String>> papers = new ArrayList();
+        MySQLDatabase msd = MySQLDatabase.getInstance();        
+        try{
+            ArrayList values = new ArrayList();
+            values.add(ID);
+
+            papers = msd.getData("SELECT papers.id, title FROM (faculty JOIN authorship ON faculty.id = facultyID) JOIN papers ON paperID = papers.ID WHERE faculty.Id = ?;", values);
+        }
+        catch(RuntimeException e){
+            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in needHelp() of Faculty");
+        }
+        return papers;
+    }
+    
+    
     public void getAllStudentNames() throws DLException {
 	   
 	   String query = "select student.name from student"+
