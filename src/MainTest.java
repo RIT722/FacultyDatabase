@@ -82,7 +82,7 @@ public class MainTest {
             System.out.println("This is the Student(s) Name depends on the facultyID \n"+i+" "+profStudentNames[i]);
             
         }  
-          int paperID =2;  
+          int paperID =1;  
        BLPaper myPaper = new BLPaper(paperID);
          try {
              myPaper.fetch();
