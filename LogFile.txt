@@ -1,0 +1,51 @@
+Sat Nov 28 13:41:37 EST 2015 java.lang.NullPointerException 
+Unix time: 1448736097
+Error in getData() of MySQLDatabase
+SQL = SELECT * FROM Faculty WHERE ID = ?;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.prepare(MySQLDatabase.java:172)
+	at MySQLDatabase.getData(MySQLDatabase.java:116)
+	at DLFaculty.fetch(DLFaculty.java:51)
+	at facultyInforUI.<init>(facultyInforUI.java:30)
+	at facultyInforUI$1.run(facultyInforUI.java:324)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:756)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:726)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
+Sat Nov 28 13:41:37 EST 2015 java.lang.NullPointerException 
+Unix time: 1448736097
+Error in getData() of MySQLDatabase
+SQL = SELECT * FROM Faculty WHERE ID = ?;
+Stack Trace: java.lang.NullPointerException
+	at MySQLDatabase.prepare(MySQLDatabase.java:172)
+	at MySQLDatabase.getData(MySQLDatabase.java:116)
+	at DLFaculty.fetch(DLFaculty.java:51)
+	at facultyInforUI.initComponents(facultyInforUI.java:56)
+	at facultyInforUI.<init>(facultyInforUI.java:34)
+	at facultyInforUI$1.run(facultyInforUI.java:324)
+	at java.awt.event.InvocationEvent.dispatch(InvocationEvent.java:311)
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:756)
+	at java.awt.EventQueue.access$500(EventQueue.java:97)
+	at java.awt.EventQueue$3.run(EventQueue.java:709)
+	at java.awt.EventQueue$3.run(EventQueue.java:703)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:76)
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:726)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:201)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93)
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82)
+
