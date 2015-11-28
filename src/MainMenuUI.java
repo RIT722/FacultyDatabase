@@ -385,12 +385,18 @@ public class MainMenuUI extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = this.userNameField.getText();
-		String password = this.passwordField.getPassword().toString();
+		String password = new String(this.passwordField.getPassword());
 		if (username.length() > 0 && password.length() > 0) {
-			//if (BLFaculty.login(username,password)) { //TRY-CATCH THIS
-				//FacultyEdit.main(null); //instantiate, pass faculty_id
-			//}
-			new FacultyEdit(1).setVisible(true);
+			int facultyId;
+			try {
+				facultyId = BLFaculty.login(username,password);
+				new FacultyEdit(facultyId).setVisible(true);
+			}
+			catch (DLException e) {
+				JOptionPane.showMessageDialog(null, "Invalid login credentials.");
+				this.userNameField.setText("");
+				this.passwordField.setText("");
+			}
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "Please enter username and password.");
