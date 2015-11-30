@@ -143,13 +143,20 @@ public class DLFaculty {
     public void needHelp(String help) throws DLException{
          MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{
-            if(help.equals(""))
-                help = null;
-            ArrayList values = new ArrayList();
-            values.add(help);
-            values.add(ID);
+            if(help.isEmpty())
+            {
+                ArrayList nullValues = new ArrayList();
+                nullValues.add(ID);
+                msd.setData("UPDATE Faculty SET askHelp = NULL WHERE id = ?;", nullValues);
+            }
+            else
+            {
+                ArrayList values = new ArrayList();
+                values.add(help);
+                values.add(ID);
 
-            msd.setData("UPDATE Faculty SET askHelp = ? WHERE id = ?;", values);
+                msd.setData("UPDATE Faculty SET askHelp = ? WHERE id = ?;", values);
+            }
         }
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in needHelp() of Faculty");
