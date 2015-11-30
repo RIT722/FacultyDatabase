@@ -115,27 +115,28 @@ public class DLPaper {
     
     
     //Adds a paper to the papers table, adds keywords to paper_keywords table
-    public void addPaper(String keywords, int facID) throws DLException{
+    public int addPaper(String newtitle, String newpAbstract, String newcitation, String keywords, int facID) throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{
             ArrayList values = new ArrayList();
-            values.add(ID);
-            values.add(title);
-            values.add(pAbstract);
-            values.add(citation);
+            values.add(newtitle);
+            values.add(newpAbstract);
+            values.add(newcitation);
+            
+            msd.startTrans();
+            msd.setData("INSERT INTO papers(title, abstract, citation) VALUES(?, ?, ?);", values);
+            ArrayList<ArrayList<String>> rs = msd.getData("SELECT LAST_INSERT_ID()");
+            ID = Integer.parseInt(rs.get(0).get(0));
             
             ArrayList authorship = new ArrayList();
             authorship.add(facID);
             authorship.add(ID);
+            msd.setData("INSERT INTO authorship(facultyID, paperID) VALUES(?, ?)", authorship);
             
             ArrayList keywordList = new ArrayList();          
             String[] temp = keywords.split(",");
             keywordList.add(ID);
             keywordList.add(temp[0]);
-            
-            msd.startTrans();
-            msd.setData("INSERT INTO papers(id, title, abstract, citation) VALUES(?, ?, ?, ?);", values);
-            msd.setData("INSERT INTO authorship(facultyID, paperID) VALUES(?, ?)", authorship);
             for(int i = 0; i < temp.length; i++){
                 keywordList.set(1, temp[i]);
                 msd.setData("INSERT INTO paper_keywords VALUES(?, ?);", keywordList);
@@ -145,7 +146,7 @@ public class DLPaper {
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in addPaper() of Papers");
         }
-    
+        return ID;
     }
     
     

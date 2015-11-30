@@ -26,10 +26,16 @@ public class FacultyEdit extends javax.swing.JFrame {
     String title;
     String pAbstract;
     String citation;
-    String keywords;     
+    String keywords;
+    String titleText;
+    String abstractText;
+    String citationText;
+    String keywordsText;
+    int facID;
     
     public FacultyEdit(int facultyID) {
         faculty = new BLFaculty(facultyID);
+        facID = facultyID;
         try{
             faculty.fetch();
         }
@@ -143,6 +149,17 @@ public class FacultyEdit extends javax.swing.JFrame {
         abstractTextArea.setLineWrap(true);
         abstractTextArea.setRows(5);
         jScrollPane1.setViewportView(abstractTextArea);
+        abstractTextArea.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                abstractTextAreaDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                abstractTextAreaDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                abstractTextAreaDocumentUpdated(evt);
+            }
+        });
 
         keywordsTextField.setEditable(false);
 
@@ -151,12 +168,34 @@ public class FacultyEdit extends javax.swing.JFrame {
         citationTextArea.setLineWrap(true);
         citationTextArea.setRows(5);
         jScrollPane2.setViewportView(citationTextArea);
+        citationTextArea.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                citationTextAreaDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                citationTextAreaDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                citationTextAreaDocumentUpdated(evt);
+            }
+        });
 
         titleTextArea.setEditable(false);
         titleTextArea.setColumns(20);
         titleTextArea.setLineWrap(true);
         titleTextArea.setRows(5);
         jScrollPane3.setViewportView(titleTextArea);
+        titleTextArea.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                titleTextAreaDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                titleTextAreaDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                titleTextAreaDocumentUpdated(evt);
+            }
+        });
 
         javax.swing.GroupLayout paperInfoPanelLayout = new javax.swing.GroupLayout(paperInfoPanel);
         paperInfoPanel.setLayout(paperInfoPanelLayout);
@@ -219,6 +258,18 @@ public class FacultyEdit extends javax.swing.JFrame {
                 .addGap(102, 102, 102))
         );
 
+        keywordsTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent evt) {
+                keywordsTextFieldDocumentUpdated(evt);
+            }
+            public void removeUpdate(DocumentEvent evt) {
+                keywordsTextFieldDocumentUpdated(evt);
+            }
+            public void changedUpdate(DocumentEvent evt) {
+                keywordsTextFieldDocumentUpdated(evt);
+            }
+        });
+
         editButton.setText("Edit Paper");
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,6 +285,11 @@ public class FacultyEdit extends javax.swing.JFrame {
         });
 
         addNewPaperButton.setText("Add New Paper");
+        addNewPaperButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewPaperButtonActionPerformed(evt);
+            }
+        });
 
         saveChangesButton.setText("Save Changes");
         saveChangesButton.addActionListener(new java.awt.event.ActionListener() {
@@ -385,35 +441,66 @@ public class FacultyEdit extends javax.swing.JFrame {
 
     private void facultyPapersListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyPapersListActionPerformed
         int titleListIdx = facultyPapersList.getSelectedIndex();
-        int paperId = paperIDs[titleListIdx-2];
-        displayPaper = new BLPaper(paperId);
-        try{
-            displayPaper.fetch();
+        if(titleListIdx == 1){
+            titleTextArea.setText("");
+            abstractTextArea.setText("");
+            citationTextArea.setText("");
+            keywordsTextField.setText("");
+            titleTextArea.setEditable(true);
+            abstractTextArea.setEditable(true);
+            citationTextArea.setEditable(true);
+            keywordsTextField.setEditable(true);
         }
-        catch(DLException e){
-            
+        else
+        {
+            int paperId = paperIDs[titleListIdx-2];
+            displayPaper = new BLPaper(paperId);
+            try{
+                displayPaper.fetch();
+            }
+            catch(DLException e){
+
+            }
+            titleTextArea.setEditable(false);
+            abstractTextArea.setEditable(false);
+            citationTextArea.setEditable(false);
+            keywordsTextField.setEditable(false);
+            title = displayPaper.getTitle();
+            pAbstract = displayPaper.getAbstract();
+            citation = displayPaper.getCitation();
+            try{
+                keywords = displayPaper.getPaperKeywords();
+            }
+            catch(DLException e){
+
+            }
+            titleTextArea.setText(title);
+            titleTextArea.setCaretPosition(0);
+            abstractTextArea.setText(pAbstract);
+            abstractTextArea.setCaretPosition(0);
+            citationTextArea.setText(citation);
+            citationTextArea.setCaretPosition(0);
+            keywordsTextField.setText(keywords);
+            keywordsTextField.setCaretPosition(0);
         }
-        title = displayPaper.getTitle();
-        pAbstract = displayPaper.getAbstract();
-        citation = displayPaper.getCitation();
-        try{
-            keywords = displayPaper.getPaperKeywords();
-        }
-        catch(DLException e){
-            
-        }
-        titleTextArea.setText(title);
-        titleTextArea.setCaretPosition(0);
-        abstractTextArea.setText(pAbstract);
-        abstractTextArea.setCaretPosition(0);
-        citationTextArea.setText(citation);
-        citationTextArea.setCaretPosition(0);
-        keywordsTextField.setText(keywords);
-        keywordsTextField.setCaretPosition(0);
     }//GEN-LAST:event_facultyPapersListActionPerformed
 
     private void deletePaperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePaperButtonActionPerformed
-        // TODO add your handling code here:
+        int titleListIdx = facultyPapersList.getSelectedIndex();
+        int paperID = paperIDs[titleListIdx-2];
+        BLPaper delPaper = new BLPaper(paperID);
+        Object[] options = { "OK", "CANCEL" };
+        int question = JOptionPane.showOptionDialog(null, "Click OK to delete paper", "Warning",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        if(question == JOptionPane.YES_OPTION)
+        {
+            try{
+                delPaper.deletePaper();
+                JOptionPane.showMessageDialog(null, "Paper Deleted");
+               }
+            catch(DLException e){
+                JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+            }
+        }
     }//GEN-LAST:event_deletePaperButtonActionPerformed
 
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed
@@ -454,6 +541,28 @@ public class FacultyEdit extends javax.swing.JFrame {
         keywordsTextField.setEditable(true);
     }//GEN-LAST:event_editButtonActionPerformed
 
+    private void addNewPaperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewPaperButtonActionPerformed
+        int titleListIdx = facultyPapersList.getSelectedIndex();
+        if(titleListIdx == 1){
+            try{
+                BLPaper newPaper = new BLPaper();
+                System.out.println(titleText + " " + abstractText+ " " + citationText +" "+ keywordsText+ " " + facID);
+                int newID = newPaper.addPaper(titleText, abstractText, citationText, keywordsText, facID);
+//                facultyEditPanel.revalidate();
+//                facultyEditPanel.repaint();
+                titleTextArea.setText("");
+                abstractTextArea.setText("");
+                citationTextArea.setText("");
+                keywordsTextField.setText("");                
+                JOptionPane.showMessageDialog(null, "Paper added.");
+                
+            }
+            catch(DLException d){
+                JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+            }
+        }
+    }//GEN-LAST:event_addNewPaperButtonActionPerformed
+
 	private void studentNameTextBoxDocumentUpdated(DocumentEvent evt) {
 		Document studentNameTextBoxDocument = (Document)evt.getDocument();
 		if (studentNameTextBoxDocument.getLength() > 0) {
@@ -474,6 +583,44 @@ public class FacultyEdit extends javax.swing.JFrame {
 		int needStudentLength = needStudentTextBoxDocument.getLength();
 		try {
 			helpText = needStudentTextBoxDocument.getText(0, needStudentLength);
+		}
+		catch (BadLocationException e) {}
+	}
+        
+        
+        private void titleTextAreaDocumentUpdated(DocumentEvent evt) {
+		Document titleTextAreaDocument = (Document)evt.getDocument();
+		int titleTextAreaLength = titleTextAreaDocument.getLength();
+		try {
+			titleText = titleTextAreaDocument.getText(0, titleTextAreaLength);
+		}
+		catch (BadLocationException e) {}
+	}
+        
+        
+        private void abstractTextAreaDocumentUpdated(DocumentEvent evt) {
+		Document abstractTextAreaDocument = (Document)evt.getDocument();
+		int abstractTextAreaLength = abstractTextAreaDocument.getLength();
+		try {
+			abstractText = abstractTextAreaDocument.getText(0, abstractTextAreaLength);
+		}
+		catch (BadLocationException e) {}
+	}
+        
+        private void citationTextAreaDocumentUpdated(DocumentEvent evt) {
+		Document citationTextAreaDocument = (Document)evt.getDocument();
+		int citationTextAreaLength = citationTextAreaDocument.getLength();
+		try {
+			citationText = citationTextAreaDocument.getText(0, citationTextAreaLength);
+		}
+		catch (BadLocationException e) {}
+	}
+        
+        private void keywordsTextFieldDocumentUpdated(DocumentEvent evt) {
+		Document keywordsTextFieldDocument = (Document)evt.getDocument();
+		int keywordsTextFieldLength = keywordsTextFieldDocument.getLength();
+		try {
+			keywordsText = keywordsTextFieldDocument.getText(0, keywordsTextFieldLength);
 		}
 		catch (BadLocationException e) {}
 	}
