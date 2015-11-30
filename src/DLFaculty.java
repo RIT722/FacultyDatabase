@@ -117,9 +117,24 @@ public class DLFaculty {
     
      //faculty login
     //Consider adding unique username to password
-   public static boolean facultyLogin(String email, String password) throws DLException{
-        // Nazar 
-       return true;
+	public static int facultyLogin(String email, String password) throws DLException{
+	   int id;
+	   ArrayList<ArrayList<String>> result;
+	   MySQLDatabase db = MySQLDatabase.getInstance();
+	   try {
+		   ArrayList<String> values = new ArrayList();
+		   values.add(email);
+		   values.add(password);
+		   result = db.getData("SELECT id FROM Faculty WHERE email=? AND password=?", values);
+		   id = Integer.parseInt(result.get(0).get(0));
+		   return id;
+	   }
+	   catch(DLException e) {
+		   throw e;
+	   }
+	   catch(IndexOutOfBoundsException e) {
+		   throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in facultyLogin() of Faculty");
+	   }
     }
     
         

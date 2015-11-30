@@ -12,7 +12,7 @@ public class BLFaculty extends DLFaculty {
    public BLFaculty(int ID){
         super(ID);
     }
-   public static boolean login(String email, String pw) throws DLException {
+   public static int login(String email, String pw) throws DLException {
 		MessageDigest md;
 		byte[] hashedBytes = new byte[0];
 		try {
@@ -83,12 +83,5 @@ public class BLFaculty extends DLFaculty {
 	   }
 	   return outputList;
    }  
-      
-      
-      
-      
-      
-      
-   
-   
+
 }
