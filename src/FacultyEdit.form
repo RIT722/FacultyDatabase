@@ -76,7 +76,6 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="paperInfoPanel" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
@@ -102,7 +101,7 @@
                                   <Component id="addStudentButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="addNewPaperButton" min="-2" max="-2" attributes="0"/>
@@ -110,9 +109,13 @@
                           <Component id="saveChangesButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="returnToSearchButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="paperInfoPanel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -172,15 +175,15 @@
         <Component class="javax.swing.JComboBox" name="facultyPapersList">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(paperList)" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel(paperList.toArray())" type="code"/>
             </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="facultyPapersListActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox(paperList)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ArrayList&lt;ArrayList&lt;String&gt;&gt; papers = new ArrayList();&#xa;try {&#xa;    papers = faculty.getPapersByFacultyID();&#xa;}&#xa;catch(DLException e){&#xa;    //blah&#xa;}&#xa;String[] paperList = new String[papers.size()+2];&#xa;paperIDs = new int[papers.size()];&#xa;paperList[0] = &quot;&quot;;  //should be a blank option first&#xa;paperList[1] = &quot;Add New Paper&quot;; //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; papers.size(); i++)&#xa;{&#xa;    if((papers.get(i).get(1)).length() &gt; 30)&#xa;        paperList[i+2] = (papers.get(i).get(1)).substring(0, 30) + &quot;...&quot;;&#xa;    else&#xa;        paperList[i+2] = (papers.get(i).get(1)) + &quot;...&quot;;&#xa;&#xa;    paperIDs[i] = Integer.parseInt(papers.get(i).get(0));&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox()"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ArrayList&lt;ArrayList&lt;String&gt;&gt; papers = new ArrayList();&#xa;try {&#xa;    papers = faculty.getPapersByFacultyID();&#xa;}&#xa;catch(DLException e){&#xa;    //blah&#xa;}&#xa;paperList = new ArrayList();&#xa;paperIDs = new ArrayList();&#xa;paperList.add(&quot;&quot;);  //should be a blank option first&#xa;paperList.add(&quot;Add New Paper&quot;); //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; papers.size(); i++)&#xa;{&#xa;    if((papers.get(i).get(1)).length() &gt; 30)&#xa;        paperList.add((papers.get(i).get(1)).substring(0, 30) + &quot;...&quot;);&#xa;    else&#xa;        paperList.add((papers.get(i).get(1)) + &quot;...&quot;);&#xa;&#xa;    paperIDs.add(Integer.parseInt(papers.get(i).get(0)));&#xa;}"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="paperInfoPanel">
@@ -199,15 +202,6 @@
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="keywordLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="keywordsTextField" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="keywordInstructions" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -221,14 +215,20 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane2" max="32767" attributes="0"/>
-                                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jScrollPane1" alignment="0" pref="461" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jScrollPane3" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <Component id="keywordInstructions" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="keywordLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="keywordsTextField" min="-2" pref="466" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

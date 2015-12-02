@@ -139,14 +139,23 @@ public class DLFaculty {
     
         
     //Inserts a student into the student table using a faculty object
-    public void addStudent(String studentName) throws DLException{
+    public boolean addStudent(String studentName) throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{
             ArrayList values = new ArrayList();
             values.add(studentName);
             values.add(ID);
             
-            msd.setData("INSERT INTO student(name, facultyID) VALUES(?, ?)", values);
+            ArrayList name = new ArrayList();
+            name.add(studentName);
+            ArrayList<ArrayList<String>> studentID = msd.getData("SELECT ID from student WHERE name = ?", name);
+            if(studentID.size() > 0)
+            {
+                return false;
+            }
+            else 
+                msd.setData("INSERT INTO student(name, facultyID) VALUES(?, ?)", values);
+                return true;
         }
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in addStudent() of Faculty");

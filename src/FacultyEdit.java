@@ -22,7 +22,7 @@ public class FacultyEdit extends javax.swing.JFrame {
     BLPaper displayPaper;
     String studentName;
     String helpText;
-    int[] paperIDs;
+    ArrayList<Integer> paperIDs;
     String title;
     String pAbstract;
     String citation;
@@ -32,6 +32,7 @@ public class FacultyEdit extends javax.swing.JFrame {
     String citationText;
     String keywordsText;
     int facID;
+    ArrayList paperList;
     
     public FacultyEdit(int facultyID) {
         faculty = new BLFaculty(facultyID);
@@ -67,20 +68,20 @@ public class FacultyEdit extends javax.swing.JFrame {
         catch(DLException e){
             //blah
         }
-        String[] paperList = new String[papers.size()+2];
-        paperIDs = new int[papers.size()];
-        paperList[0] = "";  //should be a blank option first
-        paperList[1] = "Add New Paper"; //Add option for new paper to combo box list
+        paperList = new ArrayList();
+        paperIDs = new ArrayList();
+        paperList.add("");  //should be a blank option first
+        paperList.add("Add New Paper"); //Add option for new paper to combo box list
         for(int i = 0; i < papers.size(); i++)
         {
             if((papers.get(i).get(1)).length() > 30)
-            paperList[i+2] = (papers.get(i).get(1)).substring(0, 30) + "...";
+            paperList.add((papers.get(i).get(1)).substring(0, 30) + "...");
             else
-            paperList[i+2] = (papers.get(i).get(1)) + "...";
+            paperList.add((papers.get(i).get(1)) + "...");
 
-            paperIDs[i] = Integer.parseInt(papers.get(i).get(0));
+            paperIDs.add(Integer.parseInt(papers.get(i).get(0)));
         }
-        facultyPapersList = new javax.swing.JComboBox(paperList);
+        facultyPapersList = new javax.swing.JComboBox();
         paperInfoPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         abstractLabel = new javax.swing.JLabel();
@@ -125,7 +126,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         profNameLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         profNameLabel.setText(facultyName);
 
-        facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList));
+        facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray()));
         facultyPapersList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 facultyPapersListActionPerformed(evt);
@@ -205,13 +206,6 @@ public class FacultyEdit extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(paperInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(paperInfoPanelLayout.createSequentialGroup()
-                        .addComponent(keywordLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(keywordsTextField))
-                    .addGroup(paperInfoPanelLayout.createSequentialGroup()
-                        .addComponent(keywordInstructions)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(paperInfoPanelLayout.createSequentialGroup()
                         .addGroup(paperInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(paperInfoPanelLayout.createSequentialGroup()
                                 .addGroup(paperInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,11 +215,16 @@ public class FacultyEdit extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, paperInfoPanelLayout.createSequentialGroup()
                                 .addComponent(abstractLabel)
                                 .addGap(18, 18, 18)))
-                        .addGroup(paperInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane3))))
-                .addContainerGap())
+                        .addGroup(paperInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)))
+                    .addComponent(keywordInstructions)
+                    .addGroup(paperInfoPanelLayout.createSequentialGroup()
+                        .addComponent(keywordLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(keywordsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         paperInfoPanelLayout.setVerticalGroup(
             paperInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,7 +355,6 @@ public class FacultyEdit extends javax.swing.JFrame {
             .addGroup(facultyEditPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(paperInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(facultyEditPanelLayout.createSequentialGroup()
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(facultyEditPanelLayout.createSequentialGroup()
@@ -377,14 +375,17 @@ public class FacultyEdit extends javax.swing.JFrame {
                                 .addComponent(studentNameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(addStudentButton)))
-                        .addGap(14, 14, 14))
+                        .addGap(20, 20, 20))
                     .addGroup(facultyEditPanelLayout.createSequentialGroup()
                         .addComponent(addNewPaperButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(saveChangesButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(returnToSearchButton)))
-                .addContainerGap())
+                        .addComponent(returnToSearchButton)
+                        .addGap(40, 40, 40))
+                    .addGroup(facultyEditPanelLayout.createSequentialGroup()
+                        .addComponent(paperInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         facultyEditPanelLayout.setVerticalGroup(
             facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,7 +454,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         }
         else
         {
-            int paperId = paperIDs[titleListIdx-2];
+            int paperId = paperIDs.get(titleListIdx-2);
             displayPaper = new BLPaper(paperId);
             try{
                 displayPaper.fetch();
@@ -487,7 +488,7 @@ public class FacultyEdit extends javax.swing.JFrame {
 
     private void deletePaperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePaperButtonActionPerformed
         int titleListIdx = facultyPapersList.getSelectedIndex();
-        int paperID = paperIDs[titleListIdx-2];
+        int paperID = paperIDs.get(titleListIdx-2);
         BLPaper delPaper = new BLPaper(paperID);
         Object[] options = { "OK", "CANCEL" };
         int question = JOptionPane.showOptionDialog(null, "Click OK to delete paper", "Warning",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
@@ -495,7 +496,16 @@ public class FacultyEdit extends javax.swing.JFrame {
         {
             try{
                 delPaper.deletePaper();
+                System.out.println(paperID + " size:" + paperIDs.size());
+                paperIDs.remove(titleListIdx-2);
+                paperList.remove(titleListIdx);
+                facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray()));
+                titleTextArea.setText("");
+                abstractTextArea.setText("");
+                citationTextArea.setText("");
+                keywordsTextField.setText("");
                 JOptionPane.showMessageDialog(null, "Paper Deleted");
+
                }
             catch(DLException e){
                 JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
@@ -504,7 +514,26 @@ public class FacultyEdit extends javax.swing.JFrame {
     }//GEN-LAST:event_deletePaperButtonActionPerformed
 
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed
-        // TODO add your handling code here:
+        int titleListIdx = facultyPapersList.getSelectedIndex();
+        int paperID = paperIDs.get(titleListIdx-2);
+        try{
+            BLPaper updatePaper = new BLPaper(paperID);
+            updatePaper.save(paperID, titleText, abstractText, citationText, keywordsText);
+            updatePaper.fetch();
+
+            if(updatePaper.getTitle().length() > 30)
+                paperList.set(titleListIdx, (updatePaper.getTitle()).substring(0, 30) + "...");
+            else
+                paperList.set(titleListIdx, updatePaper.getTitle() + "...");
+
+            facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray()));
+             
+            JOptionPane.showMessageDialog(null, "Paper saved.");
+
+        }
+        catch(DLException d){
+            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+        }
     }//GEN-LAST:event_saveChangesButtonActionPerformed
 
     private void returnToSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToSearchButtonActionPerformed
@@ -513,13 +542,22 @@ public class FacultyEdit extends javax.swing.JFrame {
 
     private void addStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStudentButtonActionPerformed
         try{
-            faculty.addStudent(studentName);
+            boolean newStudent = faculty.addStudent(studentName);
+            if(!newStudent)
+            {    
+                JOptionPane.showMessageDialog(null, "Student already added.");
+                studentNameTextBox.setText("");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Student added.");
+		studentNameTextBox.setText("");
+            }
         }
         catch(DLException e){
             JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
         }
-		JOptionPane.showMessageDialog(null, "Student added.");
-		studentNameTextBox.setText("");
+		
     }//GEN-LAST:event_addStudentButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
@@ -546,10 +584,16 @@ public class FacultyEdit extends javax.swing.JFrame {
         if(titleListIdx == 1){
             try{
                 BLPaper newPaper = new BLPaper();
-                System.out.println(titleText + " " + abstractText+ " " + citationText +" "+ keywordsText+ " " + facID);
                 int newID = newPaper.addPaper(titleText, abstractText, citationText, keywordsText, facID);
-//                facultyEditPanel.revalidate();
-//                facultyEditPanel.repaint();
+                newPaper.fetch();
+                paperIDs.add(newID);
+                
+                if(newPaper.getTitle().length() > 30)
+                    paperList.add((newPaper.getTitle()).substring(0, 30) + "...");
+                else
+                    paperList.add(newPaper.getTitle() + "...");
+
+                facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray()));
                 titleTextArea.setText("");
                 abstractTextArea.setText("");
                 citationTextArea.setText("");

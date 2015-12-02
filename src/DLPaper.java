@@ -82,26 +82,26 @@ public class DLPaper {
     
     //Modify to include commit/rollback would you like to save changes? - unnecessary
     //Updates the papers table to reflect updated details for a paper. Updates keywords in paper_keywords
-    public void save(String title, String pAbstract, String citation, String keywords, int facID) throws DLException{
+    public void save(int paperID, String title, String pAbstract, String citation, String keywords) throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{
             ArrayList values = new ArrayList();
             values.add(title);
             values.add(pAbstract);
             values.add(citation);
-            values.add(ID);
+            values.add(paperID);
             
             ArrayList oldKeywords = new ArrayList();
-            oldKeywords.add(ID);
+            oldKeywords.add(paperID);
             
             String[] temp = keywords.split(",");
             ArrayList keywordList = new ArrayList();
-            keywordList.add(ID);
+            keywordList.add(paperID);
             keywordList.add(temp[0]);
             
             msd.startTrans();
-            msd.setData("UPDATE papers SET title = ?, abstract = ?, citation = ? WHERE id = ?;", values);
             msd.setData("DELETE FROM paper_keywords WHERE id = ?", oldKeywords);
+            msd.setData("UPDATE papers SET title = ?, abstract = ?, citation = ? WHERE id = ?;", values);
             for(int i = 0; i < temp.length; i++){
                 keywordList.set(1, temp[i]);
                 msd.setData("INSERT INTO paper_keywords VALUES(?, ?);", keywordList);
