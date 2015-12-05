@@ -8,6 +8,10 @@ import java.util.*;
 
 public class BLFaculty extends DLFaculty {
 
+    /*New method*/
+    public BLFaculty(){
+        
+    }
    
    public BLFaculty(int ID){
         super(ID);
@@ -82,6 +86,47 @@ public class BLFaculty extends DLFaculty {
 			   outputList.add(temp);
 	   }
 	   return outputList;
-   }  
+   }
+        /* New Method */
+        public void setUpdateDetails(String fn, String ln, String newEmail){
+            firstName = fn;
+            lastName = ln;
+            int atIndx = newEmail.indexOf("@");
+            email = newEmail;
+            askHelp = null;
+        }
+        
+        public int setInsertDetails(String fn, String ln, String newEmail) throws DLException{
+            firstName = fn;
+            lastName = ln;
+            int atIndx = newEmail.indexOf("@");
+            String pw = newEmail.substring(0, atIndx);
+            email = newEmail;
+            int newID;
+            
+            MessageDigest md;
+		byte[] hashedBytes = new byte[0];
+		try {
+			md = MessageDigest.getInstance("MD5");
+			hashedBytes = md.digest(pw.getBytes("UTF-8"));
+		} catch (NoSuchAlgorithmException|UnsupportedEncodingException ex) {
+			System.out.println("OOPSIE");
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		for (byte b : hashedBytes) {
+			sb.append(String.format("%02X", b));
+		}
+		String hashedPw = sb.toString();
+            password = hashedPw;
+            
+            try{
+                newID = this.post();
+            }
+            catch(DLException e){
+                throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in setInsertDetails() of BLFaculty");
+            }
+            return newID;
+        }
 
 }

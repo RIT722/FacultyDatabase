@@ -18,7 +18,22 @@ public class DLFaculty {
         this.ID = ID;
     }
     
-
+    /* Created constructors */
+    public void setFN(String fn){
+        firstName = fn;
+    }
+   
+    public void setLN(String ln){
+        lastName = ln;
+    }
+    
+    public void setEmail(String Email){
+        email = Email;
+    }
+    
+    public void setPass(String pass){
+        password = pass;
+    }
     
     //Accessor methods
     public String getFN(){
@@ -61,6 +76,7 @@ public class DLFaculty {
         }
     }
     
+    /*Made changes*/
     //Updates the database using values from a faculty object
     public void put() throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
@@ -68,46 +84,49 @@ public class DLFaculty {
             ArrayList values = new ArrayList();
             values.add(firstName);
             values.add(lastName);
-            values.add(password);
             values.add(email);
-            values.add(askHelp);
             values.add(ID);
 
             msd.setData("UPDATE Faculty SET fName = ?, lName = ?,"
-                    + "password = ?, email = ?, askHelp = ? WHERE id = ?;", values);
+                    + "email = ? WHERE id = ?;", values);
         }
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in put() of Faculty");
         }
     }
     
+    /*Modified method*/
     //inserts values into the faculty table from a faculty object
-    public void post() throws DLException{
+    public int post() throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{
             ArrayList values = new ArrayList();
-            values.add(ID);
             values.add(firstName);
             values.add(lastName);
             values.add(password);
             values.add(email);
-            values.add(askHelp);
             
-            msd.setData("INSERT INTO Faculty VALUES(?, ?, ?, ?, ?, ?);", values);
+            msd.setData("INSERT INTO Faculty(fname, lname, password,email) VALUES(?, ?, ?, ?);", values);
+            ArrayList<ArrayList<String>> rs = msd.getData("SELECT LAST_INSERT_ID()");
+            ID = Integer.parseInt(rs.get(0).get(0));
         }
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in post() of Faculty");
         }
+        return ID;
     }
     
+    /* Modified method */
     //deletes entries from the faculty table using a faculty object
     public void delete() throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{   
             ArrayList values = new ArrayList();
             values.add(ID);
-            msd.setData("DELETE FROM Faculty WHERE id = ?;", values);
-            
+            msd.startTrans();
+            msd.setData("DELETE papers FROM (faculty INNER JOIN authorship ON faculty.id = facultyId) JOIN papers ON papers.id = paperId WHERE facultyId = ?;", values);
+            msd.setData("DELETE FROM faculty WHERE id = ?", values);
+            msd.endTrans();
         }
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in delete() of Faculty");

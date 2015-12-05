@@ -452,6 +452,9 @@ public class FacultyEdit extends javax.swing.JFrame {
             citationTextArea.setEditable(true);
             keywordsTextField.setEditable(true);
         }
+        else if(titleListIdx == 0){
+            
+        }
         else
         {
             int paperId = paperIDs.get(titleListIdx-2);
