@@ -298,7 +298,6 @@ public class AdminEdit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void facultyListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyListActionPerformed
-        facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray()));
         int profListIdx = facultyList.getSelectedIndex();
         if(profListIdx == 1){
             firstNameTextField.setText("");
