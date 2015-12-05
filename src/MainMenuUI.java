@@ -430,7 +430,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		panel.add(uname);
 		panel.add(pass);
 		String[] options = new String[]{"OK", "Cancel"};
-		int option = JOptionPane.showOptionDialog(null, panel, "Enter Admin Password",
+		int option = JOptionPane.showOptionDialog(null, panel, "Enter Admin Username and Password",
 								 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
 								 null, options, uname);
 		String username = uname.getText();
