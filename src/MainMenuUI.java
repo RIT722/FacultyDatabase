@@ -314,6 +314,7 @@ public class MainMenuUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+        // To Serach By Paper's Title
         if (this.titleField.isEnabled() && !this.titleField.getText().isEmpty()){
                         ArrayList<BLPaper> ret = new ArrayList<>();
                         try{
@@ -321,7 +322,6 @@ public class MainMenuUI extends javax.swing.JFrame {
                         }catch(DLException e){
                             System.out.println(e.toString());
 			}
-			System.out.println("ret = "+ret);
                         PaperUI paperUI = new PaperUI();
                         if(ret != null)
                             for(BLPaper paper : ret){
@@ -335,6 +335,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 			int id = Integer.parseInt(this.profs.get(index).get(0));
 			new facultyInforUI(id).setVisible(true);
 		}
+                // To Search By Paper's Keyword
 		else if (this.keywordField.isEnabled() && !this.keywordField.getText().isEmpty()) {
                         ArrayList<BLPaper> ret = new ArrayList<>();
                         try{
@@ -342,7 +343,6 @@ public class MainMenuUI extends javax.swing.JFrame {
                         }catch(DLException e){
                             System.out.println(e.toString());
                         }
-			System.out.println("ret = "+ret);
                         PaperUI paperUI = new PaperUI();
                         if(ret != null)
                             for(BLPaper paper : ret){
