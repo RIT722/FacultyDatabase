@@ -24,7 +24,7 @@ public class PaperUI extends javax.swing.JFrame {
     }
     
    
-    
+    // Get Paper's Title 
     public javax.swing.JComboBox getTitleCBX(){
      return TitleCBX;   
     }
@@ -159,7 +159,7 @@ public class PaperUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // Get Title, Abstraction and citation 
     private void TitleCBXItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TitleCBXItemStateChanged
         if(evt.getItem() != null){
             AbstractTXT.setText(((BLPaper)evt.getItem()).getPAbstract());
