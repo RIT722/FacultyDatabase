@@ -169,7 +169,8 @@ public class MySQLDatabase { //Database connector class
     //Gets list of BLPaper objects (not using prepared statements)
     public ArrayList<BLPaper> getPapers(String sql) throws DLException{
         try{
-            PreparedStatement stmt = prepare(sql);
+            
+            PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int numCols = rsmd.getColumnCount();
@@ -241,26 +242,7 @@ public class MySQLDatabase { //Database connector class
         
     }
     
-    //Creates PreparedStatements
-    public PreparedStatement prepare(String sql) throws DLException{
-        PreparedStatement stmt;
-        try{
-            if(prepString.containsKey(sql))
-                {
-                    stmt = prepString.get(sql);
-                }
-            else{
-                    stmt = conn.prepareStatement(sql);
-                    prepString.put(sql, stmt);
-                }
-            return stmt;
-        }
-        
-        catch(SQLException e){
-            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in MySQLDatabase prepare()");
-        }
-        
-    }
+
     
     //Executes prepared statements
     public int executeStmt(String sql, ArrayList values) throws DLException{

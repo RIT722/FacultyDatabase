@@ -8,6 +8,7 @@ public class DLPaper {
     String pAbstract;
     String citation;
     
+    /*Default Constructor*/
     public DLPaper(){
         
     }
@@ -16,6 +17,7 @@ public class DLPaper {
         this.ID = ID;
     }
     
+    /* Setter Methods*/
     public void SetTitle(String title) {
         this.title = title;
     }
@@ -27,6 +29,7 @@ public class DLPaper {
         this.citation = citation;
     }
     
+    /* Getter Methods*/
     public String getTitle(){
         return title;
     }
@@ -151,30 +154,7 @@ public class DLPaper {
         return ID;
     }
     
-    
-    public void getAllPapersdependsonTitle(String title) throws SQLException {
-    
-    // Nazar
-    }
-   
-    public static ArrayList<ArrayList<String>> searchByKeywords(String keyword) throws DLException{
-
-        ArrayList<ArrayList<String>> paperList;
-
-        try{
-            MySQLDatabase msd = MySQLDatabase.getInstance();  
-            ArrayList values = new ArrayList();
-            values.add(keyword);
-            paperList = msd.getData("SELECT title FROM papers JOIN paper_keywords ON papers.id = paper_keywords.id WHERE keyword = ?", values);
-            
-        }
-        catch(RuntimeException e){
-            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in searchByKeywords() of Faculty");
-        }
-        return paperList;
-    }
-    
-    
+    // Get all papers depends on Keyword
     public static ArrayList<BLPaper> searchPapersByKeywords(String keyword) throws DLException{
 
         ArrayList<BLPaper> paperList;
@@ -213,42 +193,12 @@ public class DLPaper {
         return keyword;
     }
      
-     
-          public static void searchByTitle(String title) throws DLException {
-            //String title = _title; 
-            String[] arr = title.split(" ");    
-            int size =  arr.length;
-      // System.out.println(size);
-            for (int i=0;i<size;i++){
-       //System.out.println(arr[i]);
-       
-            String query = "select papers.title from papers where title like '%"+arr[i]+"%' order by id;";
-            try{ 
-            MySQLDatabase myDB = MySQLDatabase.getInstance();
-
-
-            ArrayList<ArrayList<String>> result = myDB.getData(query);
-  // results.add(result);
-            for (int j=0; j < result.size();j++) {
-            System.out.println(result.get(j));
-                  }
-
-               }
-               catch(RuntimeException e){
-                   throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "SQL string = " + query, "Error in fetch() of Faculty");
-        }
-        }
-        }  
+     // Get All Paper depends on Title
     public static ArrayList<BLPaper> searchPapersByTitle(String title) throws DLException {
-        //String title = _title; 
-        String[] arr = title.split(" ");
+        
         String whereQuery = " title like '%";
         whereQuery += title.replaceAll(" ", "%' OR title like '%");
         whereQuery += "%'";
-        int size = arr.length;
-        // System.out.println(size);
-        // for (int i=0;i<size;i++){
-        //System.out.println(arr[i]);
 
         String query = "select * from papers where" + whereQuery + " order by id;";
         try {
@@ -256,7 +206,7 @@ public class DLPaper {
 
             ArrayList<BLPaper> result = myDB.getPapers(query);
             return result;
-            // results.add(result);
+            
 
         } catch (RuntimeException e) {
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis() / 1000), "SQL string = " + query, "Error in fetch() of Faculty");
