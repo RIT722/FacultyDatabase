@@ -117,13 +117,13 @@
                   </Group>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="facultyInfoPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <EmptySpace pref="21" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="addNewFacultyButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="saveChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="returnToSearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="16" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -134,7 +134,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Select faculty member"/>
+            <Property name="text" type="java.lang.String" value="Select faculty member:"/>
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Select Faculty User"/>
@@ -151,7 +151,9 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox()"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ArrayList&lt;ArrayList&lt;String&gt;&gt; profs = new ArrayList();&#xa;try {&#xa;    profs = faculty.profList();&#xa;}&#xa;catch(DLException e){&#xa;    //blah&#xa;}&#xa;profList = new ArrayList();&#xa;profIDs = new ArrayList();&#xa;profList.add(&quot;&quot;);  //should be a blank option first&#xa;profList.add(&quot;Add New Faculty&quot;); //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; profs.size(); i++)&#xa;{&#xa;    profList.add(profs.get(i).get(1));&#xa;    profIDs.add(Integer.parseInt(profs.get(i).get(0)));&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create container to hold professor information&#xa;ArrayList&lt;ArrayList&lt;String&gt;&gt; profs = new ArrayList();&#xa;try {&#xa;    profs = faculty.profList(); //Get professor info from db&#xa;}&#xa;catch(DLException e){&#xa;    JOptionPane.showMessageDialog(null, &quot;Could not complete operation. Details written to log file.&quot;);&#xa;}&#xa;profList = new ArrayList(); //Holds drop-down list values&#xa;profIDs = new ArrayList(); //Holds faculty IDs&#xa;profList.add(&quot;&quot;);  //should be a blank option first&#xa;profList.add(&quot;Add New Faculty&quot;); //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; profs.size(); i++)&#xa;{&#xa;    profList.add(profs.get(i).get(1));&#xa;    profIDs.add(Integer.parseInt(profs.get(i).get(0)));&#xa;}&#xa;//Instantiate the drop down list"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Create action listener for drop down list"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="//Set the drop-down list values"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="facultyInfoPanel">
@@ -162,6 +164,9 @@
               </Border>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Creates area of window to display Faculty details"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -228,6 +233,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="firstNameTextField.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        firstNameTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        firstNameTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        firstNameTextFieldDocumentUpdated(evt);&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Displays faculty first name and takes user input"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="emailTextField">
@@ -236,6 +242,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="emailTextField.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        emailTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        emailTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        emailTextFieldDocumentUpdated(evt);&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Displays faculty email and takes user input"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="lastNameTextField">
@@ -244,6 +251,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="lastNameTextField.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        lastNameTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        lastNameTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        lastNameTextFieldDocumentUpdated(evt);&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Displays faculty last name and takes user input"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -255,6 +263,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Creates Edit Button and associated action listener"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="deleteButton">
           <Properties>
@@ -263,6 +274,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Creates Delete Faculty button and associated action listener"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="addNewFacultyButton">
           <Properties>
@@ -271,6 +285,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addNewFacultyButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Creates Add New Faculty Button and associated action listener"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="saveChangesButton">
           <Properties>
@@ -279,6 +296,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveChangesButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Creates Save Changes button and associated action listener"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="returnToSearchButton">
           <Properties>
@@ -287,6 +307,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="returnToSearchButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Creates Return to Search button and associated action listener"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

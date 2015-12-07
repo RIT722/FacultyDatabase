@@ -183,7 +183,7 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox()"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ArrayList&lt;ArrayList&lt;String&gt;&gt; papers = new ArrayList();&#xa;try {&#xa;    papers = faculty.profPapersList();&#xa;}&#xa;catch(DLException e){&#xa;    //blah&#xa;}&#xa;paperList = new ArrayList();&#xa;paperIDs = new ArrayList();&#xa;paperList.add(&quot;&quot;);  //should be a blank option first&#xa;paperList.add(&quot;Add New Paper&quot;); //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; papers.size(); i++)&#xa;{&#xa;    if((papers.get(i).get(1)).length() &gt; 30)&#xa;        paperList.add((papers.get(i).get(1)).substring(0, 30) + &quot;...&quot;);&#xa;    else&#xa;        paperList.add((papers.get(i).get(1)) + &quot;...&quot;);&#xa;&#xa;    paperIDs.add(Integer.parseInt(papers.get(i).get(0)));&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create placeholder for database information&#xa;ArrayList&lt;ArrayList&lt;String&gt;&gt; papers = new ArrayList();&#xa;try {&#xa;    papers = faculty.profPapersList(); //Get paper information from database&#xa;}&#xa;catch(DLException e){&#xa;    JOptionPane.showMessageDialog(null, &quot;Could not complete operation. Details written to log file.&quot;);&#xa;}&#xa;paperList = new ArrayList(); //Create list for titles&#xa;paperIDs = new ArrayList(); //Create list for IDs&#xa;paperList.add(&quot;&quot;);  //should be a blank option first&#xa;paperList.add(&quot;Add New Paper&quot;); //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; papers.size(); i++) //Add titles to title list and IDs to ID list&#xa;{&#xa;    if((papers.get(i).get(1)).length() &gt; 30)&#xa;        paperList.add((papers.get(i).get(1)).substring(0, 30) + &quot;...&quot;);&#xa;    else&#xa;        paperList.add((papers.get(i).get(1)) + &quot;...&quot;);&#xa;&#xa;    paperIDs.add(Integer.parseInt(papers.get(i).get(0)));&#xa;}&#xa;//Create drop down list of titles"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="paperInfoPanel">
@@ -315,6 +315,7 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="abstractTextArea.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        abstractTextAreaDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        abstractTextAreaDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        abstractTextAreaDocumentUpdated(evt);&#xa;    }&#xa;});"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create abstract text area"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -325,6 +326,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="keywordsTextField.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        keywordsTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        keywordsTextFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        keywordsTextFieldDocumentUpdated(evt);&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create keywords text field"/>
               </AuxValues>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -343,6 +345,7 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="citationTextArea.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        citationTextAreaDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        citationTextAreaDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        citationTextAreaDocumentUpdated(evt);&#xa;    }&#xa;});"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create citation text area"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -363,6 +366,7 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="titleTextArea.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        titleTextAreaDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        titleTextAreaDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        titleTextAreaDocumentUpdated(evt);&#xa;    }&#xa;});"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create title text area"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -376,6 +380,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create Edit Paper button"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="deletePaperButton">
           <Properties>
@@ -384,6 +391,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deletePaperButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create Delete Paper button"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="addNewPaperButton">
           <Properties>
@@ -392,6 +402,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addNewPaperButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create Add New Paper button"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="saveChangesButton">
           <Properties>
@@ -400,6 +413,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveChangesButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create Save Changes button"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="returnToSearchButton">
           <Properties>
@@ -408,6 +424,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="returnToSearchButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create Return to Search button"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="addStudentButton">
           <Properties>
@@ -417,6 +436,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addStudentButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create Add Student button"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="studentNameTextBox">
           <Properties>
@@ -424,6 +446,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(20)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create text field for student name"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="needStudentLabel">
@@ -438,7 +461,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="String helpTag = faculty.getHelp();"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create text field for faculty to enter a student job posting&#xa;String helpTag = faculty.getHelp();"/>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="needStudentTextBox.setCaretPosition(0);&#xa;needStudentTextBox.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        needStudentTextBoxDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        needStudentTextBoxDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        needStudentTextBoxDocumentUpdated(evt);&#xa;    }&#xa;});"/>
           </AuxValues>
         </Component>
@@ -449,6 +472,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create Update button"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author katie
+ * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
  */
+/* This class creates the Admin Panel window where faculty 
+   can be added, edited, or deleted*/
+
 import java.util.*;
 import javax.swing.JOptionPane;
 import javax.swing.event.*;
@@ -30,7 +27,6 @@ public class AdminEdit extends javax.swing.JFrame {
     String firstNameText;
     String lastNameText;
     String emailText;
-    
 
     
     public AdminEdit() {
@@ -38,7 +34,6 @@ public class AdminEdit extends javax.swing.JFrame {
         initComponents();
     }
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,15 +46,16 @@ public class AdminEdit extends javax.swing.JFrame {
         jDialog1 = new javax.swing.JDialog();
         adminEditPanel = new javax.swing.JPanel();
         instructionLabel = new javax.swing.JLabel();
+        //Create container to hold professor information
         ArrayList<ArrayList<String>> profs = new ArrayList();
         try {
-            profs = faculty.profList();
+            profs = faculty.profList(); //Get professor info from db
         }
         catch(DLException e){
-            //blah
+            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
         }
-        profList = new ArrayList();
-        profIDs = new ArrayList();
+        profList = new ArrayList(); //Holds drop-down list values
+        profIDs = new ArrayList(); //Holds faculty IDs
         profList.add("");  //should be a blank option first
         profList.add("Add New Faculty"); //Add option for new paper to combo box list
         for(int i = 0; i < profs.size(); i++)
@@ -67,18 +63,28 @@ public class AdminEdit extends javax.swing.JFrame {
             profList.add(profs.get(i).get(1));
             profIDs.add(Integer.parseInt(profs.get(i).get(0)));
         }
+        //Instantiate the drop down list
         facultyList = new javax.swing.JComboBox();
+        //Creates area of window to display Faculty details
         facultyInfoPanel = new javax.swing.JPanel();
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
+        //Displays faculty first name and takes user input
         firstNameTextField = new javax.swing.JTextField();
+        //Displays faculty email and takes user input
         emailTextField = new javax.swing.JTextField();
+        //Displays faculty last name and takes user input
         lastNameTextField = new javax.swing.JTextField();
+        //Creates Edit Button and associated action listener
         editButton = new javax.swing.JButton();
+        //Creates Delete Faculty button and associated action listener
         deleteButton = new javax.swing.JButton();
+        //Creates Add New Faculty Button and associated action listener
         addNewFacultyButton = new javax.swing.JButton();
+        //Creates Save Changes button and associated action listener
         saveChangesButton = new javax.swing.JButton();
+        //Creates Return to Search button and associated action listener
         returnToSearchButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -98,9 +104,11 @@ public class AdminEdit extends javax.swing.JFrame {
         adminEditPanel.setPreferredSize(new java.awt.Dimension(612, 489));
 
         instructionLabel.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        instructionLabel.setText("Select faculty member");
+        instructionLabel.setText("Select faculty member:");
 
+        //Set the drop-down list values
         facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray()));
+        //Create action listener for drop down list
         facultyList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 facultyListActionPerformed(evt);
@@ -233,15 +241,6 @@ public class AdminEdit extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(adminEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(adminEditPanelLayout.createSequentialGroup()
-                        .addGroup(adminEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(adminEditPanelLayout.createSequentialGroup()
-                                .addComponent(editButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(deleteButton))
-                            .addComponent(instructionLabel)
-                            .addComponent(facultyList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(adminEditPanelLayout.createSequentialGroup()
                         .addComponent(addNewFacultyButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(saveChangesButton)
@@ -249,7 +248,15 @@ public class AdminEdit extends javax.swing.JFrame {
                         .addComponent(returnToSearchButton)
                         .addGap(40, 40, 40))
                     .addGroup(adminEditPanelLayout.createSequentialGroup()
-                        .addComponent(facultyInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(adminEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(adminEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(adminEditPanelLayout.createSequentialGroup()
+                                    .addComponent(editButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(deleteButton))
+                                .addComponent(instructionLabel)
+                                .addComponent(facultyList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(facultyInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         adminEditPanelLayout.setVerticalGroup(
@@ -265,17 +272,15 @@ public class AdminEdit extends javax.swing.JFrame {
                     .addComponent(deleteButton))
                 .addGap(38, 38, 38)
                 .addComponent(facultyInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(adminEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addNewFacultyButton)
                     .addComponent(saveChangesButton)
                     .addComponent(returnToSearchButton))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         instructionLabel.getAccessibleContext().setAccessibleName("Select Faculty User");
-        facultyInfoPanel.getAccessibleContext().setAccessibleName("Faculty Information");
-        facultyInfoPanel.getAccessibleContext().setAccessibleParent(null);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,9 +302,12 @@ public class AdminEdit extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /* This method generates the actions that occur when the faculty drop
+       down list is clicked*/
     private void facultyListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyListActionPerformed
-        int profListIdx = facultyList.getSelectedIndex();
-        if(profListIdx == 1){
+        int profListIdx = facultyList.getSelectedIndex(); //gets the index of the drop-down selection
+        if(profListIdx == 1){ /*this is for when "Add New Faculty" is selected
+                                the fields are blanked and made editable*/
             firstNameTextField.setText("");
             lastNameTextField.setText("");
             emailTextField.setText("");
@@ -307,15 +315,19 @@ public class AdminEdit extends javax.swing.JFrame {
             lastNameTextField.setEditable(true);
             emailTextField.setEditable(true);
         }
-        else
+        if(profListIdx == 0){ /*If the blank option is selected, nothing happens*/
+            
+        }
+        else /*If a professor name is selected, the first name, last name
+            and email fields populate. They are not editable*/
         {
-            int profId = profIDs.get(profListIdx-2);
-            displayProf = new BLFaculty(profId);
+            int profId = profIDs.get(profListIdx-2); //get ID of the selected professor
+            displayProf = new BLFaculty(profId); //create a BLFaculty object for the professor
             try{
-                displayProf.fetch();
+                displayProf.fetch();            //get the other field values for the BLFaculty object from the database
             }
             catch(DLException e){
-
+                    JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
             }
             firstNameTextField.setEditable(false);
             lastNameTextField.setEditable(false);
@@ -331,81 +343,97 @@ public class AdminEdit extends javax.swing.JFrame {
             lastNameTextField.setCaretPosition(0);
             emailTextField.setText(email);
             emailTextField.setCaretPosition(0);
+            //setCaretPosition makes text show from the beginning
 
         }
     }//GEN-LAST:event_facultyListActionPerformed
 
+    //This controls what happens when the Delete Faculty button is pressed
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        int profListIdx = facultyList.getSelectedIndex();
-        int profID = profIDs.get(profListIdx-2);
-        BLFaculty delFaculty = new BLFaculty(profID);
-        Object[] options = { "OK", "CANCEL" };
-        int question = JOptionPane.showOptionDialog(null, "Click OK to delete faculty", "Warning",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-        if(question == JOptionPane.YES_OPTION)
-        {
-            try{
-                delFaculty.delete();
-                profIDs.remove(profListIdx-2);
-                profList.remove(profListIdx);
-                facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray()));
-                firstNameTextField.setText("");
-                lastNameTextField.setText("");
-                emailTextField.setText("");
-                JOptionPane.showMessageDialog(null, "Faculty Deleted");
+        int profListIdx = facultyList.getSelectedIndex(); //gets the index of the drop-down selection
+        if(profListIdx <= 1){ /*Prevents an exception if the blank or Add New Paper
+                                options are selected*/
+        }
+        else{
+            int profID = profIDs.get(profListIdx-2); //get the ID for the selected faculty
+            BLFaculty delFaculty = new BLFaculty(profID); //create BLFaculty object for selected faculty
+            //Make user confirm deletion of faculty
+            Object[] options = { "OK", "CANCEL" };
+            int question = JOptionPane.showOptionDialog(null, "Click OK to delete faculty", "Warning",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            if(question == JOptionPane.YES_OPTION)
+            {
+                try{
+                    delFaculty.delete();            //Delete the professor from the database
+                    profIDs.remove(profListIdx-2);  //Remove the deleted prof ID from the list
+                    profList.remove(profListIdx);   //Remove the deleted prof from the drop-down list
+                    facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray())); //reset the drop-down list
+                    firstNameTextField.setText("");
+                    lastNameTextField.setText("");
+                    emailTextField.setText("");
+                    JOptionPane.showMessageDialog(null, "Faculty Deleted"); //Display alert to user
 
-               }
-            catch(DLException e){
-                JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+                   }
+                catch(DLException e){
+                    JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+                }
             }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    //This method controls what happens when the Save Changes button is pressed
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed
-        int profListIdx = facultyList.getSelectedIndex();
-        int profID = profIDs.get(profListIdx-2);
-        try{
-            BLFaculty updateFaculty = new BLFaculty(profID);
-            updateFaculty.setUpdateDetails(firstNameText, lastNameText, emailText);
-            updateFaculty.put();
-            updateFaculty.fetch();
-            
-            String name = firstNameText + " " + lastNameText;
-
-            profList.set(profListIdx, name);
-
-            facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray()));
-             
-            JOptionPane.showMessageDialog(null, "Faculty saved.");
-
+        int profListIdx = facultyList.getSelectedIndex(); //gets the index of the drop-down selection
+        if(profListIdx <= 1){ /*Prevents an exception if the blank or Add New Paper
+                                options are selected*/
         }
-        catch(DLException d){
-            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+        else{
+            int profID = profIDs.get(profListIdx-2); //get the ID for the selected faculty
+            try{
+                BLFaculty updateFaculty = new BLFaculty(profID); //create BLFaculty object for selected faculty
+                updateFaculty.setUpdateDetails(firstNameText, lastNameText, emailText); //call method to set BLFaculty fields
+                updateFaculty.put(); //execute the update to the database with new faculty details
+                updateFaculty.fetch(); //Update BLFaculty with database values
+
+                String name = firstNameText + " " + lastNameText;
+
+                profList.set(profListIdx, name); //Update the professor name in the drop down list
+
+                facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray())); //reset the drop-down list
+
+                JOptionPane.showMessageDialog(null, "Faculty saved.");
+
+            }
+            catch(DLException d){
+                JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+            }
         }
     }//GEN-LAST:event_saveChangesButtonActionPerformed
 
     private void returnToSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToSearchButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_returnToSearchButtonActionPerformed
-
+    
+    //Makes first name, last name, and email fields editable
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         firstNameTextField.setEditable(true);
         lastNameTextField.setEditable(true);
         emailTextField.setEditable(true);
     }//GEN-LAST:event_editButtonActionPerformed
 
+    //This method controls what happens when the Add New Faculty button is pressed
     private void addNewFacultyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewFacultyButtonActionPerformed
-        int profListIdx = facultyList.getSelectedIndex();
-        if(profListIdx == 1){
+        int profListIdx = facultyList.getSelectedIndex(); //gets the index of the drop-down selection
+        if(profListIdx == 1){ //Only allow actions if Add New Faculty is selected in the drop-down list
             try{
-                BLFaculty newFaculty = new BLFaculty();
-                int newID = newFaculty.setInsertDetails(firstNameText, lastNameText, emailText);
-                newFaculty.fetch();
-                profIDs.add(newID);
+                BLFaculty newFaculty = new BLFaculty(); //create BLFaculty object for selected faculty
+                int newID = newFaculty.setInsertDetails(firstNameText, lastNameText, emailText); //Updates BLFaculty object with new details and posts them to the database
+                newFaculty.fetch(); //Updates BLFaculty object with database values
+                profIDs.add(newID); //Adds new faculty ID to list
                 String name = firstNameText + " " + lastNameText;
                 
-                profList.add(name);
+                profList.add(name); //Adds new faculty name to drop down list
 
-                facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray()));
+                facultyList.setModel(new javax.swing.DefaultComboBoxModel(profList.toArray())); //Resets drop down list
                 firstNameTextField.setText("");
                 lastNameTextField.setText("");
                 emailTextField.setText("");
@@ -418,14 +446,17 @@ public class AdminEdit extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addNewFacultyButtonActionPerformed
 
-        
+        /*These three DocumentUpdated methods get the user-entered text from the first
+          name, last name, and email text fields*/
         private void firstNameTextFieldDocumentUpdated(DocumentEvent evt) {
 		Document firstNameTextFieldDocument = (Document)evt.getDocument();
 		int firstNameTextFieldLength = firstNameTextFieldDocument.getLength();
 		try {
 			firstNameText = firstNameTextFieldDocument.getText(0, firstNameTextFieldLength);
 		}
-		catch (BadLocationException e) {}
+		catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
 	}
         
         
@@ -435,7 +466,9 @@ public class AdminEdit extends javax.swing.JFrame {
 		try {
 			lastNameText = lastNameTextFieldDocument.getText(0, lastNameTextFieldLength);
 		}
-		catch (BadLocationException e) {}
+		catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
 	}
         
         private void emailTextFieldDocumentUpdated(DocumentEvent evt) {
@@ -444,7 +477,9 @@ public class AdminEdit extends javax.swing.JFrame {
 		try {
 			emailText = emailTextFieldDocument.getText(0, emailTextFieldLength);
 		}
-		catch (BadLocationException e) {}
+		catch (BadLocationException e) {
+                    e.printStackTrace();
+                }
 	}
         
 	

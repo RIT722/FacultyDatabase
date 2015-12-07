@@ -1,4 +1,11 @@
-
+/**
+ *
+ * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
+ */
+/* This class contains the methods for connecting to the database, getting data,
+updating the database, preparing statements, executing prepared statements, 
+starting transactions, committing transactions, and rolling back transactions
+*/
 
 import java.lang.*;
 import java.sql.*;
@@ -8,12 +15,12 @@ public class MySQLDatabase { //Database connector class
     private static final MySQLDatabase INSTANCE = new MySQLDatabase();
             
     static Connection conn = null; //Connection object
-    private String userName = "root";
-    private String password;
-    private String url = "jdbc:mysql://127.0.0.1/722Project";
+    private String userName = "root"; //Database user name
+    private String password;        //Database password variable
+    private String url = "jdbc:mysql://127.0.0.1/722Project"; //Database url
     public boolean connection = false;
     public boolean closeVar = false;
-    HashMap<String, PreparedStatement> prepString = new HashMap();
+    HashMap<String, PreparedStatement> prepString = new HashMap(); //HashMap for saving prepared Statements
 
  
     private MySQLDatabase(){ 
@@ -37,7 +44,7 @@ public class MySQLDatabase { //Database connector class
         }
         
         try{
-            conn = DriverManager.getConnection(url, userName, password);
+            conn = DriverManager.getConnection(url, userName, password); //creates Connection object
             connection = true;
         }
         catch(SQLException e){
@@ -82,15 +89,16 @@ public class MySQLDatabase { //Database connector class
 
     }
     
+    //Gets data from database with or without attribute names, depending on boolean
     public ArrayList<ArrayList<String>> getData(String sql, boolean b) throws DLException{
         
         ArrayList<ArrayList<String>> aList = getData(sql);
         
-        if(!b){
+        if(!b){ //if boolean is false, return without attribute names
             return aList;
         }
         
-        else
+        else //if boolean is true, return with attribute names
         {
             aList.add(0, new ArrayList());
             try{
@@ -111,6 +119,7 @@ public class MySQLDatabase { //Database connector class
         
     }
     
+    //Gets data from database using prepared statements
     public ArrayList<ArrayList<String>> getData(String sql, ArrayList values) throws DLException{
         try{
             PreparedStatement stmt = prepare(sql, values);
@@ -134,6 +143,7 @@ public class MySQLDatabase { //Database connector class
         }
     }
     
+    //Gets list of BLPaper objects using prepared statements
     public ArrayList<BLPaper> getPapers(String sql, ArrayList values) throws DLException{
         try{
             PreparedStatement stmt = prepare(sql, values);
@@ -152,10 +162,11 @@ public class MySQLDatabase { //Database connector class
             return arry;
         }
         catch(SQLException|RuntimeException se){
-            throw new DLException(se, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in getData() of MySQLDatabase", "SQL = "+ sql);
+            throw new DLException(se, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in getPapers() of MySQLDatabase", "SQL = "+ sql);
         }
     }
     
+    //Gets list of BLPaper objects (not using prepared statements)
     public ArrayList<BLPaper> getPapers(String sql) throws DLException{
         try{
             PreparedStatement stmt = prepare(sql);
@@ -174,7 +185,7 @@ public class MySQLDatabase { //Database connector class
             return arry;
         }
         catch(SQLException|RuntimeException se){
-            throw new DLException(se, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in getData() of MySQLDatabase", "SQL = "+ sql);
+            throw new DLException(se, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in getPapers() of MySQLDatabase", "SQL = "+ sql);
         }
     }
     
@@ -190,6 +201,7 @@ public class MySQLDatabase { //Database connector class
         }
     }
     
+    //Executes updates, deletes, and inserts into the database using prepared statements
     public boolean setData(String sql, ArrayList values) throws DLException{
         boolean success = false;
         try{
@@ -203,6 +215,7 @@ public class MySQLDatabase { //Database connector class
         return success;
     }
     
+    //creates PreparedStatements using a set of given values
     public PreparedStatement prepare(String sql, ArrayList values) throws DLException{
         PreparedStatement stmt;
         try{
@@ -228,6 +241,7 @@ public class MySQLDatabase { //Database connector class
         
     }
     
+    //Creates PreparedStatements
     public PreparedStatement prepare(String sql) throws DLException{
         PreparedStatement stmt;
         try{
@@ -248,6 +262,7 @@ public class MySQLDatabase { //Database connector class
         
     }
     
+    //Executes prepared statements
     public int executeStmt(String sql, ArrayList values) throws DLException{
         try{
             PreparedStatement stmt = prepare(sql, values);
@@ -260,6 +275,7 @@ public class MySQLDatabase { //Database connector class
         
     }
     
+    //Starts a transaction by turning off autocommit
     public void startTrans() throws DLException{
         try{
             conn.setAutoCommit(false);
@@ -269,6 +285,7 @@ public class MySQLDatabase { //Database connector class
         }
     }
     
+    //Ends a transaction by committing the changes and turning autocommit on
     public void endTrans() throws DLException{
        try{
            conn.commit();
@@ -279,6 +296,7 @@ public class MySQLDatabase { //Database connector class
         } 
     }
     
+    //Rolls back changes and turns autocommit back on
     public void rollbackTrans() throws DLException{
         try{
             conn.rollback();
