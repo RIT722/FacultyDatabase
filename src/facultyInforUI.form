@@ -61,37 +61,38 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="currentStudentjLabel" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jScrollPane2" alignment="1" min="-2" pref="277" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="lookingForstudentjLabel" alignment="0" min="-2" pref="255" max="-2" attributes="0"/>
                                           <Component id="currentStudentjComboBox" alignment="0" min="-2" pref="288" max="-2" attributes="0"/>
                                       </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Component id="returnToSearchButton" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane2" min="-2" pref="277" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="81" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="facultyPapersjPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel2" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="facultyEmailjTextField" min="-2" pref="236" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel1" min="-2" pref="129" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="facultynamejTextField" min="-2" pref="236" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel2" max="32767" attributes="0"/>
+                              <Component id="jLabel1" pref="157" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="facultyEmailjLabel" pref="192" max="32767" attributes="0"/>
+                              <Component id="facultyFullNamejLabel" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -100,20 +101,24 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="facultynamejTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="facultyEmailjTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Component id="jLabel1" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="facultyFullNamejLabel" min="-2" pref="27" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="facultyEmailjLabel" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="facultyPapersjPanel" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="currentStudentjLabel" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="currentStudentjComboBox" min="-2" max="-2" attributes="0"/>
@@ -121,11 +126,11 @@
                           <Component id="lookingForstudentjLabel" min="-2" pref="28" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="74" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="returnToSearchButton" min="-2" pref="45" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="facultyPapersjPanel" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -184,7 +189,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jScrollPane3" pref="89" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" pref="98" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
@@ -224,8 +229,7 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;(profPapersTitle)"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Get papersList&#xa;&#xa;        try {&#xa;&#x9;&#x9;&#xa;                MySQLDatabase msdb = MySQLDatabase.getInstance();&#xa;                msdb.connect();&#xa;                bL.fetch();&#xa;        &#x9;this.profPapers = bL.profPapersList();&#xa;        }&#xa;        catch(DLException e){&#xa;            //Do nothing&#xa;        }&#xa;        &#xa;       &#xa;&#x9;   String[] profPapersTitle = new String[this.profPapers.size()+1];&#xa;               &#xa;           profPapersTitle[0] = &quot;&lt;click here to select paper&gt;&quot;;  &#xa;           for (int i=1;i&lt;profPapersTitle.length;i++) {&#xa;            profPapersTitle[i] = this.profPapers.get(i-1).get(1);&#xa;           // System.out.println(&quot;This is the papers ID depends on the facultyID \n&quot;+i +&quot; &quot;+this.profPapers.get(i-1).get(0));&#xa;           // System.out.println(&quot;This is the papers title depends on the facultyID \n&quot; +i+&quot; &quot;+ profPapersTitle[i]);&#xa;        }"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="facultypapersjComboBox.setFont(font);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Get papersList&#xa;&#xa;        try {&#xa;&#x9;&#x9;&#xa;                MySQLDatabase msdb = MySQLDatabase.getInstance();&#xa;                msdb.connect();&#xa;                bL.fetch();&#xa;        &#x9;this.profPapers = bL.profPapersList();&#xa;        }&#xa;        catch(DLException e){&#xa;            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);&#xa;        }&#xa;        &#xa;       &#xa;&#x9;   String[] profPapersTitle = new String[this.profPapers.size()+1];&#xa;               &#xa;           profPapersTitle[0] = &quot;&lt;click here to select paper&gt;&quot;;  &#xa;           for (int i=1;i&lt;profPapersTitle.length;i++) {&#xa;            profPapersTitle[i] = this.profPapers.get(i-1).get(1);&#xa;           }"/>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
@@ -338,19 +342,6 @@
             <Property name="text" type="java.lang.String" value="Professor Email"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="facultynamejTextField">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(bL.firstName + &quot; &quot; + bL.lastName)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{&#xa;            bL.fetch();&#xa;                       &#xa;                                       &#xa;        }catch(DLException e)&#xa;        {&#xa;        //Do nothing&#xa;        &#xa;        }"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="facultynamejTextField.setFont(font);"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JTextField" name="facultyEmailjTextField">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField(bL.email)"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="facultyEmailjTextField.setFont(font);"/>
-          </AuxValues>
-        </Component>
         <Component class="javax.swing.JComboBox" name="currentStudentjComboBox">
           <Properties>
             <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -362,8 +353,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;(profStudentNames)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Current Studen(s) Name&#xa;&#x9;&#x9;&#xa;&#x9;&#x9;try {&#xa;               MySQLDatabase msdb = MySQLDatabase.getInstance();&#xa;                msdb.connect();&#xa;                &#xa;            this.currentStudent = bL.profCurrentStudentList();&#xa;        }&#xa;        catch(DLException e){&#xa;            //Do nothing&#xa;        }&#xa;        &#xa;        String[] profStudentNames = new String[this.currentStudent.size()+1];&#xa;        profStudentNames[0] = &quot;&quot;;  &#xa;        for (int i=1;i&lt;profStudentNames.length;i++) {&#xa;            profStudentNames[i] = this.currentStudent.get(i-1).get(0);&#xa;          //  System.out.println(&quot;This is the Student(s) Name depends on the facultyID \n&quot;+i+&quot; &quot;+profStudentNames[i]);&#xa;            &#xa;        }"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="currentStudentjComboBox.setFont(font);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Current Studen(s) Name&#xa;&#x9;&#x9;&#xa;&#x9;&#x9;try {&#xa;               MySQLDatabase msdb = MySQLDatabase.getInstance();&#xa;                msdb.connect();&#xa;                &#xa;            this.currentStudent = bL.profCurrentStudentList();&#xa;        }&#xa;        catch(DLException e){&#xa;            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);&#xa;        }&#xa;        &#xa;        String[] profStudentNames = new String[this.currentStudent.size()+1];&#xa;        profStudentNames[0] = &quot;&quot;;  &#xa;        for (int i=1;i&lt;profStudentNames.length;i++) {&#xa;            profStudentNames[i] = this.currentStudent.get(i-1).get(0);&#xa;       &#xa;            &#xa;        }"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
@@ -402,11 +392,29 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="if(lookingForStudentjjTextArea.getText().equals(&quot;&quot;))&#xa;lookingForStudentjjTextArea.setEnabled(false);&#xa;else&#xa;lookingForStudentjjTextArea.setEnabled(true);"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextArea(bL.askHelp)"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lookingForStudentjjTextArea.setFont(font2);"/>
               </AuxValues>
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="facultyFullNamejLabel">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JLabel(bL.firstName + &quot; &quot; + bL.lastName)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{&#xa;            bL.fetch();&#xa;                       &#xa;                                       &#xa;        }catch(DLException e)&#xa;        {&#xa;        //Do nothing&#xa;        &#xa;        }"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="facultyEmailjLabel">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JLabel(bL.email)"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="returnToSearchButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Return to Search Window"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="returnToSearchButtonActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

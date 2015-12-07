@@ -4,18 +4,23 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-
+/**
+ *
+ * @author Group 2: Fahad Alotaibi, Katherine Shaw, Nazar Al-Wattar, Chris Penepent
+ */
 
 public class BLFaculty extends DLFaculty {
 
-    /*New method*/
+    /*Constructor*/
     public BLFaculty(){
         
     }
-   
+    /*Parameterized Constructor*/
    public BLFaculty(int ID){
         super(ID);
     }
+   
+   /*Login method to test the usesr entry*/
    public static int login(String email, String pw) throws DLException {
 		MessageDigest md;
 		byte[] hashedBytes = new byte[0];
@@ -23,7 +28,7 @@ public class BLFaculty extends DLFaculty {
 			md = MessageDigest.getInstance("MD5");
 			hashedBytes = md.digest(pw.getBytes("UTF-8"));
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-			System.out.println("OOPSIE");
+			 throw new DLException(ex, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Driver error in connect()");
 		}
 		
 		StringBuilder sb = new StringBuilder();
@@ -34,6 +39,7 @@ public class BLFaculty extends DLFaculty {
 		return DLFaculty.facultyLogin(email,hashedPw);
 	}
    
+   /* profList() Method to return professor names*/
    public static ArrayList<ArrayList<String>> profList() throws DLException{
 	   ArrayList<ArrayList<String>> returnList = getAllProfs();
 	   ArrayList<ArrayList<String>> outputList = new ArrayList();
@@ -49,7 +55,7 @@ public class BLFaculty extends DLFaculty {
 	   return outputList;
    }
    
-   //get Student (s) name for this faculty ID (Nazar)
+   //get Student (s) name depends on the faculty ID ()
       public ArrayList<ArrayList<String>> profCurrentStudentList() throws DLException{
 	   ArrayList<ArrayList<String>> returnList = getAllProfCurrentStudentName();
 	   ArrayList<ArrayList<String>> outputList = new ArrayList();
@@ -63,7 +69,7 @@ public class BLFaculty extends DLFaculty {
 	   return outputList;
    }
    
-   //get All papers depends on the facultyID (Nazar)
+   //get All papers depends on the facultyID ()
         public ArrayList<ArrayList<String>> profPapersList() throws DLException{
 	   ArrayList<ArrayList<String>> returnPapersList = getAllProfPapers();
 	   ArrayList<ArrayList<String>> outputList = new ArrayList();
@@ -72,7 +78,7 @@ public class BLFaculty extends DLFaculty {
 	   {
 		String Title;	 
 			   String paperID = returnPapersList.get(i).get(0);
-                            //to disply only 21 character of the papertitle
+                            
                             if((returnPapersList.get(i).get(1)).length()> 43)
                                 Title = (returnPapersList.get(i).get(1)).substring(0, 43) + "...";
                            else
@@ -80,14 +86,12 @@ public class BLFaculty extends DLFaculty {
                            ArrayList<String> temp = new ArrayList();
 			   temp.add(paperID);
 			   temp.add(Title);
-                           
-                         //  System.out.println("Paper ID: " + paperID);
-                         //  System.out.println("Paper Title: " + Title);
+                                                   
 			   outputList.add(temp);
 	   }
 	   return outputList;
    }
-        /* New Method */
+        /* To update the full faculty name and email */
         public void setUpdateDetails(String fn, String ln, String newEmail){
             firstName = fn;
             lastName = ln;
@@ -95,7 +99,7 @@ public class BLFaculty extends DLFaculty {
             email = newEmail;
             askHelp = null;
         }
-        
+         /* To insert the full faculty name and email */
         public int setInsertDetails(String fn, String ln, String newEmail) throws DLException{
             firstName = fn;
             lastName = ln;
@@ -110,7 +114,7 @@ public class BLFaculty extends DLFaculty {
 			md = MessageDigest.getInstance("MD5");
 			hashedBytes = md.digest(pw.getBytes("UTF-8"));
 		} catch (NoSuchAlgorithmException|UnsupportedEncodingException ex) {
-			System.out.println("OOPSIE");
+			 throw new DLException(ex, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error In the Method setInsertDetails");
 		}
 		
 		StringBuilder sb = new StringBuilder();

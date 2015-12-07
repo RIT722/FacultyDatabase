@@ -1,16 +1,10 @@
 
-import java.awt.Font;
 import java.util.ArrayList;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
- * @author NAZAR ALWATTAR
+ * @author Group 2: Katherine Shaw, Nazar Al-Wattar,Fahad Alotaibi , Chris Penepent
  */
 public class facultyInforUI extends javax.swing.JFrame {
 
@@ -18,20 +12,23 @@ public class facultyInforUI extends javax.swing.JFrame {
     private ArrayList<ArrayList<String>> profPapers;
     public  BLPaper myPaper;
     public   BLFaculty bL;
-     public Font font = new Font("CMonospaced", Font.BOLD,22);
-     public Font font2 = new Font("CMonospaced", Font.BOLD,13);
-    //public int paperIndex=1;
-  // public boolean show =  true;
-    
+      
     /**
-     * Creates new form facultyInforUI
-     * @param ID
+     * Constructor
+     * 
      */
     public facultyInforUI()
     {
     
     }
-    public facultyInforUI(int ID) {
+    
+    /**
+     * ID Constructor
+     * 
+     * @param ID
+     * @throws DLException
+     */
+    public facultyInforUI(int ID) throws DLException {
         
          bL = new BLFaculty(ID);
        
@@ -42,7 +39,7 @@ public class facultyInforUI extends javax.swing.JFrame {
                      
         }catch(DLException e)
         {
-        //Do nothing
+       throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error In the ID facultyInforUI Constructor");
         
         }
        
@@ -71,7 +68,7 @@ public class facultyInforUI extends javax.swing.JFrame {
             this.profPapers = bL.profPapersList();
         }
         catch(DLException e){
-            //Do nothing
+            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);
         }
 
         String[] profPapersTitle = new String[this.profPapers.size()+1];
@@ -79,8 +76,6 @@ public class facultyInforUI extends javax.swing.JFrame {
         profPapersTitle[0] = "<click here to select paper>";
         for (int i=1;i<profPapersTitle.length;i++) {
             profPapersTitle[i] = this.profPapers.get(i-1).get(1);
-            // System.out.println("This is the papers ID depends on the facultyID \n"+i +" "+this.profPapers.get(i-1).get(0));
-            // System.out.println("This is the papers title depends on the facultyID \n" +i+" "+ profPapersTitle[i]);
         }
         facultypapersjComboBox = new javax.swing.JComboBox<>(profPapersTitle);
         facultyPapersComboboxjLabel = new javax.swing.JLabel();
@@ -95,16 +90,6 @@ public class facultyInforUI extends javax.swing.JFrame {
         facultyPaperCitationjTextArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        try{
-            bL.fetch();
-
-        }catch(DLException e)
-        {
-            //Do nothing
-
-        }
-        facultynamejTextField = new javax.swing.JTextField(bL.firstName + " " + bL.lastName);
-        facultyEmailjTextField = new javax.swing.JTextField(bL.email);
         //Current Studen(s) Name
 
         try {
@@ -114,14 +99,13 @@ public class facultyInforUI extends javax.swing.JFrame {
             this.currentStudent = bL.profCurrentStudentList();
         }
         catch(DLException e){
-            //Do nothing
+            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);
         }
 
         String[] profStudentNames = new String[this.currentStudent.size()+1];
         profStudentNames[0] = "";
         for (int i=1;i<profStudentNames.length;i++) {
             profStudentNames[i] = this.currentStudent.get(i-1).get(0);
-            //  System.out.println("This is the Student(s) Name depends on the facultyID \n"+i+" "+profStudentNames[i]);
 
         }
         currentStudentjComboBox = new javax.swing.JComboBox<>(profStudentNames);
@@ -129,6 +113,17 @@ public class facultyInforUI extends javax.swing.JFrame {
         lookingForstudentjLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lookingForStudentjjTextArea = new javax.swing.JTextArea(bL.askHelp);
+        try{
+            bL.fetch();
+
+        }catch(DLException e)
+        {
+            //Do nothing
+
+        }
+        facultyFullNamejLabel = new javax.swing.JLabel(bL.firstName + " " + bL.lastName);
+        facultyEmailjLabel = new javax.swing.JLabel(bL.email);
+        returnToSearchButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,7 +137,6 @@ public class facultyInforUI extends javax.swing.JFrame {
         facultypapersjComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(profPapersTitle));
         facultypapersjComboBox.setSelectedIndex(0);
         facultypapersjComboBox.setSelectedItem(facultypapersjComboBox);
-        facultypapersjComboBox.setFont(font);
         facultypapersjComboBox.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
             }
@@ -213,7 +207,7 @@ public class facultyInforUI extends javax.swing.JFrame {
                 .addGroup(facultyPapersjPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(facultyPapersjPanelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
                     .addGroup(facultyPapersjPanelLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(facultyPaperAbstractjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -233,11 +227,6 @@ public class facultyInforUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Professor Email");
 
-        facultynamejTextField.setFont(font);
-
-        facultyEmailjTextField.setFont(font);
-
-        currentStudentjComboBox.setFont(font);
         currentStudentjComboBox.setSelectedIndex(1);
         currentStudentjComboBox.setSelectedItem(currentStudentjComboBox);
 
@@ -249,12 +238,18 @@ public class facultyInforUI extends javax.swing.JFrame {
 
         lookingForStudentjjTextArea.setColumns(20);
         lookingForStudentjjTextArea.setRows(5);
-        lookingForStudentjjTextArea.setFont(font2);
         jScrollPane2.setViewportView(lookingForStudentjjTextArea);
         if(lookingForStudentjjTextArea.getText().equals(""))
         lookingForStudentjjTextArea.setEnabled(false);
         else
         lookingForStudentjjTextArea.setEnabled(true);
+
+        returnToSearchButton.setText("Return to Search Window");
+        returnToSearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnToSearchButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout facultyInfojPanelLayout = new javax.swing.GroupLayout(facultyInfojPanel);
         facultyInfojPanel.setLayout(facultyInfojPanelLayout);
@@ -268,39 +263,43 @@ public class facultyInforUI extends javax.swing.JFrame {
                             .addComponent(currentStudentjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(facultyInfojPanelLayout.createSequentialGroup()
                                 .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(lookingForstudentjLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(currentStudentjComboBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 81, Short.MAX_VALUE)))
+                                        .addComponent(currentStudentjComboBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(returnToSearchButton)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(facultyPapersjPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(facultyInfojPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(facultyInfojPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(facultyEmailjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(facultyInfojPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(facultynamejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(facultyEmailjLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                            .addComponent(facultyFullNamejLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(63, 63, 63)))
                 .addContainerGap())
         );
         facultyInfojPanelLayout.setVerticalGroup(
             facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, facultyInfojPanelLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(facultynamejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(16, 16, 16)
-                .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(facultyEmailjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(23, 23, 23)
+            .addGroup(facultyInfojPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(facultyFullNamejLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(facultyEmailjLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(facultyInfojPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(facultyInfojPanelLayout.createSequentialGroup()
+                        .addComponent(facultyPapersjPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(facultyInfojPanelLayout.createSequentialGroup()
                         .addComponent(currentStudentjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -309,9 +308,9 @@ public class facultyInforUI extends javax.swing.JFrame {
                         .addComponent(lookingForstudentjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(facultyPapersjPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(returnToSearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -345,23 +344,20 @@ public class facultyInforUI extends javax.swing.JFrame {
         {
             
         int index = facultypapersjComboBox.getSelectedIndex();
-           // System.out.println("Index  for this combobox element is "+ index);
-            String item = facultypapersjComboBox.getSelectedItem().toString();
-           // System.out.println("The Item  for this combobox element is "+ item);
-            
+           String item = facultypapersjComboBox.getSelectedItem().toString();
+                      
             for(int i=0; i<profPapers.size(); i++)
             {
             if(profPapers.get(i).get(1).equals(item))
             {
           int  paperIndex =Integer.parseInt(profPapers.get(i).get(0));
-              //  System.out.println("This is the paper id " + paperIndex);
-                
+                             
                 MySQLDatabase msdb = MySQLDatabase.getInstance();
                 try {
                     msdb.connect();
                 }catch(DLException e)
                 {
-//DO Nothing now
+                 Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);
                 }
                
               
@@ -370,31 +366,28 @@ public class facultyInforUI extends javax.swing.JFrame {
                 try {
                     myPaper.fetch();  
                     
-                  //  show = true;
+                  
                     
                     facultypaperTitlejTextArea = new javax.swing.JTextArea(myPaper.title);
                     facultypaperTitlejTextArea.setColumns(20);
                     facultypaperTitlejTextArea.setRows(5);
-                    facultypaperTitlejTextArea.setFont(font2);
+                   
                     jScrollPane1.setViewportView(facultypaperTitlejTextArea);
-                   // System.out.println("This is the title for this paper " +  facultypaperTitlejTextField.getText());
-                    facultyPaperAbstractjTextArea = new javax.swing.JTextArea(myPaper.pAbstract);
+                   facultyPaperAbstractjTextArea = new javax.swing.JTextArea(myPaper.pAbstract);
                    facultyPaperAbstractjTextArea.setColumns(20);
                    facultyPaperAbstractjTextArea.setRows(5);
-                    facultyPaperAbstractjTextArea.setFont(font2);
                    jScrollPane3.setViewportView(facultyPaperAbstractjTextArea);
                    facultyPaperAbstractjTextArea.setLineWrap(true);
                    facultyPaperAbstractjTextArea.setWrapStyleWord(true);
                    facultyPaperCitationjTextArea = new javax.swing.JTextArea(myPaper.citation);
                     facultyPaperCitationjTextArea.setColumns(20);
                     facultyPaperCitationjTextArea.setRows(5);
-                    facultyPaperCitationjTextArea.setFont(font2);
                     jScrollPane4.setViewportView(facultyPaperCitationjTextArea);
                     
                    
             
             }catch (DLException ex) {
-             //Do nothing
+            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, ex);
        }
            
             }
@@ -404,6 +397,10 @@ public class facultyInforUI extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_facultypapersjComboBoxPopupMenuWillBecomeInvisible
+
+    private void returnToSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToSearchButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_returnToSearchButtonActionPerformed
   /**
      * @param args the command line arguments
      */
@@ -434,8 +431,7 @@ public class facultyInforUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                int ID =1;
-                new facultyInforUI(ID).setVisible(true);
+                new facultyInforUI().setVisible(true);
             }
         });
     }
@@ -443,7 +439,8 @@ public class facultyInforUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> currentStudentjComboBox;
     private javax.swing.JLabel currentStudentjLabel;
-    private javax.swing.JTextField facultyEmailjTextField;
+    private javax.swing.JLabel facultyEmailjLabel;
+    private javax.swing.JLabel facultyFullNamejLabel;
     private javax.swing.JPanel facultyInfojPanel;
     private javax.swing.JLabel facultyPaperAbstractjLabel;
     private javax.swing.JTextArea facultyPaperAbstractjTextArea;
@@ -452,7 +449,6 @@ public class facultyInforUI extends javax.swing.JFrame {
     private javax.swing.JLabel facultyPaperTitlejLabel;
     private javax.swing.JLabel facultyPapersComboboxjLabel;
     private javax.swing.JPanel facultyPapersjPanel;
-    private javax.swing.JTextField facultynamejTextField;
     private javax.swing.JTextArea facultypaperTitlejTextArea;
     private javax.swing.JComboBox<String> facultypapersjComboBox;
     private javax.swing.JLabel jLabel1;
@@ -463,5 +459,6 @@ public class facultyInforUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea lookingForStudentjjTextArea;
     private javax.swing.JLabel lookingForstudentjLabel;
+    private javax.swing.JButton returnToSearchButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,12 +1,16 @@
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Group 2: Nazar Al-Wattar, Fahad Alotaibi, Katherine Shaw, Chris Penepent
+ */
 public class DLFaculty {
     String firstName;
     String lastName;
     String password;
     String email;
-    String askHelp; //changing the askHelp variable from boolean to String (Nazar)
+    String askHelp;
     int ID;
     
     public DLFaculty(){
@@ -18,7 +22,7 @@ public class DLFaculty {
         this.ID = ID;
     }
     
-    /* Created constructors */
+    /* Mutators */
     public void setFN(String fn){
         firstName = fn;
     }
@@ -51,7 +55,7 @@ public class DLFaculty {
     public String getEmail(){
         return email;
     }
-    //changing the getHelp from boolean to String (Nazar)
+    
     public String getHelp(){
         return askHelp;
     }
@@ -205,47 +209,7 @@ public class DLFaculty {
         }
     }
     
-    
-       
-    // Will return the faculty name, email, and list of papers
-/*    public void getAllProfessorInfo(String ProfName) throws SQLException {
-    
-    // 
-    }*/
-    
-    /*public void getAllStudentNames() throws DLException {
-	   
-	   String query = "select student.name from student"+
-			 " join faculty on ((faculty.id = student.facultyID) AND faculty.id = '"+ ID +"')"+""
-			 		+ "group by student.name;";
-               
-      MySQLDatabase myDB = MySQLDatabase.getInstance();
-
-      try {
-      ArrayList<ArrayList<String>> results = myDB.getData(query);
-
-	   if(results.isEmpty()){
-		System.out.println("We didn't fetch data from the database, try again");
-							
-	   }
-	   else{ 
-		   System.out.println("Student id who work with this profesor are: \n");
-		   for(int i =0 ; i< results.size(); i++)
-		      {
-			      String studentId = (results.get(i).toString());
-			      System.out.println(studentId);	
-		      }
-	      }			
-      }catch(RuntimeException e){
-            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "SQL string = " + query, "Error in fetch() of Faculty");
-        }
-
       
-      
-		}
-	
-    
-    */
     //get student (s) name for this faculty with this ID
     public ArrayList<ArrayList<String>> getAllProfCurrentStudentName() throws DLException{
 		ArrayList<ArrayList<String>> studentList;
@@ -264,7 +228,7 @@ public class DLFaculty {
 	}
     
    
-    //get All Papers for this faculty with this ID (Nazar)
+    //get All Papers for this faculty with this ID 
 
     public ArrayList<ArrayList<String>> getAllProfPapers() throws DLException{
 		ArrayList<ArrayList<String>> profPapersList;
@@ -281,15 +245,11 @@ public class DLFaculty {
         catch(RuntimeException e){
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in getAllProfPapers Method");
         }
-       // System.out.println("This is my result for papers: " + profPapersList);
+       
         return profPapersList;
 	} 
     
-
-    
-    
-	   
-               
+              /*getAllProfs Method to return all the professor names */
 	public static ArrayList<ArrayList<String>> getAllProfs() throws DLException{
 		ArrayList<ArrayList<String>> profList;
 
@@ -300,7 +260,7 @@ public class DLFaculty {
             
         }
         catch(RuntimeException e){
-            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in searchByKeywords() of Faculty");
+            throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in getAllProfs Method");
         }
         return profList;
 	}
