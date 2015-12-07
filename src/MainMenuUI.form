@@ -191,7 +191,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="keywordField">
           <Properties>
-            <Property name="enabled" type="boolean" value="false" postCode="keywordField.getDocument().addDocumentListener(new DocumentListener() {&#xa;&#x9;public void insertUpdate(DocumentEvent evt) {&#xa;        keywordFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        keywordFieldDocumentUpdated(evt);&#xa;    }&#xa;&#x9;public void changedUpdate(DocumentEvent evt) {&#xa;&#x9;&#x9;keywordFieldDocumentUpdated(evt);&#xa;&#x9;}&#xa;});"/>
+            <Property name="enabled" type="boolean" value="false" postCode="keywordField.getDocument().addDocumentListener(new DocumentListener() {&#xa;    public void insertUpdate(DocumentEvent evt) {&#xa;        keywordFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void removeUpdate(DocumentEvent evt) {&#xa;        keywordFieldDocumentUpdated(evt);&#xa;    }&#xa;    public void changedUpdate(DocumentEvent evt) {&#xa;        keywordFieldDocumentUpdated(evt);&#xa;    }&#xa;});"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="facultyNameComboBox">
@@ -203,7 +203,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox(profNames)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {&#xa;    this.profs = BLFaculty.profList();&#xa;}&#xa;catch(DLException e){&#xa;    //blah&#xa;}&#xa;String[] profNames = new String[this.profs.size()+1];&#xa;profNames[0] = &quot;&quot;;  //should be a blank option first&#xa;for (int i=1;i&lt;profNames.length;i++) {&#xa;    profNames[i] = this.profs.get(i-1).get(1);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//get the current list of professors from the database&#xa;try {&#xa;    this.profs = BLFaculty.profList();&#xa;}&#xa;catch(DLException e){&#xa;    JOptionPane.showMessageDialog(null, &quot;Could not complete operation. Details written to log file.&quot;);&#xa;}&#xa;//prepare to populate combobox&#xa;String[] profNames = new String[this.profs.size()+1];&#xa;profNames[0] = &quot;&lt;click here to select professor name&gt;&quot;; //default option&#xa;for (int i=1;i&lt;profNames.length;i++) {&#xa;    profNames[i] = this.profs.get(i-1).get(1);&#xa;}"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="titleLabel">

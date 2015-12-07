@@ -17,20 +17,21 @@ public class MainMenuUI extends javax.swing.JFrame {
 	private MySQLDatabase MySQLDB;
 	
 	/**
-	 * Creates new form FacultyDatabaseUI
+	 * Creates new form MainMenuUI
 	 */
 	public MainMenuUI() {		
 		//ADAPTED FROM: http://stackoverflow.com/a/8881235
+		/*
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel("Enter database password:");
 		JPasswordField pass = new JPasswordField(16);
 		panel.add(label);
 		panel.add(pass);
 		String[] options = new String[]{"OK", "Cancel"};
+		//database password prompt
 		int option = JOptionPane.showOptionDialog(null, panel, "Enter Password",
 								 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
 								 null, options, pass);
-		//pass.requestFocusInWindow();
 		if (option == 0) // pressing OK button
 		{
 			String pw = new String(pass.getPassword());
@@ -38,9 +39,9 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
 		else { //Cancel
 			System.exit(0);
-			System.out.println("UH NEVER MIND");
 		}
-		
+		*/
+		this.connectToDatabase("student");
 		initComponents();
 	}
 
@@ -63,14 +64,16 @@ public class MainMenuUI extends javax.swing.JFrame {
         facultyMembersLabel = new javax.swing.JLabel();
         titleField = new javax.swing.JTextField();
         keywordField = new javax.swing.JTextField();
+        //get the current list of professors from the database
         try {
             this.profs = BLFaculty.profList();
         }
         catch(DLException e){
-            //blah
+            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
         }
+        //prepare to populate combobox
         String[] profNames = new String[this.profs.size()+1];
-        profNames[0] = "";  //should be a blank option first
+        profNames[0] = "<click here to select professor name>"; //default option
         for (int i=1;i<profNames.length;i++) {
             profNames[i] = this.profs.get(i-1).get(1);
         }
@@ -314,42 +317,47 @@ public class MainMenuUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // To Serach By Paper's Title
+        // To Search By Paper's Title
+		//only occurs if Title radio button is selected and text entry field is not empty
         if (this.titleField.isEnabled() && !this.titleField.getText().isEmpty()){
-                        ArrayList<BLPaper> ret = new ArrayList<>();
-                        try{
-                        ret = BLPaper.searchPapersByTitle(this.titleField.getText().trim());
-                        }catch(DLException e){
-                            System.out.println(e.toString());
+			ArrayList<BLPaper> result = new ArrayList<>();
+            try{ //execute a query with the user-entered title
+				result = BLPaper.searchPapersByTitle(this.titleField.getText().trim());
+            }catch(DLException e){
+                JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
 			}
-                        PaperUI paperUI = new PaperUI();
-                        if(ret != null)
-                            for(BLPaper paper : ret){
-                                paperUI.getTitleCBX().addItem(paper);
-                            }
-                        
-                        paperUI.setVisible(true);      
+			PaperUI paperUI = new PaperUI();
+			if(result != null){
+				for(BLPaper paper : result){ //populate list of papers in search results window
+					paperUI.getTitleCBX().addItem(paper);
+				}
+			}
+
+			paperUI.setVisible(true); //make search results window visible
 		}
+		//Search by faculty member
+		//only occurs if Faculty Name radio button is selected and the default option in the combobox is not selected
 		else if (this.facultyNameComboBox.isEnabled() && this.facultyNameComboBox.getSelectedIndex() > 0) {
 			int index = this.facultyNameComboBox.getSelectedIndex() - 1; //because first "prof" in list is blank
 			int id = Integer.parseInt(this.profs.get(index).get(0));
 			new facultyInforUI(id).setVisible(true);
 		}
-                // To Search By Paper's Keyword
+        // To Search By Paper's Keyword
+		//only occurs if keyword radio button is selected and text entry field is not empty
 		else if (this.keywordField.isEnabled() && !this.keywordField.getText().isEmpty()) {
-                        ArrayList<BLPaper> ret = new ArrayList<>();
-                        try{
-                        ret = BLPaper.searchPapersByKeywords(this.keywordField.getText());
-                        }catch(DLException e){
-                            System.out.println(e.toString());
-                        }
-                        PaperUI paperUI = new PaperUI();
-                        if(ret != null)
-                            for(BLPaper paper : ret){
-                                paperUI.getTitleCBX().addItem(paper);
-                            }
-                        
-                        paperUI.setVisible(true);
+			ArrayList<BLPaper> result = new ArrayList<>();
+			try{ //execute a query with the user-entered keyword
+				result = BLPaper.searchPapersByKeywords(this.keywordField.getText());
+			}catch(DLException e){
+				System.out.println(e.toString());
+			}
+			PaperUI paperUI = new PaperUI();
+			if(result != null)
+				for(BLPaper paper : result){ //populate list of papers in search results window
+					paperUI.getTitleCBX().addItem(paper);
+				}
+
+			paperUI.setVisible(true); //make search results window visible
 		}
 		else {
 			this.searchButton.setEnabled(false); //if none of the above is true this button should not be enabled to begin with!
@@ -357,47 +365,48 @@ public class MainMenuUI extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void keywordRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordRadioButtonActionPerformed
-		if (this.facultyNameComboBox.isEnabled()){
-			this.facultyNameComboBox.setEnabled(false);
+		if (this.facultyNameComboBox.isEnabled()){ //if we're switching from the Faculty Name radio button
+			this.facultyNameComboBox.setEnabled(false); //then the combobox needs to be disabled
 		}
-		if (this.titleField.isEnabled()){
-			this.titleField.setEnabled(false);
+		if (this.titleField.isEnabled()){ //if we're switching from the Title radio button
+			this.titleField.setEnabled(false); //then the Title text field needs to be disabled
 		}
 		this.keywordField.setEnabled(true);
 		if (this.keywordField.getDocument().getLength() == 0 && this.searchButton.isEnabled()) {
-			this.searchButton.setEnabled(false);
-		}
+			this.searchButton.setEnabled(false); //if the keyword search field is empty and the search button is enabled
+		}											//then the search button needs to be disabled
     }//GEN-LAST:event_keywordRadioButtonActionPerformed
 
     private void facultyNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyNameRadioButtonActionPerformed
-		if (this.titleField.isEnabled()){
-			this.titleField.setEnabled(false);
+		if (this.titleField.isEnabled()){ //if we're switching from the Title radio button
+			this.titleField.setEnabled(false); //then the Title text field needs to be disabled
 		}
-		if (this.keywordField.isEnabled()){
-			this.keywordField.setEnabled(false);
+		if (this.keywordField.isEnabled()){ //if we're switching from the Keyword radio button
+			this.keywordField.setEnabled(false); //then the Keyword text field needs to be disabled
 		}
 		this.facultyNameComboBox.setEnabled(true);
 		if (this.facultyNameComboBox.getSelectedIndex() == 0 && this.searchButton.isEnabled()) {
-			this.searchButton.setEnabled(false);
-		}
+			this.searchButton.setEnabled(false); //if the default item is selected and the Search button is enabled
+		}											//then the search button needs to be disabled
     }//GEN-LAST:event_facultyNameRadioButtonActionPerformed
 
     private void titleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleRadioButtonActionPerformed
-		if (this.facultyNameComboBox.isEnabled()){
-			this.facultyNameComboBox.setEnabled(false);
+		if (this.facultyNameComboBox.isEnabled()){ //if we're switching from the Faculty Name radio button
+			this.facultyNameComboBox.setEnabled(false); //then the combobox needs to be disabled
 		}
-		if (this.keywordField.isEnabled()){
-			this.keywordField.setEnabled(false);
+		if (this.keywordField.isEnabled()){ //if we're switching from the Keyword radio button
+			this.keywordField.setEnabled(false); //then the Keyword text field needs to be disabled
 		}
 		this.titleField.setEnabled(true);
 		if (this.titleField.getDocument().getLength() == 0 && this.searchButton.isEnabled()) {
-			this.searchButton.setEnabled(false);
-		}
+			this.searchButton.setEnabled(false);//if the title search field is empty and the search button is enabled
+		}											//then the search button needs to be disabled
     }//GEN-LAST:event_titleRadioButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = this.userNameField.getText();
 		String password = new String(this.passwordField.getPassword());
+		//only attempt login if both a username and password have been entered
 		if (username.length() > 0 && password.length() > 0) {
 			int facultyId;
 			try {
@@ -424,12 +433,13 @@ public class MainMenuUI extends javax.swing.JFrame {
 		panel.add(uname);
 		panel.add(pass);
 		String[] options = new String[]{"OK", "Cancel"};
+		//prompt for admin credentials
 		int option = JOptionPane.showOptionDialog(null, panel, "Enter Admin Username and Password",
 								 JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
 								 null, options, uname);
 		String username = uname.getText();
 		String pw = new String(pass.getPassword());
-		if (option == 0 && !pw.isEmpty()) // pressing OK button
+		if (option == 0 && !username.isEmpty() && !pw.isEmpty()) // pressing OK button with a password entered
 		{
 			try {
 				BLAdmin.login(username,pw);
@@ -449,9 +459,11 @@ public class MainMenuUI extends javax.swing.JFrame {
 	private void titleFieldDocumentUpdated(DocumentEvent evt) {
 		Document titleFieldDocument = (Document)evt.getDocument();
 		if (titleFieldDocument.getLength() > 0) {
+			//enable the search button if the title field currently has stuff in it
 			this.searchButton.setEnabled(true);
 		}
 		else {
+			//disable the search button if the title field is now empty
 			this.searchButton.setEnabled(false);
 		}
 	}
@@ -459,9 +471,11 @@ public class MainMenuUI extends javax.swing.JFrame {
 	private void facultyNameComboBoxSelected(ActionEvent evt) {
 		JComboBox cb = (JComboBox)evt.getSource();
 		if (cb.getSelectedIndex() > 0) {
+			//enable the search button if a faculty name besides the default is now selected
 			this.searchButton.setEnabled(true);
 		}
 		else {
+			//disable the search button if the currently selected "faculty" name is the default
 			this.searchButton.setEnabled(false);
 		}
 	}
@@ -469,9 +483,11 @@ public class MainMenuUI extends javax.swing.JFrame {
 	private void keywordFieldDocumentUpdated(DocumentEvent evt) {
 		Document keywordFieldDocument = (Document)evt.getDocument();
 		if (keywordFieldDocument.getLength() > 0) {
+			//enable the search button if the keyword field currently has stuff in it
 			this.searchButton.setEnabled(true);
 		}
 		else {
+			//disable the search button if the keyword field is now empty
 			this.searchButton.setEnabled(false);
 		}
 	}
@@ -512,6 +528,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		});
 	}
 	
+	//utility function
 	private void connectToDatabase(String pw) {
 		MySQLDB = MySQLDatabase.getInstance();
 		try{
