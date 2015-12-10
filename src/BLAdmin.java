@@ -8,6 +8,7 @@ public class BLAdmin {
         
     }
 
+	//Hash user-entered password, send down to data layer adminLogin() method
 	public static void login(String email, String pw) throws DLException {
 		MessageDigest md;
 		byte[] hashedBytes = new byte[0];

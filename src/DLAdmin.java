@@ -5,6 +5,7 @@ public class DLAdmin {
 
 	public DLAdmin() {}
 	
+	//attempt to select from the Admin table with the given credentials
 	public static void adminLogin(String email,String password) throws DLException{
 		ArrayList<ArrayList<String>> result;
 		MySQLDatabase db = MySQLDatabase.getInstance();

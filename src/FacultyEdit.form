@@ -113,7 +113,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="paperInfoPanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="16" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -142,7 +142,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="needStudentTextBox" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="13" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="needStudentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="updateButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -156,7 +156,7 @@
                       <Component id="saveChangesButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="returnToSearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -183,7 +183,7 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox()"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create placeholder for database information&#xa;ArrayList&lt;ArrayList&lt;String&gt;&gt; papers = new ArrayList();&#xa;try {&#xa;    papers = faculty.profPapersList(); //Get paper information from database&#xa;}&#xa;catch(DLException e){&#xa;    JOptionPane.showMessageDialog(null, &quot;Could not complete operation. Details written to log file.&quot;);&#xa;}&#xa;paperList = new ArrayList(); //Create list for titles&#xa;paperIDs = new ArrayList(); //Create list for IDs&#xa;paperList.add(&quot;&quot;);  //should be a blank option first&#xa;paperList.add(&quot;Add New Paper&quot;); //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; papers.size(); i++) //Add titles to title list and IDs to ID list&#xa;{&#xa;    if((papers.get(i).get(1)).length() &gt; 30)&#xa;        paperList.add((papers.get(i).get(1)).substring(0, 30) + &quot;...&quot;);&#xa;    else&#xa;        paperList.add((papers.get(i).get(1)) + &quot;...&quot;);&#xa;&#xa;    paperIDs.add(Integer.parseInt(papers.get(i).get(0)));&#xa;}&#xa;//Create drop down list of titles"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Create placeholder for database information&#xa;ArrayList&lt;ArrayList&lt;String&gt;&gt; papers = new ArrayList();&#xa;try {&#xa;    papers = faculty.profPapersList(); //Get paper information from database&#xa;}&#xa;catch(DLException e){&#xa;    JOptionPane.showMessageDialog(null, &quot;Could not complete operation. Details written to log file.&quot;);&#xa;}&#xa;paperList = new ArrayList(); //Create list for titles&#xa;paperIDs = new ArrayList(); //Create list for IDs&#xa;paperList.add(&quot;&lt;click here to view paper list&gt;&quot;);  //should be a blank option first&#xa;paperList.add(&quot;Add New Paper&quot;); //Add option for new paper to combo box list&#xa;for(int i = 0; i &lt; papers.size(); i++) //Add titles to title list and IDs to ID list&#xa;{&#xa;    if((papers.get(i).get(1)).length() &gt; 30)&#xa;        paperList.add((papers.get(i).get(1)).substring(0, 30) + &quot;...&quot;);&#xa;    else&#xa;        paperList.add((papers.get(i).get(1)) + &quot;...&quot;);&#xa;&#xa;    paperIDs.add(Integer.parseInt(papers.get(i).get(0)));&#xa;}&#xa;//Create drop down list of titles"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="paperInfoPanel">
@@ -376,6 +376,7 @@
         <Component class="javax.swing.JButton" name="editButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit Paper"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
@@ -387,6 +388,7 @@
         <Component class="javax.swing.JButton" name="deletePaperButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete Paper"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deletePaperButtonActionPerformed"/>

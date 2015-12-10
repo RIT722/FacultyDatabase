@@ -70,7 +70,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         }
         paperList = new ArrayList(); //Create list for titles
         paperIDs = new ArrayList(); //Create list for IDs
-        paperList.add("");  //should be a blank option first
+        paperList.add("<click here to view paper list>");  //should be a blank option first
         paperList.add("Add New Paper"); //Add option for new paper to combo box list
         for(int i = 0; i < papers.size(); i++) //Add titles to title list and IDs to ID list
         {
@@ -284,6 +284,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         });
 
         editButton.setText("Edit Paper");
+        editButton.setEnabled(false);
         editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editButtonActionPerformed(evt);
@@ -291,6 +292,7 @@ public class FacultyEdit extends javax.swing.JFrame {
         });
 
         deletePaperButton.setText("Delete Paper");
+        deletePaperButton.setEnabled(false);
         deletePaperButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deletePaperButtonActionPerformed(evt);
@@ -399,7 +401,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                         .addGap(40, 40, 40))
                     .addGroup(facultyEditPanelLayout.createSequentialGroup()
                         .addComponent(paperInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(16, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         facultyEditPanelLayout.setVerticalGroup(
             facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,7 +423,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                             .addComponent(addStudentButton))
                         .addGap(18, 18, 18)
                         .addComponent(needStudentTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(facultyEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(needStudentLabel)
                             .addComponent(updateButton))))
@@ -431,7 +433,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                     .addComponent(addNewPaperButton)
                     .addComponent(saveChangesButton)
                     .addComponent(returnToSearchButton))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -457,7 +459,19 @@ public class FacultyEdit extends javax.swing.JFrame {
     //This method controls the action of the papers drop down list
     private void facultyPapersListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyPapersListActionPerformed
         int titleListIdx = facultyPapersList.getSelectedIndex(); //Get the index of the selected item
-        if(titleListIdx == 1){ //If the item is Add New Paper, clear the text fields and set them to editable
+        if(titleListIdx == 0){
+            titleTextArea.setText("");
+            abstractTextArea.setText("");
+            citationTextArea.setText("");
+            keywordsTextField.setText("");
+            titleTextArea.setEditable(false);
+            abstractTextArea.setEditable(false);
+            citationTextArea.setEditable(false);
+            keywordsTextField.setEditable(false);
+			editButton.setEnabled(false);
+			deletePaperButton.setEnabled(false);
+        }
+		if(titleListIdx == 1){ //If the item is Add New Paper, clear the text fields and set them to editable
             titleTextArea.setText("");
             abstractTextArea.setText("");
             citationTextArea.setText("");
@@ -466,11 +480,10 @@ public class FacultyEdit extends javax.swing.JFrame {
             abstractTextArea.setEditable(true);
             citationTextArea.setEditable(true);
             keywordsTextField.setEditable(true);
+			editButton.setEnabled(false);
+			deletePaperButton.setEnabled(false);
         }
-        else if(titleListIdx == 0){ //If the item selected is blank, do nothing
-            
-        }
-        else //Otherwise, a paper is selected. The details are displayed in text fields below
+        if(titleListIdx > 1) //Otherwise, a paper is selected. The details are displayed in text fields below
         {
             int paperId = paperIDs.get(titleListIdx-2); //Get the ID of the selected paper
             displayPaper = new BLPaper(paperId); //Create a BLPaper object
@@ -502,6 +515,8 @@ public class FacultyEdit extends javax.swing.JFrame {
             citationTextArea.setCaretPosition(0);
             keywordsTextField.setText(keywords);
             keywordsTextField.setCaretPosition(0);
+			editButton.setEnabled(true);
+			deletePaperButton.setEnabled(true);
         }
     }//GEN-LAST:event_facultyPapersListActionPerformed
 
@@ -536,26 +551,37 @@ public class FacultyEdit extends javax.swing.JFrame {
     //Controls the actions of the Save Changes button
     private void saveChangesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangesButtonActionPerformed
         int titleListIdx = facultyPapersList.getSelectedIndex(); //Gets the index of the selected paper
-        int paperID = paperIDs.get(titleListIdx-2); //Gets the ID of the selected paper
-        try{
-            BLPaper updatePaper = new BLPaper(paperID); //Create BLPaper object
-            updatePaper.save(titleText, abstractText, citationText, keywordsText, facID); //Update database with new values
+		if(titleListIdx > 1){
+			if(!titleTextArea.getText().isEmpty() && !abstractTextArea.getText().isEmpty() && !citationTextArea.getText().isEmpty()
+																							&& !keywordsTextField.getText().isEmpty()){
+				int paperID = paperIDs.get(titleListIdx-2); //Gets the ID of the selected paper
+				try{
+					BLPaper updatePaper = new BLPaper(paperID); //Create BLPaper object
+					updatePaper.save(titleText, abstractText, citationText, keywordsText, facID); //Update database with new values
 
-            updatePaper.fetch(); //Populate object with database values
+					updatePaper.fetch(); //Populate object with database values
 
-            if(updatePaper.getTitle().length() > 30)
-                paperList.set(titleListIdx, (updatePaper.getTitle()).substring(0, 30) + "..."); //Update paper title in list
-            else
-                paperList.set(titleListIdx, updatePaper.getTitle() + "...");
+					if(updatePaper.getTitle().length() > 30)
+						paperList.set(titleListIdx, (updatePaper.getTitle()).substring(0, 30) + "..."); //Update paper title in list
+					else
+						paperList.set(titleListIdx, updatePaper.getTitle() + "...");
 
-            facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray())); //Reset drop down list
-             
-            JOptionPane.showMessageDialog(null, "Paper saved."); //Display message to user
+					facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray())); //Reset drop down list
 
-        }
-        catch(DLException d){
-            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file."); //Display error message to user
-        }
+					JOptionPane.showMessageDialog(null, "Paper saved."); //Display message to user
+
+				}
+				catch(DLException d){
+					JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file."); //Display error message to user
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Please fill out all fields.");
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Please select a paper.");
+		}
     }//GEN-LAST:event_saveChangesButtonActionPerformed
 
     //When Return to Search is clicked, the window closes
@@ -610,30 +636,39 @@ public class FacultyEdit extends javax.swing.JFrame {
     private void addNewPaperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewPaperButtonActionPerformed
         int titleListIdx = facultyPapersList.getSelectedIndex(); //Get index of selected item
         if(titleListIdx == 1){ //Check to see if selected item is Add New Paper
-            try{
-                BLPaper newPaper = new BLPaper(); //Create BLPaper object
-                //Add paper details to database, return auto generated ID
-                int newID = newPaper.addPaper(titleText, abstractText, citationText, keywordsText, facID); 
-                newPaper.fetch(); //Populate object with database values
-                paperIDs.add(newID); //Add paper ID to list
-                
-                if(newPaper.getTitle().length() > 30) //Ad paper title to drop down
-                    paperList.add((newPaper.getTitle()).substring(0, 30) + "...");
-                else
-                    paperList.add(newPaper.getTitle() + "...");
+            if(!titleTextArea.getText().isEmpty() && !abstractTextArea.getText().isEmpty() && !citationTextArea.getText().isEmpty()
+																							&& !keywordsTextField.getText().isEmpty()){
+				try{
+					BLPaper newPaper = new BLPaper(); //Create BLPaper object
+					//Add paper details to database, return auto generated ID
+					int newID = newPaper.addPaper(titleText, abstractText, citationText, keywordsText, facID); 
+					newPaper.fetch(); //Populate object with database values
+					paperIDs.add(newID); //Add paper ID to list
 
-                facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray())); //Reset drop-down list
-                titleTextArea.setText(""); //Clear paper fields
-                abstractTextArea.setText("");
-                citationTextArea.setText("");
-                keywordsTextField.setText("");                
-                JOptionPane.showMessageDialog(null, "Paper added."); //Display message to user
-                
-            }
-            catch(DLException d){
-                JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file."); //Display error message to user
-            }
+					if(newPaper.getTitle().length() > 30) //Ad paper title to drop down
+						paperList.add((newPaper.getTitle()).substring(0, 30) + "...");
+					else
+						paperList.add(newPaper.getTitle() + "...");
+
+					facultyPapersList.setModel(new javax.swing.DefaultComboBoxModel(paperList.toArray())); //Reset drop-down list
+					titleTextArea.setText(""); //Clear paper fields
+					abstractTextArea.setText("");
+					citationTextArea.setText("");
+					keywordsTextField.setText("");                
+					JOptionPane.showMessageDialog(null, "Paper added."); //Display message to user
+
+				}
+				catch(DLException d){
+					JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file."); //Display error message to user
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Please fill out all fields.");
+			}
         }
+		else {
+			JOptionPane.showMessageDialog(null, "Please select Add New Paper from the paper list drop-down menu.");
+		}
     }//GEN-LAST:event_addNewPaperButtonActionPerformed
         
         //DocumentUpdated methods get user-entered text from text fields

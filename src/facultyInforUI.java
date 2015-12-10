@@ -162,16 +162,19 @@ public class facultyInforUI extends javax.swing.JFrame {
         facultyPaperAbstractjTextArea.setEnabled(false);
         facultyPaperAbstractjTextArea.setColumns(20);
         facultyPaperAbstractjTextArea.setRows(5);
+        facultyPaperAbstractjTextArea.setWrapStyleWord(true);
         jScrollPane3.setViewportView(facultyPaperAbstractjTextArea);
 
         facultypaperTitlejTextArea.setEnabled(false);
         facultypaperTitlejTextArea.setColumns(20);
         facultypaperTitlejTextArea.setRows(5);
+        facultypaperTitlejTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(facultypaperTitlejTextArea);
 
         facultyPaperCitationjTextArea.setEnabled(false);
         facultyPaperCitationjTextArea.setColumns(20);
         facultyPaperCitationjTextArea.setRows(5);
+        facultyPaperCitationjTextArea.setWrapStyleWord(true);
         jScrollPane4.setViewportView(facultyPaperCitationjTextArea);
 
         javax.swing.GroupLayout facultyPapersjPanelLayout = new javax.swing.GroupLayout(facultyPapersjPanel);
@@ -238,6 +241,7 @@ public class facultyInforUI extends javax.swing.JFrame {
 
         lookingForStudentjjTextArea.setColumns(20);
         lookingForStudentjjTextArea.setRows(5);
+        lookingForStudentjjTextArea.setWrapStyleWord(true);
         jScrollPane2.setViewportView(lookingForStudentjjTextArea);
         if(lookingForStudentjjTextArea.getText().equals(""))
         lookingForStudentjjTextArea.setEnabled(false);
@@ -401,40 +405,6 @@ public class facultyInforUI extends javax.swing.JFrame {
     private void returnToSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToSearchButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_returnToSearchButtonActionPerformed
-  /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(facultyInforUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(facultyInforUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(facultyInforUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(facultyInforUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new facultyInforUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> currentStudentjComboBox;

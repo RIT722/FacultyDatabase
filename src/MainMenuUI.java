@@ -1,3 +1,4 @@
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class MainMenuUI extends javax.swing.JFrame {
 	 */
 	public MainMenuUI() {		
 		//ADAPTED FROM: http://stackoverflow.com/a/8881235
+		//prompt for database password, only used during development due to each team member using a different pw
+			//for their local copt of the database
 		/*
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel("Enter database password:");
@@ -41,9 +44,9 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
 		else { //Cancel
 			System.exit(0);
-		}
-		*/
-		this.connectToDatabase("student");
+		}*/
+		
+		this.connectToDatabase("student"); //pw for the lab computers
 		initComponents();
 	}
 
@@ -66,20 +69,10 @@ public class MainMenuUI extends javax.swing.JFrame {
         facultyMembersLabel = new javax.swing.JLabel();
         titleField = new javax.swing.JTextField();
         keywordField = new javax.swing.JTextField();
-        //get the current list of professors from the database
-        try {
-            this.profs = BLFaculty.profList();
-        }
-        catch(DLException e){
-            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
-        }
-        //prepare to populate combobox
-        String[] profNames = new String[this.profs.size()+1];
-        profNames[0] = "<click here to select professor name>"; //default option
-        for (int i=1;i<profNames.length;i++) {
-            profNames[i] = this.profs.get(i-1).get(1);
-        }
-        facultyNameComboBox = new javax.swing.JComboBox(profNames);
+        //prepare to pre-populate combobox with default entry
+        String[] defaultItem = new String[1];
+        defaultItem[0] = "<click here to select professor name>"; //default option
+        facultyNameComboBox = new javax.swing.JComboBox(defaultItem);
         titleLabel = new javax.swing.JLabel();
         facultyNameLabel = new javax.swing.JLabel();
         keywordLabel = new javax.swing.JLabel();
@@ -141,6 +134,7 @@ public class MainMenuUI extends javax.swing.JFrame {
                 facultyNameComboBoxSelected(evt);
             }
         });
+        this.updateFacultyNameComboBox();
 
         titleLabel.setText("Title");
 
@@ -321,6 +315,7 @@ public class MainMenuUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	//When the search button is pressed, perform one of three serches depending on which search field is enabled
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // To Search By Paper's Title
 		//only occurs if Title radio button is selected and text entry field is not empty
@@ -337,7 +332,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 					paperUI.getTitleCBX().addItem(paper);
 				}
 			}
-
+			paperUI.setLocationRelativeTo(null);
 			paperUI.setVisible(true); //make search results window visible
 		}
 		//Search by faculty member
@@ -346,7 +341,9 @@ public class MainMenuUI extends javax.swing.JFrame {
             try {
                 int index = this.facultyNameComboBox.getSelectedIndex() - 1; //because first "prof" in list is blank
                 int id = Integer.parseInt(this.profs.get(index).get(0));
-                new facultyInforUI(id).setVisible(true);
+				facultyInforUI facultyInfoWindow = new facultyInforUI(id);
+				facultyInfoWindow.setLocationRelativeTo(null);
+				facultyInfoWindow.setVisible(true);
             } catch (DLException ex) {
                 Logger.getLogger(MainMenuUI.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -365,7 +362,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 				for(BLPaper paper : result){ //populate list of papers in search results window
 					paperUI.getTitleCBX().addItem(paper);
 				}
-
+			paperUI.setLocationRelativeTo(null);
 			paperUI.setVisible(true); //make search results window visible
 		}
 		else {
@@ -373,6 +370,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_searchButtonActionPerformed
 
+	//RadioButtonActionPerformed methods contain logic to enable/disable search fields as appropriate
     private void keywordRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordRadioButtonActionPerformed
 		if (this.facultyNameComboBox.isEnabled()){ //if we're switching from the Faculty Name radio button
 			this.facultyNameComboBox.setEnabled(false); //then the combobox needs to be disabled
@@ -412,6 +410,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}											//then the search button needs to be disabled
     }//GEN-LAST:event_titleRadioButtonActionPerformed
 
+	//Attempt a faculty login if the username and password fields are filled out
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = this.userNameField.getText();
 		String password = new String(this.passwordField.getPassword());
@@ -420,7 +419,9 @@ public class MainMenuUI extends javax.swing.JFrame {
 			int facultyId;
 			try {
 				facultyId = BLFaculty.login(username,password);
-				new FacultyEdit(facultyId).setVisible(true);
+				FacultyEdit facultyEditWindow = new FacultyEdit(facultyId);
+				facultyEditWindow.setLocationRelativeTo(null);
+				facultyEditWindow.setVisible(true);
 			}
 			catch (DLException e) {
 				JOptionPane.showMessageDialog(null, "Invalid login credentials.");
@@ -433,13 +434,17 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_loginButtonActionPerformed
 
+	//Open JOptionPane to get admin login credentials, attempt admin login, open AdminEdit window if successful
     private void adminPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPanelButtonActionPerformed
         JPanel panel = new JPanel();
-		JLabel label = new JLabel("Enter admin username:");
+		panel.setLayout(new GridLayout(2,2));
+		JLabel unameLabel = new JLabel("Enter admin username:");
 		JTextField uname = new JTextField(16);
+		JLabel pwLabel = new JLabel("Enter admin password:");
 		JPasswordField pass = new JPasswordField(16);
-		panel.add(label);
+		panel.add(unameLabel);
 		panel.add(uname);
+		panel.add(pwLabel);
 		panel.add(pass);
 		String[] options = new String[]{"OK", "Cancel"};
 		//prompt for admin credentials
@@ -452,7 +457,11 @@ public class MainMenuUI extends javax.swing.JFrame {
 		{
 			try {
 				BLAdmin.login(username,pw);
-				new AdminEdit().setVisible(true);
+				//ActionEvent will permit the AdminEdit window to reference this MainMenuUI frame in order to call
+					//the method updateFacultyNameComboBox()
+				AdminEdit adminPanelWindow = new AdminEdit(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,""));
+				adminPanelWindow.setLocationRelativeTo(null);
+				adminPanelWindow.setVisible(true);
 			}
 			catch (DLException e) {
 				JOptionPane.showMessageDialog(null, "Invalid login credentials.");
@@ -465,6 +474,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_adminPanelButtonActionPerformed
 
+	//enable/disable search button based on whether or not title search field currently contains text
 	private void titleFieldDocumentUpdated(DocumentEvent evt) {
 		Document titleFieldDocument = (Document)evt.getDocument();
 		if (titleFieldDocument.getLength() > 0) {
@@ -477,6 +487,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
 	}
 	
+	//enable/disable search button based on whether or not a faculty member has been selected from the combobox
 	private void facultyNameComboBoxSelected(ActionEvent evt) {
 		JComboBox cb = (JComboBox)evt.getSource();
 		if (cb.getSelectedIndex() > 0) {
@@ -489,6 +500,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}
 	}
 	
+	//enable/disable search button based on whether or not keyword search field currently contains text
 	private void keywordFieldDocumentUpdated(DocumentEvent evt) {
 		Document keywordFieldDocument = (Document)evt.getDocument();
 		if (keywordFieldDocument.getLength() > 0) {
@@ -532,12 +544,14 @@ public class MainMenuUI extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new MainMenuUI().setVisible(true);
+				MainMenuUI mainMenu = new MainMenuUI();
+				mainMenu.setLocationRelativeTo(null);
+				mainMenu.setVisible(true);
 			}
 		});
 	}
 	
-	//utility function
+	//utility function for database connection
 	private void connectToDatabase(String pw) {
 		MySQLDB = MySQLDatabase.getInstance();
 		try{
@@ -548,7 +562,21 @@ public class MainMenuUI extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
 			System.exit(1);
 		}
-		System.out.println("connection successful"); //Will print if connection is successful
+	}
+	
+	//utility function to repopulate the faculty name combobox; this is called from AdminEdit as that window is being closed
+	public void updateFacultyNameComboBox() {
+		try {
+            this.profs = BLFaculty.profList();
+        }
+        catch(DLException e){
+            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+        }
+        //prepare to populate combobox
+		int firstNewItem = this.facultyNameComboBox.getItemCount() - 1; //this will be used to index prof name list, disclude default item
+        for (int i=firstNewItem;i<this.profs.size();i++) {
+			this.facultyNameComboBox.addItem(this.profs.get(i).get(1));
+        }
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
