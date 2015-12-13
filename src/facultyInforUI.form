@@ -317,7 +317,6 @@
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="facultyPaperCitationjTextArea">
                   <Properties>
-                    <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                     <Property name="wrapStyleWord" type="boolean" value="true"/>
                   </Properties>
@@ -348,7 +347,7 @@
         <Component class="javax.swing.JComboBox" name="currentStudentjComboBox">
           <Properties>
             <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="1" type="code"/>
+              <Connection code="0" type="code"/>
             </Property>
             <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection component="currentStudentjComboBox" type="bean"/>
@@ -356,7 +355,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;(profStudentNames)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Current Studen(s) Name&#xa;&#x9;&#x9;&#xa;&#x9;&#x9;try {&#xa;               MySQLDatabase msdb = MySQLDatabase.getInstance();&#xa;                msdb.connect();&#xa;                &#xa;            this.currentStudent = bL.profCurrentStudentList();&#xa;        }&#xa;        catch(DLException e){&#xa;            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);&#xa;        }&#xa;        &#xa;        String[] profStudentNames = new String[this.currentStudent.size()+1];&#xa;        profStudentNames[0] = &quot;&quot;;  &#xa;        for (int i=1;i&lt;profStudentNames.length;i++) {&#xa;            profStudentNames[i] = this.currentStudent.get(i-1).get(0);&#xa;       &#xa;            &#xa;        }"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="//Current Studen(s) Name&#xa;&#x9;&#x9;&#xa;&#x9;&#x9;try {&#xa;               MySQLDatabase msdb = MySQLDatabase.getInstance();&#xa;                msdb.connect();&#xa;                &#xa;            this.currentStudent = bL.profCurrentStudentList();&#xa;        }&#xa;        catch(DLException e){&#xa;            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);&#xa;        }&#xa;        &#xa;        String[] profStudentNames = new String[this.currentStudent.size()+1];&#xa;        profStudentNames[0] = &quot;&lt;Select student&gt;&quot;;  &#xa;        for (int i=1;i&lt;profStudentNames.length;i++) {&#xa;            profStudentNames[i] = this.currentStudent.get(i-1).get(0);&#xa;       &#xa;            &#xa;        }"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
@@ -388,6 +387,7 @@
                 <Property name="columns" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="20" type="code"/>
                 </Property>
+                <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="5" type="code"/>
                 </Property>

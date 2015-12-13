@@ -103,7 +103,7 @@ public class facultyInforUI extends javax.swing.JFrame {
         }
 
         String[] profStudentNames = new String[this.currentStudent.size()+1];
-        profStudentNames[0] = "";
+        profStudentNames[0] = "<Select student>";
         for (int i=1;i<profStudentNames.length;i++) {
             profStudentNames[i] = this.currentStudent.get(i-1).get(0);
 
@@ -172,7 +172,6 @@ public class facultyInforUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(facultypaperTitlejTextArea);
 
         facultyPaperCitationjTextArea.setEnabled(false);
-        facultyPaperCitationjTextArea.setColumns(20);
         facultyPaperCitationjTextArea.setRows(5);
         facultyPaperCitationjTextArea.setWrapStyleWord(true);
         jScrollPane4.setViewportView(facultyPaperCitationjTextArea);
@@ -230,7 +229,7 @@ public class facultyInforUI extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Professor Email");
 
-        currentStudentjComboBox.setSelectedIndex(1);
+        currentStudentjComboBox.setSelectedIndex(0);
         currentStudentjComboBox.setSelectedItem(currentStudentjComboBox);
 
         currentStudentjLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -240,6 +239,7 @@ public class facultyInforUI extends javax.swing.JFrame {
         lookingForstudentjLabel.setText("Looking for a student researcher in");
 
         lookingForStudentjjTextArea.setColumns(20);
+        lookingForStudentjjTextArea.setLineWrap(true);
         lookingForStudentjjTextArea.setRows(5);
         lookingForStudentjjTextArea.setWrapStyleWord(true);
         jScrollPane2.setViewportView(lookingForStudentjjTextArea);
@@ -386,6 +386,8 @@ public class facultyInforUI extends javax.swing.JFrame {
                    facultyPaperCitationjTextArea = new javax.swing.JTextArea(myPaper.citation);
                     facultyPaperCitationjTextArea.setColumns(20);
                     facultyPaperCitationjTextArea.setRows(5);
+					facultyPaperCitationjTextArea.setLineWrap(true);
+                    facultyPaperCitationjTextArea.setWrapStyleWord(true);
                     jScrollPane4.setViewportView(facultyPaperCitationjTextArea);
                     
                    
