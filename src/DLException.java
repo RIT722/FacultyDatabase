@@ -1,3 +1,5 @@
+import java.io.*;
+import java.util.*;
 /**
  *
  * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
@@ -5,8 +7,6 @@
 /*This class creates a custom exception. Details from exceptions are written
 to a log file.
 */
-import java.io.*;
-import java.util.*;
 
 public class DLException extends Exception{
     Exception e;

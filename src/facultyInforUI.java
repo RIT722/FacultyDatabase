@@ -1,11 +1,12 @@
-
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Group 2: Katherine Shaw, Nazar Al-Wattar,Fahad Alotaibi , Chris Penepent
  */
+//This window displays faculty information when searching by faculty name
 public class facultyInforUI extends javax.swing.JFrame {
 
     private ArrayList<ArrayList<String>> currentStudent;
@@ -33,19 +34,12 @@ public class facultyInforUI extends javax.swing.JFrame {
          bL = new BLFaculty(ID);
        
         try{
-           
-            bL.fetch();
-         
-                     
+            bL.fetch();         
         }catch(DLException e)
         {
        throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error In the ID facultyInforUI Constructor");
         
         }
-       
-        
-       
-                
       initComponents();
     }
 
@@ -340,31 +334,15 @@ public class facultyInforUI extends javax.swing.JFrame {
 
 
     private void facultypapersjComboBoxPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_facultypapersjComboBoxPopupMenuWillBecomeInvisible
-        // TODO add your handling code here:
-        
-        
-        
          if(facultypapersjComboBox.getSelectedIndex()>0)
         {
-            
-        int index = facultypapersjComboBox.getSelectedIndex();
            String item = facultypapersjComboBox.getSelectedItem().toString();
                       
             for(int i=0; i<profPapers.size(); i++)
             {
             if(profPapers.get(i).get(1).equals(item))
             {
-          int  paperIndex =Integer.parseInt(profPapers.get(i).get(0));
-                             
-                MySQLDatabase msdb = MySQLDatabase.getInstance();
-                try {
-                    msdb.connect();
-                }catch(DLException e)
-                {
-                 Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, e);
-                }
-               
-              
+				int  paperIndex =Integer.parseInt(profPapers.get(i).get(0));
                 
                 myPaper = new BLPaper(paperIndex);
                 try {
@@ -392,18 +370,16 @@ public class facultyInforUI extends javax.swing.JFrame {
                     
                    
             
-            }catch (DLException ex) {
-            Logger.getLogger(facultyInforUI.class.getName()).log(Level.SEVERE, null, ex);
-       }
+				}catch (DLException ex) {
+					JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
+				}
            
             }
-            
         }
        }
-        
-        
     }//GEN-LAST:event_facultypapersjComboBoxPopupMenuWillBecomeInvisible
 
+	//When Return to Search is clicked, the window closes
     private void returnToSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToSearchButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_returnToSearchButtonActionPerformed

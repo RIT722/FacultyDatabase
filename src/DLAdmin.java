@@ -1,6 +1,11 @@
-
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
+ */
+
+//Data layer class for Admin entity
 public class DLAdmin {
 
 	public DLAdmin() {}

@@ -1,9 +1,11 @@
-
-
 /**
  *
  * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
  */
+/*
+	This class creates the window to display search results when searching by
+	title or keywords.
+*/
 public class PaperUI extends javax.swing.JFrame {
 
     /**
@@ -12,7 +14,6 @@ public class PaperUI extends javax.swing.JFrame {
     public PaperUI() {
         initComponents();
     }
-    
    
     // Get Paper's Title 
     public javax.swing.JComboBox getTitleCBX(){
@@ -49,11 +50,6 @@ public class PaperUI extends javax.swing.JFrame {
         TitleCBX.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 TitleCBXItemStateChanged(evt);
-            }
-        });
-        TitleCBX.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TitleCBXActionPerformed(evt);
             }
         });
 
@@ -181,13 +177,9 @@ public class PaperUI extends javax.swing.JFrame {
             TitleTXT.setText(((BLPaper)evt.getItem()).getTitle());
         }
     }//GEN-LAST:event_TitleCBXItemStateChanged
-
-    private void TitleCBXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TitleCBXActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TitleCBXActionPerformed
-
+	
+	//When Return to Search is clicked, the window closes
     private void returnToSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToSearchButtonActionPerformed
-        // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_returnToSearchButtonActionPerformed
 

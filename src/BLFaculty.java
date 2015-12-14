@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,6 +8,7 @@ import java.util.*;
  * @author Group 2: Fahad Alotaibi, Katherine Shaw, Nazar Al-Wattar, Chris Penepent
  */
 
+//Business layer class for Faculty entity
 public class BLFaculty extends DLFaculty {
 
     /*Constructor*/
@@ -20,7 +20,7 @@ public class BLFaculty extends DLFaculty {
         super(ID);
     }
    
-   /*Login method to test the usesr entry*/
+   //Hash user-entered password, send down to data layer facultyLogin() method
    public static int login(String email, String pw) throws DLException {
 		MessageDigest md;
 		byte[] hashedBytes = new byte[0];
@@ -55,7 +55,7 @@ public class BLFaculty extends DLFaculty {
 	   return outputList;
    }
    
-   //get Student (s) name depends on the faculty ID ()
+   //get Student(s) name depends on the faculty ID ()
       public ArrayList<ArrayList<String>> profCurrentStudentList() throws DLException{
 	   ArrayList<ArrayList<String>> returnList = getAllProfCurrentStudentName();
 	   ArrayList<ArrayList<String>> outputList = new ArrayList();

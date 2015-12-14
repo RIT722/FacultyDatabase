@@ -1,15 +1,15 @@
+import java.awt.event.ActionEvent;
+import java.util.*;
+import javax.swing.JOptionPane;
+import javax.swing.event.*;
+import javax.swing.text.*;
+
 /**
  *
  * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
  */
 /* This class creates the Admin Panel window where faculty 
    can be added, edited, or deleted*/
-
-import java.awt.event.ActionEvent;
-import java.util.*;
-import javax.swing.JOptionPane;
-import javax.swing.event.*;
-import javax.swing.text.*;
 public class AdminEdit extends javax.swing.JFrame {
 
     /**
@@ -423,6 +423,7 @@ public class AdminEdit extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_saveChangesButtonActionPerformed
 
+	//This handler is attached to the button that closes the Admin Edit window
     private void returnToSearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnToSearchButtonActionPerformed
 		this.mainMenu.updateFacultyNameComboBox(); //update the faculty name combobox in main menu
 		this.dispose();
@@ -471,6 +472,7 @@ public class AdminEdit extends javax.swing.JFrame {
 
 	/*These three DocumentUpdated methods get the user-entered text from the first
 	  name, last name, and email text fields*/
+	//Updates the Document for the firstNameTextField
 	private void firstNameTextFieldDocumentUpdated(DocumentEvent evt) {
 		Document firstNameTextFieldDocument = (Document)evt.getDocument();
 		int firstNameTextFieldLength = firstNameTextFieldDocument.getLength();
@@ -481,7 +483,7 @@ public class AdminEdit extends javax.swing.JFrame {
 		}
 	}
         
-        
+	//Updates the Document for the lastNameTextField
 	private void lastNameTextFieldDocumentUpdated(DocumentEvent evt) {
 		Document lastNameTextFieldDocument = (Document)evt.getDocument();
 		int lastNameTextFieldLength = lastNameTextFieldDocument.getLength();
@@ -492,6 +494,7 @@ public class AdminEdit extends javax.swing.JFrame {
 				}
 	}
 
+	//Updates the Document for the emailTextField
 	private void emailTextFieldDocumentUpdated(DocumentEvent evt) {
 		Document emailTextFieldDocument = (Document)evt.getDocument();
 		int emailTextFieldLength = emailTextFieldDocument.getLength();
@@ -501,7 +504,6 @@ public class AdminEdit extends javax.swing.JFrame {
 		catch (BadLocationException e) {
 				}
 	}
-        
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewFacultyButton;

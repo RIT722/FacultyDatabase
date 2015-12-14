@@ -1,7 +1,9 @@
-
 import java.util.ArrayList;
-import java.sql.*;
-
+/**
+ *
+ * @author Group 2: Nazar Al-Wattar, Fahad Alotaibi, Katherine Shaw, Chris Penepent
+ */
+//Data layer class for Paper entity
 public class DLPaper {
     int ID;
     String title;
@@ -62,13 +64,8 @@ public class DLPaper {
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "SQL string = " + sql, "Error in fetch() of Faculty");
         }
     }
-    
-
-       
-    //Modify to include commit/rollback confirm delete: not done, unnecessary
-    //Pop-up confirmation will occur before any SQL happens
+	
     //Deletes a radio-button-selected paper from the papers table
-    
     public void deletePaper() throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{   
@@ -85,7 +82,6 @@ public class DLPaper {
         }
     }
     
-    //Modify to include commit/rollback would you like to save changes? - unnecessary
     //Updates the papers table to reflect updated details for a paper. Updates keywords in paper_keywords
     public void save(String title, String pAbstract, String citation, String keywords, int facID) throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
@@ -117,8 +113,7 @@ public class DLPaper {
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis()/1000), "Error in save() of Papers");
         }
     }
-    
-    
+
     //Adds a paper to the papers table, adds keywords to paper_keywords table
     public int addPaper(String newtitle, String newpAbstract, String newcitation, String keywords, int facID) throws DLException{
         MySQLDatabase msd = MySQLDatabase.getInstance();        
@@ -173,7 +168,7 @@ public class DLPaper {
     }
     
     
-    // Updated to be only get keywords, other part is done in fetch
+    //Return keywords for this paper
      public String getPaperKeywords() throws DLException {
         String keyword = ""; 
         try{
@@ -211,6 +206,5 @@ public class DLPaper {
         } catch (RuntimeException e) {
             throw new DLException(e, "Unix time: " + String.valueOf(System.currentTimeMillis() / 1000), "SQL string = " + query, "Error in fetch() of Faculty");
         }
-    }
-     
+    }    
 }

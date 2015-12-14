@@ -1,3 +1,7 @@
+import java.util.*;
+import javax.swing.JOptionPane;
+import javax.swing.event.*;
+import javax.swing.text.*;
 /**
  *
  * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
@@ -6,33 +10,29 @@
     add, edit, and delete their papers. They can also add students and create
     a posting for student researchers.
 */
-
-import java.util.*;
-import javax.swing.JOptionPane;
-import javax.swing.event.*;
-import javax.swing.text.*;
 public class FacultyEdit extends javax.swing.JFrame {
 
     /**
      * Creates new form FacultyEdit
      */
-    String facultyName;
-    BLFaculty faculty;
-    BLPaper displayPaper;
-    String studentName;
-    String helpText;
-    ArrayList<Integer> paperIDs;
-    String title;
-    String pAbstract;
-    String citation;
-    String keywords;
-    String titleText;
-    String abstractText;
-    String citationText;
-    String keywordsText;
-    int facID;
-    ArrayList paperList;
+    private String facultyName;
+    private BLFaculty faculty;
+    private BLPaper displayPaper;
+    private String studentName;
+    private String helpText;
+    private ArrayList<Integer> paperIDs;
+    private String title;
+    private String pAbstract;
+    private String citation;
+    private String keywords;
+    private String titleText;
+    private String abstractText;
+    private String citationText;
+    private String keywordsText;
+    private int facID;
+    private ArrayList paperList;
     
+	//constructor creates new Faculty object w/ ID passed from main
     public FacultyEdit(int facultyID) {
         faculty = new BLFaculty(facultyID);
         facID = facultyID;
@@ -40,11 +40,10 @@ public class FacultyEdit extends javax.swing.JFrame {
             faculty.fetch();
         }
         catch(DLException e){
-            
+            JOptionPane.showMessageDialog(null, "Could not complete operation. Details written to log file.");
         }
         facultyName = faculty.getFN() + " " + faculty.getLN();
         initComponents();
-        
     }
     
 
@@ -671,7 +670,7 @@ public class FacultyEdit extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_addNewPaperButtonActionPerformed
         
-        //DocumentUpdated methods get user-entered text from text fields
+    //DocumentUpdated method gets user-entered text from studentName text field
 	private void studentNameTextBoxDocumentUpdated(DocumentEvent evt) {
 		Document studentNameTextBoxDocument = (Document)evt.getDocument();
 		if (studentNameTextBoxDocument.getLength() > 0) {
@@ -689,6 +688,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                 }
 	}
 	
+	//DocumentUpdated method gets user-entered text from needStudent text field
 	private void needStudentTextBoxDocumentUpdated(DocumentEvent evt) {
 		Document needStudentTextBoxDocument = (Document)evt.getDocument();
 		int needStudentLength = needStudentTextBoxDocument.getLength();
@@ -700,7 +700,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                 }
 	}
         
-        
+        //DocumentUpdated method gets user-entered text from title text area
         private void titleTextAreaDocumentUpdated(DocumentEvent evt) {
 		Document titleTextAreaDocument = (Document)evt.getDocument();
 		int titleTextAreaLength = titleTextAreaDocument.getLength();
@@ -712,7 +712,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                 }
 	}
         
-        
+        //DocumentUpdated method gets user-entered text from abstract text area
         private void abstractTextAreaDocumentUpdated(DocumentEvent evt) {
 		Document abstractTextAreaDocument = (Document)evt.getDocument();
 		int abstractTextAreaLength = abstractTextAreaDocument.getLength();
@@ -723,7 +723,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
 	}
-        
+        //DocumentUpdated method gets user-entered text from citation text area
         private void citationTextAreaDocumentUpdated(DocumentEvent evt) {
 		Document citationTextAreaDocument = (Document)evt.getDocument();
 		int citationTextAreaLength = citationTextAreaDocument.getLength();
@@ -734,7 +734,7 @@ public class FacultyEdit extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
 	}
-        
+        //DocumentUpdated method gets user-entered text from keywords text field
         private void keywordsTextFieldDocumentUpdated(DocumentEvent evt) {
 		Document keywordsTextFieldDocument = (Document)evt.getDocument();
 		int keywordsTextFieldLength = keywordsTextFieldDocument.getLength();

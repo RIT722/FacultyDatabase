@@ -1,17 +1,17 @@
-
 import java.util.ArrayList;
 
 /**
  *
  * @author Group 2: Nazar Al-Wattar, Fahad Alotaibi, Katherine Shaw, Chris Penepent
  */
+//Data layer class for Faculty entity
 public class DLFaculty {
-    String firstName;
-    String lastName;
-    String password;
-    String email;
-    String askHelp;
-    int ID;
+    protected String firstName;
+    protected String lastName;
+    protected String password;
+    protected String email;
+    protected String askHelp;
+    protected int ID;
     
     public DLFaculty(){
         
@@ -137,8 +137,7 @@ public class DLFaculty {
         }
     }
     
-     //faculty login
-    //Consider adding unique username to password
+    //attempt to select facultyid from the Faculty table with the given credentials
 	public static int facultyLogin(String email, String password) throws DLException{
 	   int id;
 	   ArrayList<ArrayList<String>> result;
@@ -185,7 +184,6 @@ public class DLFaculty {
     }
     
     //Updates the needHelp boolean in the faculty table
-    //Change to use text box and return string value
     public void needHelp(String help) throws DLException{
          MySQLDatabase msd = MySQLDatabase.getInstance();        
         try{
@@ -229,7 +227,6 @@ public class DLFaculty {
     
    
     //get All Papers for this faculty with this ID 
-
     public ArrayList<ArrayList<String>> getAllProfPapers() throws DLException{
 		ArrayList<ArrayList<String>> profPapersList;
 
@@ -249,7 +246,7 @@ public class DLFaculty {
         return profPapersList;
 	} 
     
-              /*getAllProfs Method to return all the professor names */
+    /*getAllProfs Method to return all the professor names */
 	public static ArrayList<ArrayList<String>> getAllProfs() throws DLException{
 		ArrayList<ArrayList<String>> profList;
 
@@ -264,5 +261,4 @@ public class DLFaculty {
         }
         return profList;
 	}
-
 }

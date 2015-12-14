@@ -14,6 +14,7 @@ import javax.swing.text.Document;
  *
  * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
  */
+//Class for main program window. Contains main().
 public class MainMenuUI extends javax.swing.JFrame {
 
 	private ArrayList<ArrayList<String>> profs;
@@ -25,7 +26,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 	public MainMenuUI() {		
 		//ADAPTED FROM: http://stackoverflow.com/a/8881235
 		//prompt for database password, only used during development due to each team member using a different pw
-			//for their local copt of the database
+			//for their local copy of the database
 		/*
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel("Enter database password:");
@@ -384,6 +385,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}											//then the search button needs to be disabled
     }//GEN-LAST:event_keywordRadioButtonActionPerformed
 
+	//RadioButtonActionPerformed methods contain logic to enable/disable search fields as appropriate
     private void facultyNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facultyNameRadioButtonActionPerformed
 		if (this.titleField.isEnabled()){ //if we're switching from the Title radio button
 			this.titleField.setEnabled(false); //then the Title text field needs to be disabled
@@ -397,6 +399,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 		}											//then the search button needs to be disabled
     }//GEN-LAST:event_facultyNameRadioButtonActionPerformed
 
+	//RadioButtonActionPerformed methods contain logic to enable/disable search fields as appropriate
     private void titleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleRadioButtonActionPerformed
 		if (this.facultyNameComboBox.isEnabled()){ //if we're switching from the Faculty Name radio button
 			this.facultyNameComboBox.setEnabled(false); //then the combobox needs to be disabled
@@ -514,6 +517,7 @@ public class MainMenuUI extends javax.swing.JFrame {
 	}
 	
 	/**
+	 * Start of program.
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {

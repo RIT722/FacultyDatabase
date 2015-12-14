@@ -1,3 +1,9 @@
+/**
+ *
+ * @author Group 2: Fahad Alotaibi, Katherine Shaw, Nazar Al-Wattar, Chris Penepent
+ */
+
+//Business layer class for Paper entity
 public class BLPaper extends DLPaper {
 
     /* Default Constructor */

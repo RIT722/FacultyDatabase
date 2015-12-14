@@ -1,11 +1,14 @@
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+/**
+ *
+ * @author Group 2: Chris Penepent, Katherine Shaw, Fahad Alotaibi, Nazar Al-Wattar
+ */
 
-public class BLAdmin {
+//Business layer class for Admin entity
+public class BLAdmin extends DLAdmin{
 	public BLAdmin(){
-        
     }
 
 	//Hash user-entered password, send down to data layer adminLogin() method
